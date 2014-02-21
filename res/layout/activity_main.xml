@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".MainActivity" >
+	<ScrollView 
+	    android:id="@+id/layout" 
+	    android:layout_height="match_parent"         
+	    android:scrollbars="horizontal|vertical" 
+	    android:layout_width="match_parent"     
+	    android:layout_marginTop="5dip" 
+	    android:layout_marginLeft="5dip"     
+	    android:scrollbarStyle="outsideInset"
+	    android:fillViewport="true"> 
+	
+	    <HorizontalScrollView 
+	        android:id="@+id/horizontalView" 
+	        android:layout_height="wrap_content"     
+	        android:scrollbars="horizontal|vertical" 
+	        android:layout_width="wrap_content"     
+	        android:layout_marginTop="5dip">
+	
+	        <RelativeLayout
+	            android:id="@+id/worklayout"
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent"
+	            android:layout_marginBottom="0dip"
+	            android:layout_marginLeft="0dip"
+	            android:layout_marginRight="0dip"
+	            android:layout_marginTop="0dip" >
+
+    <Spinner
+        android:id="@+id/vehicleSpinner"
+        android:layout_width="200dip"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
+
+     <TextView
+         android:id="@+id/vehicleTextView1"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/vehicleSpinner"
+         android:text="Vehicle"
+          />
+     <ImageButton
+         android:id="@+id/vehicleAddButton1"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignBottom="@+id/vehicleSpinner"
+         android:layout_toRightOf="@+id/vehicleSpinner"
+         android:layout_alignParentRight="true"
+         
+         android:src="@android:drawable/ic_input_add" />
+<!--  
+	<ScrollView 
+	    android:id="@+id/layout" 
+	    android:layout_height="match_parent"         
+	    android:scrollbars="horizontal|vertical" 
+	    android:layout_width="match_parent"     
+	    android:layout_marginTop="5dip" 
+	    android:layout_marginLeft="5dip"     
+	    android:scrollbarStyle="outsideInset"
+	    android:fillViewport="true"> 
+	
+	    <HorizontalScrollView 
+	        android:id="@+id/horizontalView" 
+	        android:layout_height="wrap_content"     
+	        android:scrollbars="horizontal|vertical" 
+	        android:layout_width="wrap_content"     
+	        android:layout_marginTop="5dip">
+	        -->
+	        <!-- http://eclipseandroid.blogspot.com/2012/02/how-to-display-borders-in-tablelayouts.html -->
+	        <TableLayout
+	            
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:id="@+id/tlGridTable"
+	            android:layout_marginTop="2dip"
+	            android:layout_marginBottom="2dip"
+	            android:layout_marginLeft="2dip"
+	            android:layout_marginRight="2dip"
+	            android:layout_below="@+id/vehicleAddButton1"
+	            android:background="#333333" >   
+	        </TableLayout>
+
+
+
+	        </RelativeLayout>	      
+	    </HorizontalScrollView>
+	</ScrollView>
+
+
+
+</LinearLayout>

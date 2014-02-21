@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".AddWorkActivity" >
+	<ScrollView 
+	    android:id="@+id/layout" 
+	    android:layout_height="match_parent"         
+	    android:scrollbars="horizontal|vertical" 
+	    android:layout_width="match_parent"     
+	    android:layout_marginTop="5dip" 
+	    android:layout_marginLeft="5dip"     
+	    android:scrollbarStyle="outsideInset"
+	    android:fillViewport="true"> 
+	
+	    <HorizontalScrollView 
+	        android:id="@+id/horizontalView" 
+	        android:layout_height="wrap_content"     
+	        android:scrollbars="horizontal|vertical" 
+	        android:layout_width="wrap_content"     
+	        android:layout_marginTop="5dip">
+	
+	        <RelativeLayout
+	            android:id="@+id/worklayout"
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent"
+	            android:layout_marginBottom="0dip"
+	            android:layout_marginLeft="0dip"
+	            android:layout_marginRight="0dip"
+	            android:layout_marginTop="0dip" >
+
+<!-- 	            	Start with database keys. Spinner, label, textview. -->
+
+
+	            <!-- item -->
+
+	            <!-- receipt -->
+
+	            <Spinner
+	                android:id="@+id/locationSpinner"
+	                android:layout_width="200dip"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentLeft="true" />
+
+	            <TextView
+	                android:id="@+id/locationTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentLeft="true"
+	                android:layout_below="@+id/locationSpinner"
+	                android:text="Location" />
+
+	            <ImageButton
+	                android:id="@+id/locationAddButton"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignBottom="@+id/locationSpinner"
+	                android:layout_toRightOf="@+id/locationSpinner"
+	                android:src="@android:drawable/ic_input_add" />
+
+<!-- 	            	Date field -->
+
+	            <EditText
+	                android:id="@+id/dateEditText"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentLeft="true"
+	                android:layout_below="@+id/locationTextView"
+	                android:ems="10"
+	                android:inputType="date" />
+
+	            <TextView
+	                android:id="@+id/dateTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignLeft="@+id/dateEditText"
+	                android:layout_below="@+id/dateEditText"
+	                android:text="Date" />
+
+	            <EditText
+	                android:id="@+id/mileageEditText"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentLeft="true"
+	                android:layout_below="@+id/dateTextView"
+	                android:ems="10"
+	                android:inputType="number" />
+
+	            <TextView
+	                android:id="@+id/mileageTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignLeft="@+id/mileageEditText"
+	                android:layout_below="@+id/mileageEditText"
+	                android:text="Mileage" />
+
+	            <EditText
+	                android:id="@+id/noteEditText"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignLeft="@+id/mileageTextView"
+	                android:layout_below="@+id/mileageTextView"
+	                android:ems="10"
+	                android:inputType="textMultiLine" >
+
+	                
+	            </EditText>
+
+	            <TextView
+	                android:id="@+id/noteTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignLeft="@+id/noteEditText"
+	                android:layout_below="@+id/noteEditText"
+	                android:text="Notes" />
+
+
+
+	            <ImageView
+	                android:id="@+id/recieptImageView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_below="@+id/noteTextView"
+	                android:layout_centerHorizontal="true"
+	                android:src="@drawable/ic_launcher" />
+
+	            <ImageButton
+	                android:id="@+id/imageButton1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentLeft="true"
+	                android:layout_below="@+id/noteTextView"
+	                android:src="@android:drawable/ic_menu_camera" />
+
+	        </RelativeLayout>
+
+	    </HorizontalScrollView>
+	</ScrollView>
+</LinearLayout>
+

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">CarMaintenance</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_about">Info</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="lookup">Lookup Address</string>
+    <string name="clear">Clear All</string>
+	<string name="sitename">Host Name</string>
+    <string name="ip_address">IP Address</string>
+    <string name="about_text">file:///android_asset/about.html</string>
+    <string name="sql_file">file:///android_asset/CarMaintenance.sql</string>
+     <string name="title_activity_about_message">About Car Maintenance</string>
+     <string name="title_activity_work_message">Work</string>
+     <string name="title_activity_item_message">Item</string>
+     <string name="title_activity_vehicle_message">Vehicle</string>
+     <string name="title_activity_location_message">Location</string>
+     <string name="title_activity_receipt_message">Receipt</string>
+     <string name="title_activity_lookup_message">AndroidLookup Results</string>
+     <string name="title_activity_whois_message">Whois Information</string>
+     <string name="cname">CName</string>
+    
+    <string-array name="planets_array">
+        <item></item>
+        <item>Mercury</item>
+        <item>Saturn</item>
+        
+        <item>Ford</item>
+        <item>Dodge</item>
+        <item>Chevrolet</item>
+    </string-array>
+</resources>
+    
+

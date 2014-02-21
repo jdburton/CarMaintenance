@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".AddWorkActivity" >
+	<ScrollView 
+	    android:id="@+id/layout" 
+	    android:layout_height="match_parent"         
+	    android:scrollbars="horizontal|vertical" 
+	    android:layout_width="match_parent"     
+	    android:layout_marginTop="5dip" 
+	    android:layout_marginLeft="5dip"     
+	    android:scrollbarStyle="outsideInset"
+	    android:fillViewport="true"> 
+	
+	    <HorizontalScrollView 
+	        android:id="@+id/horizontalView" 
+	        android:layout_height="wrap_content"     
+	        android:scrollbars="horizontal|vertical" 
+	        android:layout_width="wrap_content"     
+	        android:layout_marginTop="5dip">
+	
+	        <RelativeLayout
+	            android:id="@+id/worklayout"
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent"
+	            android:layout_marginBottom="0dip"
+	            android:layout_marginLeft="0dip"
+	            android:layout_marginRight="0dip"
+	            android:layout_marginTop="0dip" >
+
+<!-- 	            	Start with database keys. Spinner, label, textview. -->
+
+
+	            <!-- item -->
+
+	            <!-- receipt -->
+
+<!-- 	            	Date field -->
+
+	            <EditText
+	                android:id="@+id/locationEditText"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentLeft="true"
+	                
+	                android:ems="10"
+	                android:inputType="text" />
+
+	            <TextView
+	                android:id="@+id/locationTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignLeft="@+id/locationEditText"
+	                android:layout_below="@+id/locationEditText"
+	                android:text="Location Name" />
+
+	            <EditText
+	                android:id="@+id/phoneEditText"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentLeft="true"
+	                android:layout_below="@+id/locationTextView"
+	                android:ems="10"
+	                android:inputType="phone" />
+
+	            <TextView
+	                android:id="@+id/phoneTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignLeft="@+id/phoneEditText"
+	                android:layout_below="@+id/phoneEditText"
+	                android:text="Phone Number" />
+
+	            <EditText
+	                android:id="@+id/addressEditText"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentLeft="true"
+	                android:layout_below="@+id/phoneTextView"
+	                android:inputType="textPostalAddress" >
+	           </EditText>
+
+	           <TextView
+	                android:id="@+id/addressTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignLeft="@+id/addressEditText"
+	                android:layout_below="@+id/addressEditText"
+	                android:text="Address" />
+	           
+	           <EditText
+	                android:id="@+id/noteEditText"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignLeft="@+id/addressTextView"
+	                android:layout_below="@+id/addressTextView"
+	                android:ems="10"
+	                android:inputType="textMultiLine" >
+
+	                
+	            </EditText>
+
+	            <TextView
+	                android:id="@+id/noteTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignLeft="@+id/noteEditText"
+	                android:layout_below="@+id/noteEditText"
+	                android:text="Notes" />
+
+
+	            
+
+	        </RelativeLayout>
+
+	    </HorizontalScrollView>
+	</ScrollView>
+</LinearLayout>
+

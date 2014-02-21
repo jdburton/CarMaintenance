@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+	            <TextView
+	                android:id="@+id/maintenanceTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="Maintenance Work"
+	                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+	            <Spinner
+	                android:id="@+id/vehicleSpinner"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentLeft="true"
+	                android:layout_below="@+id/maintenanceTextView"
+	                 />
+	            
+	            <TextView
+	                android:id="@+id/vehicleTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_below="@+id/vehicleSpinner"
+	                
+	                android:text="Vehicle"
+	                 />
+	            
+	            <ImageButton
+	                android:id="@+id/vehicleAddButton"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignBottom="@+id/vehicleSpinner"
+	                android:layout_alignRight="@+id/vehicleSpinner"
+	                android:src="@android:drawable/ic_input_add" />
+	            
+	            
+	            <!-- 
+	            
+	            	Start with database keys. Spinner, label, textview.
+	            
+	             -->
+	             
+	             <!-- item -->
+	             <Spinner
+	                android:id="@+id/itemSpinner"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentLeft="true"
+	                android:layout_below="@+id/vehicleTextView" />
+
+	            <TextView
+	                android:id="@+id/itemTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentLeft="true"
+	                android:layout_below="@+id/itemSpinner"
+	                android:text="Item" />
+	            
+	            <ImageButton
+	                android:id="@+id/itemAddButton"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignBottom="@+id/itemSpinner"
+	                android:layout_alignRight="@+id/itemSpinner"
+	                android:src="@android:drawable/ic_input_add" />
+	            
+	             <!-- receipt  -->
+	             <Spinner
+	                android:id="@+id/receiptSpinner"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentLeft="true"
+	                android:layout_below="@+id/itemTextView" />
+
+	            <TextView
+	                android:id="@+id/receiptTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentLeft="true"
+	                android:layout_below="@+id/receiptSpinner"
+	                android:text="Receipt" />
+	            
+	            	            <ImageButton
+	                android:id="@+id/receiptAddButton"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignRight="@+id/receiptSpinner"
+	                android:layout_alignTop="@+id/receiptSpinner"
+	                android:src="@android:drawable/ic_input_add" />
+	             
+	            <!-- 
+	            	Date field
+	            -->
+	            
+	            <EditText
+				    android:id="@+id/dateEditText"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_alignParentLeft="true"
+				    android:layout_below="@+id/receiptTextView"
+				    android:ems="10"
+				    android:inputType="date" />
+
+	            
+	            
+	            <TextView
+	                android:id="@+id/dateTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignLeft="@+id/dateEditText"
+	                android:layout_below="@+id/dateEditText"
+	                android:text="Date" />
+	            
+	           <EditText
+	               android:id="@+id/mileageEditText"
+	               android:layout_width="wrap_content"
+	               android:layout_height="wrap_content"
+	               android:layout_alignParentLeft="true"
+	               android:layout_below="@+id/dateTextView"
+	               android:ems="10"
+	               android:inputType="number" />
+	            
+	            <TextView
+	                android:id="@+id/mileageTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignLeft="@+id/mileageEditText"
+	                android:layout_below="@+id/mileageEditText"
+	                android:text="Mileage" />
+	            
+
+
+	            <EditText
+	                android:id="@+id/noteEditText"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignLeft="@+id/mileageTextView"
+	                android:layout_below="@+id/mileageTextView"
+	                android:ems="10"
+	                android:inputType="textMultiLine" >
+
+	                <requestFocus />
+	            </EditText>
+
+	            <TextView
+	                android:id="@+id/noteTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignLeft="@+id/noteEditText"
+	                android:layout_below="@+id/noteEditText"
+	                android:text="Notes" />
+
+	        </RelativeLayout>
+
+
