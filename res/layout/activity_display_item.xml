@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".DisplayItemActivity" >
+	<ScrollView 
+	    android:id="@+id/layout" 
+	    android:layout_height="match_parent"         
+	    android:scrollbars="horizontal|vertical" 
+	    android:layout_width="match_parent"     
+	    android:layout_marginTop="5dip" 
+	    android:layout_marginLeft="5dip"     
+	    android:scrollbarStyle="outsideInset"
+	    android:fillViewport="true"> 
+	
+	    <HorizontalScrollView 
+	        android:id="@+id/horizontalView" 
+	        android:layout_height="wrap_content"     
+	        android:scrollbars="horizontal|vertical" 
+	        android:layout_width="wrap_content"     
+	        android:layout_marginTop="5dip">
+	
+
+
+
+
+	        <!-- http://eclipseandroid.blogspot.com/2012/02/how-to-display-borders-in-tablelayouts.html -->
+	        <TableLayout
+	            
+	            android:id="@+id/tlGridTable"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginBottom="0dip"
+	            android:layout_marginLeft="0dip"
+	            android:layout_marginRight="0dip"
+	            android:layout_marginTop="0dip" 
+
+
+	            android:background="#333333" >   
+	        </TableLayout>
+
+
+
+	        	      
+	    </HorizontalScrollView>
+	</ScrollView>
+
+
+
+</LinearLayout>
