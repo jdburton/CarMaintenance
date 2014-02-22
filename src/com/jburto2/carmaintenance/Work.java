@@ -1,5 +1,12 @@
 package com.jburto2.carmaintenance;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
 
 
 public class Work extends DatabaseObject
@@ -75,4 +82,133 @@ public class Work extends DatabaseObject
 	{
 		return this.idReceipt;
 	}
+	
+    /**
+     * All CRUD(Create, Read, Update, Delete) Operations
+     *
+ 
+    // Adding new work
+    void addWork(Work work) {
+        SQLiteDatabase db = this.getWritableDatabase();
+ 
+        ContentValues values = new ContentValues();
+       
+        values.put(Work.KEY_VEHICLE_IDVEHICLE, work.getVehicleID()); // Work description
+        values.put(Work.KEY_ITEMS_IDITEMS, work.getItemID()); // Work description
+        values.put(Work.KEY_RECIEPT_IDRECEIPT, work.getReceiptID()); // Work description
+        values.put(Work.KEY_WORKNOTES, work.getNotes()); // Work description
+        
+        // Inserting Row
+        db.insert(Work.TABLE_NAME, null, values);
+        db.close(); // Closing database connection
+    }
+ 
+ 
+    // Getting single work
+    Work getWorkById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        
+ 
+        Cursor cursor = db.query(Work.TABLE_NAME, new String[] { 
+        					Work.KEY_ID, 
+        					Work.KEY_VEHICLE_IDVEHICLE,
+        					Work.KEY_ITEMS_IDITEMS,
+        					Work.KEY_RECIEPT_IDRECEIPT,
+							Work.KEY_WORKNOTES  
+							}, Work.KEY_ID + "=?",
+                new String[] { Integer.toString(id) }, null, null, null, null);
+        if (cursor != null )
+        	
+            cursor.moveToFirst();
+
+        Work work = new Work(Integer.parseInt(cursor.getString(0)),Integer.parseInt(cursor.getString(1)),Integer.parseInt(cursor.getString(2)),Integer.parseInt(cursor.getString(3)),cursor.getString(4));
+        // return work
+        return work;
+    }
+    
+    Work getWorkByVehicleItemReceipt(int vid,int iid, int rid) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        
+ 
+        Cursor cursor = db.query(Work.TABLE_NAME, new String[] { 
+        					Work.KEY_ID, 
+        					Work.KEY_VEHICLE_IDVEHICLE,
+        					Work.KEY_ITEMS_IDITEMS,
+        					Work.KEY_RECIEPT_IDRECEIPT,
+							Work.KEY_WORKNOTES  
+							}, 
+							Work.KEY_VEHICLE_IDVEHICLE + "=? and "+Work.KEY_ITEMS_IDITEMS+"=? and "+Work.KEY_RECIEPT_IDRECEIPT+"=?",
+                new String[] { Integer.toString(vid), Integer.toString(iid), Integer.toString(rid) }, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        Work work = new Work(Integer.parseInt(cursor.getString(0)),Integer.parseInt(cursor.getString(1)),Integer.parseInt(cursor.getString(2)),Integer.parseInt(cursor.getString(3)),cursor.getString(4));
+        // return work
+        return work;
+    }
+     
+    // Getting All Works
+    public static List<DatabaseObject> getAll(DatabaseHandler dbh) {
+        List<DatabaseObject> workList = new ArrayList<DatabaseObject>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + Work.TABLE_NAME;
+ 
+        SQLiteDatabase db = dbh.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+ 
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Work work = new Work();
+                
+                work.setID(Integer.parseInt(cursor.getString(0)));
+                work.setVehicleID(Integer.parseInt(cursor.getString(1)));
+                work.setItemID(Integer.parseInt(cursor.getString(2)));
+                work.setReceiptID(Integer.parseInt(cursor.getString(3)));
+                work.setNotes(cursor.getString(4));
+                // Adding work to list
+                workList.add(work);
+            } while (cursor.moveToNext());
+        }
+ 
+        // return work list
+        return workList;
+    }
+ 
+    // Updating single work
+    public int update(DatabaseHandler dbh) {
+        SQLiteDatabase db = dbh.getWritableDatabase();
+ 
+        ContentValues values = new ContentValues();
+        values.put(Work.KEY_ID, work.getID());
+        values.put(Work.KEY_VEHICLE_IDVEHICLE, work.getVehicleID());
+        values.put(Work.KEY_ITEMS_IDITEMS, work.getItemID());
+        values.put(Work.KEY_RECIEPT_IDRECEIPT,work.getReceiptID());
+        values.put(Work.KEY_WORKNOTES,work.getNotes());
+ 
+        // updating row
+        return db.update(Work.TABLE_NAME, values, Work.KEY_ID + " = ?",
+                new String[] { String.valueOf(work.getID()) });
+    }
+ 
+    // Deleting single work
+    public void delete(DatabaseHandler dbh) {
+        SQLiteDatabase db = dbh.getWritableDatabase();
+        db.delete(Work.TABLE_NAME, Work.KEY_ID + " = ?",
+                new String[] { String.valueOf(work.getID()) });
+        db.close();
+    }
+ 
+ 
+    // Getting works Count
+    public int getCount(DatabaseHandler dbh) {
+        String countQuery = "SELECT  * FROM " + Work.TABLE_NAME;
+        SQLiteDatabase db = dbh.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        cursor.close();
+ 
+        // return count
+        return cursor.getCount();
+    }
+ */
 }

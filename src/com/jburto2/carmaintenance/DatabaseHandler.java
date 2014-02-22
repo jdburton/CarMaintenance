@@ -131,30 +131,42 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Getting single vehicle
-    Vehicle getVehicleById(int id) {
+    Vehicle getVehicleById(int id) throws Exception {
         SQLiteDatabase db = this.getReadableDatabase();
  
         Cursor cursor = db.query(Vehicle.TABLE_NAME, new String[] { Vehicle.KEY_ID, Vehicle.KEY_VEHICLEDESCRIPTION }, Vehicle.KEY_ID + "=?",
                 new String[] { Integer.toString(id) }, null, null, null, null);
-        if (cursor != null)
+        if (cursor.getCount() > 0)
+        {
             cursor.moveToFirst();
+        	Vehicle vehicle = new Vehicle(Integer.parseInt(cursor.getString(0)),cursor.getString(1));
+        	// return vehicle
+            return vehicle;
+        }
+        else
+        {
+        	throw new java.lang.Exception("Cannot find vehicle matching id "+id);
+        }
 
-        Vehicle vehicle = new Vehicle(Integer.parseInt(cursor.getString(0)),cursor.getString(1));
-        // return vehicle
-        return vehicle;
     }
     // Getting single vehicle
-    Vehicle getVehicle(String name) {
+    Vehicle getVehicle(String name) throws Exception {
         SQLiteDatabase db = this.getReadableDatabase();
  
         Cursor cursor = db.query(Vehicle.TABLE_NAME, new String[] { Vehicle.KEY_ID, Vehicle.KEY_VEHICLEDESCRIPTION }, Vehicle.KEY_VEHICLEDESCRIPTION + "=?",
                 new String[] { name }, null, null, null, null);
-        if (cursor != null)
+        if (cursor.getCount() > 0)
+        {
             cursor.moveToFirst();
+        	Vehicle vehicle = new Vehicle(Integer.parseInt(cursor.getString(0)),cursor.getString(1));
+        	// return vehicle
+            return vehicle;
+        }
+        else
+        {
+        	throw new java.lang.Exception("Cannot find vehicle matching name "+name);
+        }
 
-        Vehicle vehicle = new Vehicle(Integer.parseInt(cursor.getString(0)),cursor.getString(1));
-        // return vehicle
-        return vehicle;
     }
      
     // Getting All Vehicles
@@ -238,33 +250,47 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
  
     // Getting single item
-    Item getItemById(int id) {
+    Item getItemById(int id) throws Exception {
         SQLiteDatabase db = this.getReadableDatabase();
         
  
         Cursor cursor = db.query(Item.TABLE_NAME, new String[] { Item.KEY_ID, Item.KEY_ITEMDESCRIPTION, Item.KEY_ITEMMILEAGEINTERVAL, Item.KEY_ITEMTIMEINTERVAL }, Item.KEY_ID + "=?",
                 new String[] { Integer.toString(id) }, null, null, null, null);
-        if (cursor != null)
+        if (cursor.getCount() > 0)
+        {
             cursor.moveToFirst();
 
-        Item item = new Item(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Integer.parseInt(cursor.getString(2)),Integer.parseInt(cursor.getString(3)));
-        // return item
-        return item;
+	        Item item = new Item(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Integer.parseInt(cursor.getString(2)),Integer.parseInt(cursor.getString(3)));
+	        
+	        return item;
+        }
+        else
+        {
+        	throw new java.lang.Exception("Cannot find item matching id "+id);
+        }
+
     }
     
     // Getting single item
-    Item getItem(String name) {
+    Item getItem(String name) throws Exception {
         SQLiteDatabase db = this.getReadableDatabase();
         
  
         Cursor cursor = db.query(Item.TABLE_NAME, new String[] { Item.KEY_ID, Item.KEY_ITEMDESCRIPTION, Item.KEY_ITEMMILEAGEINTERVAL, Item.KEY_ITEMTIMEINTERVAL }, Item.KEY_ITEMDESCRIPTION + "=?",
                 new String[] { name }, null, null, null, null);
-        if (cursor != null)
+        if (cursor.getCount() > 0)
+        {
             cursor.moveToFirst();
+	
+	        Item item = new Item(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Integer.parseInt(cursor.getString(2)),Integer.parseInt(cursor.getString(3)));
+	        // return item
+	        return item;
+        }
+        else
+        {
+        	throw new java.lang.Exception("Cannot find item matching "+name);
+        }
 
-        Item item = new Item(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Integer.parseInt(cursor.getString(2)),Integer.parseInt(cursor.getString(3)));
-        // return item
-        return item;
     }
      
     // Getting All Items
@@ -353,7 +379,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
  
     // Getting single receipt
-    Receipt getReceiptById(int id) {
+    Receipt getReceiptById(int id) throws Exception {
         SQLiteDatabase db = this.getReadableDatabase();
         
  
@@ -366,17 +392,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 							Receipt.KEY_RECEIPTMILEAGE,
 							Receipt.KEY_RECEIPTNOTES  }, Receipt.KEY_ID + "=?",
                 new String[] { Integer.toString(id) }, null, null, null, null);
-        if (cursor != null)
+        if (cursor.getCount() > 0)
+        {
             cursor.moveToFirst();
-        
-
-        Receipt receipt = new Receipt(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Integer.parseInt(cursor.getString(2)),cursor.getString(3),Integer.parseInt(cursor.getString(4)),Integer.parseInt(cursor.getString(5)),cursor.getString(6));
-        // return receipt
-        return receipt;
+	        
+	
+	        Receipt receipt = new Receipt(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Integer.parseInt(cursor.getString(2)),cursor.getString(3),Integer.parseInt(cursor.getString(4)),Integer.parseInt(cursor.getString(5)),cursor.getString(6));
+	        // return receipt
+	        return receipt;
+	    }
+	    else
+	    {
+	    	throw new java.lang.Exception("Cannot find receipt matching id "+id);
+	    }
     }
     
     // Getting single receipt
-    Receipt getReceipt(String filename) {
+    Receipt getReceipt(String filename) throws Exception {
         SQLiteDatabase db = this.getReadableDatabase();
         
  
@@ -391,12 +423,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         		
         }, Receipt.KEY_RECEIPTFILE + "=?",
                 new String[] { filename }, null, null, null, null);
-        if (cursor != null)
+        if (cursor.getCount() > 0)
+        {
             cursor.moveToFirst();
+	          
+	        Receipt receipt = new Receipt(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Integer.parseInt(cursor.getString(2)),cursor.getString(3),Integer.parseInt(cursor.getString(4)),Integer.parseInt(cursor.getString(5)),cursor.getString(6));
+	        // return receipt
+	        return receipt;
+	    }
+	    else
+	    {
+	    	throw new java.lang.Exception("Cannot find receipt matching filename"+filename);
+	    }
         
-        Receipt receipt = new Receipt(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Integer.parseInt(cursor.getString(2)),cursor.getString(3),Integer.parseInt(cursor.getString(4)),Integer.parseInt(cursor.getString(5)),cursor.getString(6));
-        // return receipt
-        return receipt;
     }
      
     // Getting All Receipts
@@ -482,30 +521,42 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Getting single location
-    Location getLocationById(int id) {
+    Location getLocationById(int id) throws Exception {
         SQLiteDatabase db = this.getReadableDatabase();
  
         Cursor cursor = db.query(Location.TABLE_NAME, new String[] { Location.KEY_ID, Location.KEY_LOCATIONDESCRIPTION }, Location.KEY_ID + "=?",
                 new String[] { Integer.toString(id) }, null, null, null, null);
-        if (cursor != null)
+        if (cursor.getCount() > 0)
+        {
             cursor.moveToFirst();
 
-        Location location = new Location(Integer.parseInt(cursor.getString(0)),cursor.getString(1));
-        // return location
-        return location;
+	        Location location = new Location(Integer.parseInt(cursor.getString(0)),cursor.getString(1));
+	        // return location
+	        return location;
+	    }
+	    else
+	    {
+	    	throw new java.lang.Exception("Cannot find location matching id "+id);
+	    }
     }
     // Getting single location
-    Location getLocation(String name) {
+    Location getLocation(String name) throws Exception {
         SQLiteDatabase db = this.getReadableDatabase();
  
         Cursor cursor = db.query(Location.TABLE_NAME, new String[] { Location.KEY_ID, Location.KEY_LOCATIONDESCRIPTION }, Location.KEY_LOCATIONDESCRIPTION + "=?",
                 new String[] { name }, null, null, null, null);
-        if (cursor != null)
+        if (cursor.getCount() > 0)
+        {
             cursor.moveToFirst();
 
-        Location location = new Location(Integer.parseInt(cursor.getString(0)),cursor.getString(1));
-        // return location
-        return location;
+	        Location location = new Location(Integer.parseInt(cursor.getString(0)),cursor.getString(1));
+	        // return location
+	        return location;
+	    }
+	    else
+	    {
+	    	throw new java.lang.Exception("Cannot find location matching "+ name);
+	    }
     }
      
     // Getting All Locations
@@ -589,7 +640,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
  
     // Getting single work
-    Work getWorkById(int id) {
+    Work getWorkById(int id) throws Exception {
         SQLiteDatabase db = this.getReadableDatabase();
         
  
@@ -601,16 +652,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 							Work.KEY_WORKNOTES  
 							}, Work.KEY_ID + "=?",
                 new String[] { Integer.toString(id) }, null, null, null, null);
-        if (cursor != null )
+        if (cursor.getCount() > 0 )
+        {
         	
             cursor.moveToFirst();
 
-        Work work = new Work(Integer.parseInt(cursor.getString(0)),Integer.parseInt(cursor.getString(1)),Integer.parseInt(cursor.getString(2)),Integer.parseInt(cursor.getString(3)),cursor.getString(4));
-        // return work
-        return work;
+	        Work work = new Work(Integer.parseInt(cursor.getString(0)),Integer.parseInt(cursor.getString(1)),Integer.parseInt(cursor.getString(2)),Integer.parseInt(cursor.getString(3)),cursor.getString(4));
+	        // return work
+	        return work;
+	    }
+	    else
+	    {
+	    	throw new java.lang.Exception("Cannot find work matching id "+id);
+	    }
     }
     
-    Work getWorkByVehicleItemReceipt(int vid,int iid, int rid) {
+    Work getWorkByVehicleItemReceipt(int vid,int iid, int rid) throws Exception {
         SQLiteDatabase db = this.getReadableDatabase();
         
  
@@ -623,12 +680,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 							}, 
 							Work.KEY_VEHICLE_IDVEHICLE + "=? and "+Work.KEY_ITEMS_IDITEMS+"=? and "+Work.KEY_RECIEPT_IDRECEIPT+"=?",
                 new String[] { Integer.toString(vid), Integer.toString(iid), Integer.toString(rid) }, null, null, null, null);
-        if (cursor != null)
+        if (cursor.getCount() > 0)
+        {
             cursor.moveToFirst();
-
-        Work work = new Work(Integer.parseInt(cursor.getString(0)),Integer.parseInt(cursor.getString(1)),Integer.parseInt(cursor.getString(2)),Integer.parseInt(cursor.getString(3)),cursor.getString(4));
-        // return work
-        return work;
+	
+	        Work work = new Work(Integer.parseInt(cursor.getString(0)),Integer.parseInt(cursor.getString(1)),Integer.parseInt(cursor.getString(2)),Integer.parseInt(cursor.getString(3)),cursor.getString(4));
+	        // return work
+	        return work;
+	    }
+	    else
+	    {
+	    	throw new java.lang.Exception("Cannot find work for vehicleID="+vid+" itemID="+iid+" receiptID="+rid);
+	    }
     }
      
     // Getting All Works
@@ -659,6 +722,34 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return workList;
     }
  
+    // Getting All Works
+    public List<Work> getAllWorksByVehicleId(int vid) {
+        List<Work> workList = new ArrayList<Work>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + Work.TABLE_NAME + " where "+Work.KEY_VEHICLE_IDVEHICLE+"="+Integer.toString(vid);
+ 
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+ 
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Work work = new Work();
+                
+                work.setID(Integer.parseInt(cursor.getString(0)));
+                work.setVehicleID(Integer.parseInt(cursor.getString(1)));
+                work.setItemID(Integer.parseInt(cursor.getString(2)));
+                work.setReceiptID(Integer.parseInt(cursor.getString(3)));
+                work.setNotes(cursor.getString(4));
+                // Adding work to list
+                workList.add(work);
+            } while (cursor.moveToNext());
+        }
+ 
+        // return work list
+        return workList;
+    }
+    
     // Updating single work
     public int updateWork(Work work) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -693,6 +784,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         // return count
         return cursor.getCount();
+    }
+    
+    public void deleteAllRecordsFromTable(String table_name) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(table_name, null, null);
+        db.close();
     }
  
     

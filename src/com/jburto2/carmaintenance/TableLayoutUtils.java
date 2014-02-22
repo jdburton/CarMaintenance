@@ -3,6 +3,8 @@
  */
 package com.jburto2.carmaintenance;
 
+import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -76,43 +78,7 @@ public class TableLayoutUtils
 				
 			}
 		} );
-    	tableRow.setFocusable(true);
-    	tableRow.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-			
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				// TODO Auto-generated method stub
-				if (hasFocus)
-				{
-					// get the table Row
-					//TableRow tr = (TableRow)v;
-					// get the table layout above
-					ViewGroup tl = (ViewGroup)v.getParent();
-					
-					for (int index = 0; index < tl.getChildCount(); index++)
-					{
-						// unselect all children
-						View unselected = tl.getChildAt(index);
-						unselected.setSelected(false);
-						unselected.setBackgroundColor(Color.rgb(51, 51, 51));
-					}
-					
-					
-					//displayToast(context,"Table row "+v.getId()+"clicked");
-					v.setBackgroundColor(Color.rgb(0,255,0));
-					v.setSelected(true);
-				}
-				else
-				{
-					v.setBackgroundColor(Color.rgb(255,0,0));
-				}
 
-				
-			}
-				
-			
-		});
-    
 
 		
 		return tableRow;
@@ -242,13 +208,24 @@ public class TableLayoutUtils
 	 * @return Created Spinner Object.
 	 */
 	
-	public static Spinner createSpinner(Context context, ArrayAdapter<CharSequence> adapter,	int backgroundColor)
+	public static Spinner createSpinner(Context context, String[] spinnerList,	int backgroundColor)
 	{
 		/// http://stackoverflow.com/questions/11504635/layout-margin-for-text-view-programmatically
+		
+		
+		// Create an ArrayAdapter using the string array and a default spinner layout
 		Spinner spinner = new Spinner(context);
+
+        
+        // Create spinner from array http://stackoverflow.com/questions/2784081/android-create-spinner-programmatically-from-array
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item,spinnerList);
+
+		
+		
 		TableRow.LayoutParams tvlp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT);
         spinner.setLayoutParams(tvlp);
         tvlp.setMargins(2, 2, 2, 2);
+        spinner.setPadding(0, 0, 0, 0);
         //spinner.setText(message);
         //spinner.setTextSize(size);
         spinner.setBackgroundColor(backgroundColor);
@@ -342,4 +319,25 @@ public class TableLayoutUtils
 				// show it
 				alertDialog.show();
     }
+    
+	public static String getKeysFromTableRow(TableRow tr)
+	{
+		String keys = "";
+		for (int j = 0; j < tr.getChildCount(); j++)
+		{
+			try
+			{
+				TextView tv = (TextView)tr.getChildAt(j);
+				keys += Integer.toString(j)+":"+tv.getText().toString()+" | ";
+			}
+			catch (java.lang.ClassCastException c)
+			{
+				break;
+			
+			}
+			
+		}
+		return keys;
+	}
+	
 }
