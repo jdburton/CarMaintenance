@@ -1,104 +1,108 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	tools:context=".MainActivity" >
-	<ScrollView 
-	    android:id="@+id/layout" 
-	    android:layout_height="match_parent"         
-	    android:scrollbars="horizontal|vertical" 
-	    android:layout_width="match_parent"     
-	    android:layout_marginTop="5dip" 
-	    android:layout_marginLeft="5dip"     
-	    android:scrollbarStyle="outsideInset"
-	    android:fillViewport="true"> 
-	
-	    <HorizontalScrollView 
-	        android:id="@+id/horizontalView" 
-	        android:layout_height="wrap_content"     
-	        android:scrollbars="horizontal|vertical" 
-	        android:layout_width="wrap_content"     
-	        android:layout_marginTop="5dip">
-	
-	        <RelativeLayout
-	            android:id="@+id/worklayout"
-	            android:layout_width="wrap_content"
-	            android:layout_height="match_parent"
-	            android:layout_marginBottom="0dip"
-	            android:layout_marginLeft="0dip"
-	            android:layout_marginRight="0dip"
-	            android:layout_marginTop="0dip" >
+   android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:columnCount="2"
+    android:rowCount="3"
+    tools:context=".MainActivity" >
 
-    <Spinner
-        android:id="@+id/vehicleSpinner"
-        android:layout_width="200dip"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
+    <!--
+         Image button for lookup icon used under Creative Commons license from:  
+     	 http://www.iconarchive.com/show/old-school-icons-by-babasse/recherche-internet-icon.html
+    -->
+    <!--
+         Image button for internet picture used under Creative Commons license from:  
+     	 http://commons.wikimedia.org/wiki/File:Internet1.jpg
+    -->
+    
+    <!--  http://findicons.com/search/car -->
+    
+    <!-- http://stackoverflow.com/questions/5128949/resize-Button -->
+    <!-- http://stackoverflow.com/questions/1532876/android-combining-text-image-on-a-button-or-Button -->
+    
+     <Button
+        android:id="@+id/Button1"
+        android:layout_column="0"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_row="0"
+        android:layout_width="100dip" 
+	    android:layout_height="100dip"
+        android:background="@drawable/ic_car" 
+        android:text="@string/vehicles"
+        android:gravity="bottom|center"
+        android:paddingBottom="4dp"
+        android:onClick="onVehicleButtonClick"
+        />
 
-     <TextView
-         android:id="@+id/vehicleIDTextView"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_toRightOf="@+id/vehicleSpinner"
-         android:visibility="gone"
-         android:text="Vehicle"
-          />
-     <TextView
-         android:id="@+id/vehicleTextView1"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_below="@+id/vehicleSpinner"
-         android:text="Vehicle"
-          />
-     <ImageButton
-         android:id="@+id/vehicleAddButton1"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignBottom="@+id/vehicleSpinner"
-         android:layout_toRightOf="@+id/vehicleSpinner"
-         android:layout_alignParentRight="true"
-         
-         android:src="@android:drawable/ic_input_add" />
-<!--  
-	<ScrollView 
-	    android:id="@+id/layout" 
-	    android:layout_height="match_parent"         
-	    android:scrollbars="horizontal|vertical" 
-	    android:layout_width="match_parent"     
-	    android:layout_marginTop="5dip" 
-	    android:layout_marginLeft="5dip"     
-	    android:scrollbarStyle="outsideInset"
-	    android:fillViewport="true"> 
-	
-	    <HorizontalScrollView 
-	        android:id="@+id/horizontalView" 
-	        android:layout_height="wrap_content"     
-	        android:scrollbars="horizontal|vertical" 
-	        android:layout_width="wrap_content"     
-	        android:layout_marginTop="5dip">
-	        -->
-	        <!-- http://eclipseandroid.blogspot.com/2012/02/how-to-display-borders-in-tablelayouts.html -->
-	        <TableLayout
-	            
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:id="@+id/tlGridTable"
-	            android:layout_marginTop="2dip"
-	            android:layout_marginBottom="2dip"
-	            android:layout_marginLeft="2dip"
-	            android:layout_marginRight="2dip"
-	            android:layout_below="@+id/vehicleAddButton1"
-	            android:background="#333333" >   
-	        </TableLayout>
+    <Button
+        android:id="@+id/Button2"
+        android:layout_column="1"
+        android:layout_gravity="center_horizontal|center_vertical"
+	    android:layout_width="100dip" 
+	    android:layout_height="100dip"
+        android:layout_row="0"
+        android:background="@drawable/ic_work" 
+                android:text="@string/work"
+        android:gravity="bottom|center"
+        android:paddingBottom="4dp"
+        android:onClick="onWorkButtonClick"
+        />
+    
+    <Button
+        android:id="@+id/Button3"
+        android:layout_column="0"
+        android:layout_gravity="center_horizontal|center_vertical"
+	    android:layout_width="100dip" 
+	    android:layout_height="100dip"
+	    android:layout_row="1"
+        android:background="@drawable/ic_receipt" 
+        android:text="@string/receipts"
+        android:gravity="bottom|center"
+        android:onClick="onReceiptButtonClick"
+        android:paddingBottom="4dp"/>
+
+    <Button
+        android:id="@+id/Button4"
+        android:layout_width="100dip"
+        android:layout_height="100dip"
+        android:layout_column="1"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_row="1"
+        android:background="@drawable/ic_item"
+        android:text="@string/items"
+        android:gravity="bottom|center"
+        android:paddingBottom="4dp"
+        android:onClick="onItemButtonClick"
+         />
+
+    <Button
+        android:id="@+id/Button5"
+        android:layout_column="0"
+        android:layout_gravity="center_horizontal|center_vertical"
+	    android:layout_width="100dip" 
+	    android:layout_height="100dip"
+        android:layout_row="2"
+        android:background="@drawable/ic_location"
+        android:text="@string/locations"
+        android:gravity="bottom|center"
+        android:paddingBottom="4dp"
+        android:onClick="onLocationButtonClick"
+         />
+
+    <Button
+        android:id="@+id/Button6"
+        android:layout_column="1"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_row="2"
+        android:layout_width="100dip" 
+	    android:layout_height="100dip"
+        android:background="@drawable/ic_about"
+        android:text="@string/action_about"
+        android:gravity="bottom|center"
+        android:paddingBottom="4dp"
+        android:onClick="onAboutButtonClick"
+         />
 
 
 
-	        </RelativeLayout>	      
-	    </HorizontalScrollView>
-	</ScrollView>
-
-
-
-</LinearLayout>
+</GridLayout>

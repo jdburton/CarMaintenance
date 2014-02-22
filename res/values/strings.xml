@@ -4,11 +4,6 @@
     <string name="app_name">CarMaintenance</string>
     <string name="action_settings">Settings</string>
     <string name="action_about">Info</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="lookup">Lookup Address</string>
-    <string name="clear">Clear All</string>
-	<string name="sitename">Host Name</string>
-    <string name="ip_address">IP Address</string>
     <string name="about_text">file:///android_asset/about.html</string>
     <string name="sql_file">file:///android_asset/CarMaintenance.sql</string>
      <string name="title_activity_about_message">About Car Maintenance</string>
@@ -19,17 +14,17 @@
      <string name="title_activity_receipt_message">Receipt</string>
      <string name="title_activity_lookup_message">AndroidLookup Results</string>
      <string name="title_activity_whois_message">Whois Information</string>
-     <string name="cname">CName</string>
-    
-    <string-array name="planets_array">
-        <item></item>
-        <item>Mercury</item>
-        <item>Saturn</item>
-        
-        <item>Ford</item>
-        <item>Dodge</item>
-        <item>Chevrolet</item>
-    </string-array>
+     <string name="vehicles">Vehicles</string>
+     <string name="items">Items</string>
+     <string name="receipts">Receipts</string>
+     <string name="locations">Locations</string>
+     <string name="vehicle">Vehicle</string>
+     <string name="item">Item</string>
+     <string name="work">Work</string>
+     <string name="receipt">Receipt</string>
+     <string name="location">Location</string>
+     <string name="create_data">Create Sample Data</string>
+     
 </resources>
     
 

@@ -32,6 +32,8 @@ import android.widget.Toast;
 @SuppressLint("NewApi")
 public class TableLayoutUtils 
 {
+	
+	private static boolean dialogResult = false;
 	/**
 	 * @fn public static TableRow createTableRow(Context context)
 	 * Creates a table row with no margins and no padding that will expand to the entire length of the parent TableLayout.
@@ -339,5 +341,59 @@ public class TableLayoutUtils
 		}
 		return keys;
 	}
+	
+	public static void setDialogResult(boolean result) {
+		dialogResult = result;
+	}
+
+	public static boolean getDialogResult() {
+		return dialogResult;
+	}
+	
+    public static void displayYesNoDialog(Context context, String message, String title)
+    {
+    	
+
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+		// set title
+		if (title == null)
+		{
+			title = "Message";
+		}
+		alertDialogBuilder.setTitle(title);
+ 
+		// set dialog message
+		alertDialogBuilder
+				.setMessage(message)
+				.setCancelable(false)
+				.setNegativeButton("No",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						// if this button is clicked, just close
+						// the dialog box and do nothing
+						dialog.cancel();
+						TableLayoutUtils.setDialogResult(false);
+						
+					}
+				  })
+				;
+		alertDialogBuilder.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				TableLayoutUtils.setDialogResult(true);
+				
+			}
+					
+				});
+ 
+				// create alert dialog
+				AlertDialog alertDialog = alertDialogBuilder.create();
+ 
+				// show it
+				alertDialog.show();
+    }
+	
+	
 	
 }

@@ -467,6 +467,37 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // return receipt list
         return receiptList;
     }
+    
+    // Getting All Receipts
+    public List<Receipt> getAllReceiptsByLocationId(int vid) {
+        List<Receipt> receiptList = new ArrayList<Receipt>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + Receipt.TABLE_NAME + " where "+Receipt.KEY_LOCATION_IDLOCATION+"="+Integer.toString(vid);
+ 
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+ 
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Receipt receipt = new Receipt();
+                
+                receipt.setID(Integer.parseInt(cursor.getString(0)));
+                receipt.setFile(cursor.getString(1));
+                receipt.setLocationID(Integer.parseInt(cursor.getString(2)));
+                
+                receipt.setDate(cursor.getString(3));
+                receipt.setMileage(Integer.parseInt(cursor.getString(4)));
+                receipt.setAmount(Integer.parseInt(cursor.getString(5)));
+                receipt.setNotes(cursor.getString(6));
+                // Adding receipt to list
+                receiptList.add(receipt);
+            } while (cursor.moveToNext());
+        }
+ 
+        // return receipt list
+        return receiptList;
+    }
  
     // Updating single receipt
     public int updateReceipt(Receipt receipt) {

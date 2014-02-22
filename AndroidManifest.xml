@@ -5,8 +5,8 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="11"
-        android:targetSdkVersion="18" />
+        android:minSdkVersion="14"
+        android:targetSdkVersion="19" />
 
     <application
         android:allowBackup="true"
@@ -22,6 +22,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name="com.jburto2.carmaintenance.DisplayWorkActivity"
+            android:label="@string/work" >
+                        android:parentActivityName="com.jburto2.carmaintenance.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jburto2.carmaintenance.MainActivity" />
+
+        </activity>
         <activity
             android:name="com.jburto2.carmaintenance.DisplayInfoActivity"
             android:label="@string/title_activity_about_message"
@@ -31,17 +41,17 @@
                 android:value="com.jburto2.carmaintenance.MainActivity" />
         </activity>
         <activity
-            android:name="com.jburto2.carmaintenance.DisplayWorkActivity"
-            android:label="@string/title_activity_work_message"
-            android:parentActivityName="com.jburto2.carmaintenance.MainActivity" >
+            android:name="com.jburto2.carmaintenance.DisplayWorkDetailActivity"
+            android:label="@string/work"
+            android:parentActivityName="com.jburto2.carmaintenance.DisplayWorkActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jburto2.carmaintenance.MainActivity" />
+                android:value="com.jburto2.carmaintenance.DisplayWorkActivity" />
         </activity>
         <activity
             android:name="com.jburto2.carmaintenance.DisplayVehicleActivity"
             android:label="@string/title_activity_vehicle_message"
-            android:parentActivityName="com.jburto2.carmaintenance.MainActivity" >
+            android:parentActivityName="com.jburto2.carmaintenance.DisplayWorkActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jburto2.carmaintenance.MainActivity" />
@@ -49,26 +59,26 @@
         <activity
             android:name="com.jburto2.carmaintenance.DisplayItemActivity"
             android:label="@string/title_activity_item_message"
-            android:parentActivityName="com.jburto2.carmaintenance.DisplayWorkActivity" >
+            android:parentActivityName="com.jburto2.carmaintenance.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jburto2.carmaintenance.DisplayWorkActivity" />
+                android:value="com.jburto2.carmaintenance.MainActivity" />
         </activity>
         <activity
-            android:name="com.jburto2.carmaintenance.DisplayRecieptActivity"
-            android:label="@string/title_activity_item_message"
-            android:parentActivityName="com.jburto2.carmaintenance.DisplayWorkActivity" >
+            android:name="com.jburto2.carmaintenance.DisplayReceiptActivity"
+            android:label="@string/title_activity_receipt_message"
+            android:parentActivityName="com.jburto2.carmaintenance.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jburto2.carmaintenance.DisplayWorkActivity" />
+                android:value="com.jburto2.carmaintenance.MainActivity" />
         </activity>
         <activity
             android:name="com.jburto2.carmaintenance.DisplayLocationActivity"
-            android:label="@string/title_activity_item_message"
-            android:parentActivityName="com.jburto2.carmaintenance.DisplayReceiptActivity" >
+            android:label="@string/title_activity_location_message"
+            android:parentActivityName="com.jburto2.carmaintenance.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jburto2.carmaintenance.DisplayReceiptActivity" />
+                android:value="com.jburto2.carmaintenance.MainActivity" />
         </activity>
     </application>
 
