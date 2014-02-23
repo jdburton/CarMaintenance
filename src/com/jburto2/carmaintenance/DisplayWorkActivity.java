@@ -30,7 +30,7 @@ import android.widget.TextView;
  *
  * @class DisplayWorkActivity
  * 
- * @brief This class implements functionality for the main activity in Android Lookup. Start here.
+ * @brief This class implements functionality to display the work table 
  */
 
 public class DisplayWorkActivity extends DisplayTableActivity implements
@@ -197,8 +197,8 @@ AdapterView.OnItemSelectedListener {
         tableRow.addView(textView);
 	
         // 9
-        textView = TableLayoutUtils.createTextView(this, "Clear", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
-        tableRow.addView(textView);
+//        textView = TableLayoutUtils.createTextView(this, "Clear", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+//        tableRow.addView(textView);
         // 10
         textView = TableLayoutUtils.createTextView(this, "Delete", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         tableRow.addView(textView);
@@ -325,7 +325,7 @@ AdapterView.OnItemSelectedListener {
 	            	
 	            	Work work = getWorkFromTableRow(tr);
 	            	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
-	            	displayToast(keys);
+	            	//displayToast(keys);
 	            	
 
 	            	try 
@@ -337,7 +337,7 @@ AdapterView.OnItemSelectedListener {
 	            		displayMessageDialog(e.getMessage(),e.toString());
 	            	}
 	            	
-	            	displayToast(keys);
+	            	//displayToast(keys);
 	            	//send click through to parent.
 	            	tr.performClick();
 	            	
@@ -347,27 +347,27 @@ AdapterView.OnItemSelectedListener {
 	            
 	        });
 	        tableRow.addView(button);
-	        button = new ImageButton(this);
-	        button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
-	        button.setId(i*NUMBER_BUTTONS+1);
-	        button.setOnClickListener(new View.OnClickListener(){
-	            public void onClick(View v){
-	                 // Do some operation for minus after getting v.getId() to get the current row
-	            	// http://stackoverflow.com/questions/14112044/android-how-to-get-the-id-of-a-parent-view
-	            	displayToast("Button is"+v.getId()+ " on row "+ ((TableRow)v.getParent()).getId());
-	            	//send click through to parent.
-	            	/// http://stackoverflow.com/questions/8135032/does-making-parent-clickable-make-all-child-element-clickable-as-well
-		            ViewParent tr = v.getParent();
-	            	v.performClick();
-
-	            	
-	            }
-
-	        
-	            
-	        });
-	        
-	        tableRow.addView(button);
+//	        button = new ImageButton(this);
+//	        button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
+//	        button.setId(i*NUMBER_BUTTONS+1);
+//	        button.setOnClickListener(new View.OnClickListener(){
+//	            public void onClick(View v){
+//	                 // Do some operation for minus after getting v.getId() to get the current row
+//	            	// http://stackoverflow.com/questions/14112044/android-how-to-get-the-id-of-a-parent-view
+//	            	displayToast("Button is"+v.getId()+ " on row "+ ((TableRow)v.getParent()).getId());
+//	            	//send click through to parent.
+//	            	/// http://stackoverflow.com/questions/8135032/does-making-parent-clickable-make-all-child-element-clickable-as-well
+//		            ViewParent tr = v.getParent();
+//	            	v.performClick();
+//
+//	            	
+//	            }
+//
+//	        
+//	            
+//	        });
+//	        
+//	        tableRow.addView(button);
 	        
 	        button = new ImageButton(this);
 	        button.setImageResource(android.R.drawable.ic_menu_delete);
@@ -381,7 +381,7 @@ AdapterView.OnItemSelectedListener {
 	            	
 	            	Work work = getWorkFromTableRow(tr);
 	            	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
-	            	displayToast(keys);
+	            	//displayToast(keys);
 	            	
 
 	            	try 
@@ -393,7 +393,7 @@ AdapterView.OnItemSelectedListener {
 	            		displayMessageDialog(e.getMessage(),e.toString());
 	            	}
 	            	
-	            	displayToast(keys);
+	            	//displayToast(keys);
 	            	//send click through to parent.
 	            	tr.performClick();
 	            	
@@ -546,7 +546,7 @@ AdapterView.OnItemSelectedListener {
             	
             	
             	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
-            	displayToast(keys);
+            	//displayToast(keys);
             	
             	
             	
@@ -560,7 +560,7 @@ AdapterView.OnItemSelectedListener {
             		displayMessageDialog(e.getMessage(),e.toString());
             	}
             	
-            	displayToast(keys);
+            	//displayToast(keys);
             	//send click through to parent.
             	tr.performClick();
             	drawTable();
@@ -570,27 +570,27 @@ AdapterView.OnItemSelectedListener {
             
         });
         tableRow.addView(button);
-        button = new ImageButton(this);
-        button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
-        
-        button.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                 // Do some operation for minus after getting v.getId() to get the current row
-            	// http://stackoverflow.com/questions/14112044/android-how-to-get-the-id-of-a-parent-view
-            	displayToast("Button is"+v.getId()+ " on row "+ ((TableRow)v.getParent()).getId());
-            	//send click through to parent.
-            	/// http://stackoverflow.com/questions/8135032/does-making-parent-clickable-make-all-child-element-clickable-as-well
-	            ViewParent tr = v.getParent();
-            	v.performClick();
-
-            	
-            }
-
-        
-            
-        });
-        
-        tableRow.addView(button);
+//        button = new ImageButton(this);
+//        button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
+//        
+//        button.setOnClickListener(new View.OnClickListener(){
+//            public void onClick(View v){
+//                 // Do some operation for minus after getting v.getId() to get the current row
+//            	// http://stackoverflow.com/questions/14112044/android-how-to-get-the-id-of-a-parent-view
+//            	displayToast("Button is"+v.getId()+ " on row "+ ((TableRow)v.getParent()).getId());
+//            	//send click through to parent.
+//            	/// http://stackoverflow.com/questions/8135032/does-making-parent-clickable-make-all-child-element-clickable-as-well
+//	            ViewParent tr = v.getParent();
+//            	v.performClick();
+//
+//            	
+//            }
+//
+//        
+//            
+//        });
+//        
+//        tableRow.addView(button);
         
         button = new ImageButton(this);
         button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
@@ -697,6 +697,15 @@ AdapterView.OnItemSelectedListener {
 			drawTable();
 		}
 	}
+	
+	public void onVehicleButtonClick(View v) {
+		
+
+	    Intent intent = new Intent(this, DisplayVehicleActivity.class);
+	    startActivity(intent);
+
+	}
+	
 
     
 }

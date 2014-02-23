@@ -27,7 +27,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 	
 
-	private DatabaseHandler db = new DatabaseHandler(this);
+	private  DatabaseHandler db = new DatabaseHandler(this);
 	
 	private void createData()
 	{
@@ -169,13 +169,22 @@ public class MainActivity extends Activity {
 	 */
 	public boolean onOptionsItemSelected(MenuItem item) {
 	
+		Intent intent;
+		
 		/// Menu from http://developer.android.com/guide/topics/ui/menus.html#options-menu
 	    switch (item.getItemId()) {
 	   
+	    
 	    case R.id.action_about:
-	    	Intent intent = new Intent(this, DisplayInfoActivity.class);
+	    	intent = new Intent(this, DisplayInfoActivity.class);
 	    	startActivity(intent);
-
+	    	break;
+	    
+	    case R.id.create_data:
+	    	createData();
+	    	break;
+	
+	    	
 	    }
 	    return true;
 	}

@@ -78,7 +78,7 @@ public class DisplayInfoActivity extends Activity {
 	 */
 	public boolean onCreateOptionsMenu(Menu menu) {
 		
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.info, menu);
 		return true;
 	}
 

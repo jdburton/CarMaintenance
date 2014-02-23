@@ -1,24 +1,28 @@
 package com.jburto2.carmaintenance;
 
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewParent;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageButton;
+import android.widget.ImageView.ScaleType;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -36,6 +40,10 @@ import android.widget.TextView;
 public class DisplayReceiptActivity extends DisplayTableActivity implements
 AdapterView.OnItemSelectedListener {
 	
+	public static final int IMAGE_REQUEST_CODE = 1;
+	private TextView imageTextViewHolder;
+	private Bitmap bitmap;
+	private ImageButton imageButtonHolder;
 
 	
 	@Override
@@ -172,7 +180,7 @@ AdapterView.OnItemSelectedListener {
         tableRow.addView(textView);
         
         // 3
-        textView = TableLayoutUtils.createTextView(this, "Receipt Img.", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = TableLayoutUtils.createTextView(this, "Receipt Image", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         tableRow.addView(textView);
 
         // 4
@@ -190,16 +198,21 @@ AdapterView.OnItemSelectedListener {
         // 7
         textView = TableLayoutUtils.createTextView(this, "Receipt Notes", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         tableRow.addView(textView);
+        
+        // 8
+        textView = TableLayoutUtils.createTextView(this, "Receipt Uri", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView.setVisibility(View.GONE);
+        tableRow.addView(textView);
 
         // 8
         textView = TableLayoutUtils.createTextView(this, "Save", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         tableRow.addView(textView);
 	
         // 9
-        textView = TableLayoutUtils.createTextView(this, "Clear", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
-        tableRow.addView(textView);
+        //textView = TableLayoutUtils.createTextView(this, "Edit", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        //tableRow.addView(textView);
         // 10
-        textView = TableLayoutUtils.createTextView(this, "Delete", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = TableLayoutUtils.createTextView(this, "Delete", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         tableRow.addView(textView);
         
         // Override the on click listener to do nothing.
@@ -286,16 +299,38 @@ AdapterView.OnItemSelectedListener {
             tableRow.addView(textView);
             
             // 3
-            EditText editText = TableLayoutUtils.createEditText(this, singlereceipt.getFile(), 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
-            tableRow.addView(editText);
-            // TODO: Override with image
+            ImageButton imageButton = new ImageButton(this);    	
+            imageButton.setClickable(true);
+            imageButton.setLayoutParams(new TableRow.LayoutParams(50,50));
+            imageButton.setScaleType(ScaleType.CENTER_CROP);
+            imageButton.setOnClickListener(new View.OnClickListener() 
+            {
+    			
+                @Override
+                public void onClick(View v)
+                {
+    	
+    	        	//("touched image!");
+    				//send click through to parent.
+    				TableRow tr = (TableRow)v.getParent();
+    				TextView tv = (TextView)tr.getChildAt(8);
+    				onImageFieldClick((ImageButton)v,tv);
+    				
+    	        	tr.performClick();
+     
+                }
+            });
+            
+            loadImage(singlereceipt.getFile(),imageButton);
+            tableRow.addView(imageButton);
             
             // 4
-            editText = TableLayoutUtils.createEditText(this, singlereceipt.getDate(), 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
-            tableRow.addView(editText);
+            
+            textView = TableLayoutUtils.createDateTextView(this, singlereceipt.getDate(), 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+            tableRow.addView(textView);
             
             // 5
-             editText = TableLayoutUtils.createEditText(this, Integer.toString(singlereceipt.getMileage()), 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+            EditText editText = TableLayoutUtils.createEditText(this, Integer.toString(singlereceipt.getMileage()), 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
             tableRow.addView(editText);
             
             // 6
@@ -306,8 +341,15 @@ AdapterView.OnItemSelectedListener {
              editText = TableLayoutUtils.createEditText(this, singlereceipt.getNotes(), 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
             tableRow.addView(editText);
             
+            // 8
+            textView = TableLayoutUtils.createEditText(this, singlereceipt.getFile(), 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+            textView.setVisibility(View.GONE);
+            tableRow.addView(textView);
+            
+            
+            
 	        ImageButton button = new ImageButton(this);
-	        //("@android:drawable.ic_input_add");
+	        
 	        button.setImageResource(android.R.drawable.ic_menu_save);
 	        button.setId(i*NUMBER_BUTTONS);
 	        
@@ -322,7 +364,7 @@ AdapterView.OnItemSelectedListener {
 	            	
 	            	Receipt receipt = getReceiptFromTableRow(tr);
 	            	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
-	            	displayToast(keys);
+	            	//(keys);
 	            	
 
 	            	try 
@@ -334,7 +376,7 @@ AdapterView.OnItemSelectedListener {
 	            		displayMessageDialog(e.getMessage(),e.toString());
 	            	}
 	            	
-	            	displayToast(keys);
+	            	//(keys);
 	            	//send click through to parent.
 	            	tr.performClick();
 	            	
@@ -344,27 +386,28 @@ AdapterView.OnItemSelectedListener {
 	            
 	        });
 	        tableRow.addView(button);
-	        button = new ImageButton(this);
-	        button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
-	        button.setId(i*NUMBER_BUTTONS+1);
-	        button.setOnClickListener(new View.OnClickListener(){
-	            public void onClick(View v){
-	                 // Do some operation for minus after getting v.getId() to get the current row
-	            	// http://stackoverflow.com/questions/14112044/android-how-to-get-the-id-of-a-parent-view
-	            	displayToast("Button is"+v.getId()+ " on row "+ ((TableRow)v.getParent()).getId());
-	            	//send click through to parent.
-	            	/// http://stackoverflow.com/questions/8135032/does-making-parent-clickable-make-all-child-element-clickable-as-well
-		            ViewParent tr = v.getParent();
-	            	v.performClick();
-
-	            	
-	            }
-
 	        
-	            
-	        });
-	        
-	        tableRow.addView(button);
+//	        button = new ImageButton(this);
+//	        button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
+//	        button.setId(i*NUMBER_BUTTONS+1);
+//	        button.setOnClickListener(new View.OnClickListener(){
+//	            public void onClick(View v){
+//	                 // Do some operation for minus after getting v.getId() to get the current row
+//	            	// http://stackoverflow.com/questions/14112044/android-how-to-get-the-id-of-a-parent-view
+//	            	("Button is"+v.getId()+ " on row "+ ((TableRow)v.getParent()).getId());
+//	            	//send click through to parent.
+//	            	/// http://stackoverflow.com/questions/8135032/does-making-parent-clickable-make-all-child-element-clickable-as-well
+//		            ViewParent tr = v.getParent();
+//	            	v.performClick();
+//
+//	            	
+//	            }
+//
+//	        
+//	            
+//	        });
+//	        
+//	        tableRow.addView(button);
 	        
 	        button = new ImageButton(this);
 	        button.setImageResource(android.R.drawable.ic_menu_delete);
@@ -378,7 +421,7 @@ AdapterView.OnItemSelectedListener {
 	            	
 	            	Receipt receipt = getReceiptFromTableRow(tr);
 	            	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
-	            	displayToast(keys);
+	            	
 	            	
 
 	            	try 
@@ -390,7 +433,7 @@ AdapterView.OnItemSelectedListener {
 	            		displayMessageDialog(e.getMessage(),e.toString());
 	            	}
 	            	
-	            	displayToast(keys);
+	            	
 	            	//send click through to parent.
 	            	tr.performClick();
 	            	
@@ -456,7 +499,7 @@ AdapterView.OnItemSelectedListener {
     	tableRow.addView(textView);
         
 
-    	// 4
+    	// 2
     	Spinner spinner = null;
     	if (vid < 0)
     	{
@@ -481,18 +524,40 @@ AdapterView.OnItemSelectedListener {
     	}
     	
         // 3
-        EditText pictureEditText = TableLayoutUtils.createEditText(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
-        tableRow.addView(pictureEditText);
+        ImageButton imageButton = new ImageButton(this);    	
+        imageButton.setClickable(true);
+        imageButton.setLayoutParams(new TableRow.LayoutParams(50,50));
+        imageButton.setScaleType(ScaleType.CENTER_CROP);
+        
+        imageButton.setOnClickListener(new View.OnClickListener() 
+        {
+			
+            @Override
+            public void onClick(View v)
+            {
+	
+				//send click through to parent.
+				TableRow tr = (TableRow)v.getParent();
+				TextView tv = (TextView)tr.getChildAt(8);
+				onImageFieldClick((ImageButton)v,tv);
+				
+	        	tr.performClick();
+ 
+            }
+        });
+        
+        tableRow.addView(imageButton);
         // TODO: Override with image selection.
         
         
         // 4
-        EditText editText = TableLayoutUtils.createEditText(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+        textView = TableLayoutUtils.createDateTextView(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
         //TODO: Override with date picker dialog.
-        tableRow.addView(editText);
+
+        tableRow.addView(textView);
         
         // 5
-         editText = TableLayoutUtils.createEditText(this, "0", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+        EditText editText = TableLayoutUtils.createEditText(this, "0", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
         tableRow.addView(editText);
         
         // 6
@@ -504,6 +569,11 @@ AdapterView.OnItemSelectedListener {
         // 7
         editText = TableLayoutUtils.createEditText(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
         tableRow.addView(editText);
+        
+        // 8
+        textView = TableLayoutUtils.createEditText(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+        textView.setVisibility(View.GONE);
+        tableRow.addView(textView);
         
         ImageButton button = new ImageButton(this);
         
@@ -534,7 +604,7 @@ AdapterView.OnItemSelectedListener {
             	
             	
             	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
-            	displayToast(keys);
+            	//(keys);
             	
             	
             	
@@ -548,7 +618,7 @@ AdapterView.OnItemSelectedListener {
             		displayMessageDialog(e.getMessage(),e.toString());
             	}
             	
-            	displayToast(keys);
+            	//(keys);
             	//send click through to parent.
             	tr.performClick();
             	drawTable();
@@ -558,27 +628,27 @@ AdapterView.OnItemSelectedListener {
             
         });
         tableRow.addView(button);
-        button = new ImageButton(this);
-        button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
-        
-        button.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                 // Do some operation for minus after getting v.getId() to get the current row
-            	// http://stackoverflow.com/questions/14112044/android-how-to-get-the-id-of-a-parent-view
-            	displayToast("Button is"+v.getId()+ " on row "+ ((TableRow)v.getParent()).getId());
-            	//send click through to parent.
-            	/// http://stackoverflow.com/questions/8135032/does-making-parent-clickable-make-all-child-element-clickable-as-well
-	            ViewParent tr = v.getParent();
-            	v.performClick();
-
-            	
-            }
-
-        
-            
-        });
-        
-        tableRow.addView(button);
+//        button = new ImageButton(this);
+//        button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
+//        
+//        button.setOnClickListener(new View.OnClickListener(){
+//            public void onClick(View v){
+//                 // Do some operation for minus after getting v.getId() to get the current row
+//            	// http://stackoverflow.com/questions/14112044/android-how-to-get-the-id-of-a-parent-view
+//            	("Button is"+v.getId()+ " on row "+ ((TableRow)v.getParent()).getId());
+//            	//send click through to parent.
+//            	/// http://stackoverflow.com/questions/8135032/does-making-parent-clickable-make-all-child-element-clickable-as-well
+//	            ViewParent tr = v.getParent();
+//            	v.performClick();
+//
+//            	
+//            }
+//
+//        
+//            
+//        });
+//        
+//        tableRow.addView(button);
         
         button = new ImageButton(this);
         button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
@@ -637,8 +707,8 @@ AdapterView.OnItemSelectedListener {
 		
 		// Location ID = child 1
 		int locationid = Integer.parseInt(((TextView)tr.getChildAt(1)).getText().toString());
-		// File = child 3
-		String file = ((TextView)tr.getChildAt(3)).getText().toString();
+		// File = child 8
+		String file = ((TextView)tr.getChildAt(8)).getText().toString();
 		
 		// Date = child 4
 		String date = ((TextView)tr.getChildAt(4)).getText().toString();
@@ -667,6 +737,88 @@ AdapterView.OnItemSelectedListener {
 			drawTable();
 		}
 	}
+	
+	public void onLocationButtonClick(View v) {
+		
 
-    
+	    Intent intent = new Intent(this, DisplayLocationActivity.class);
+	    startActivity(intent);
+
+	}
+	
+	// Working with an image picker from http://www.vogella.com/tutorials/AndroidCamera/article.html
+	
+	public void onImageFieldClick(ImageButton iv, TextView tv) {
+		// save the view.
+		imageButtonHolder = iv;
+		imageTextViewHolder = tv;
+		
+		
+		
+		// create the intent
+		Intent intent = new Intent();
+		intent.setType("image/*");
+		intent.setAction(Intent.ACTION_GET_CONTENT);
+		intent.addCategory(Intent.CATEGORY_OPENABLE);
+		startActivityForResult(intent, IMAGE_REQUEST_CODE);
+		
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		
+		if (requestCode == IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK)
+		{
+			imageTextViewHolder.setText(data.getDataString());
+			loadImage(data.getData(),imageButtonHolder);
+		}
+			
+			
+
+		
+	}
+	
+	protected void loadImage(String uriString, ImageButton imageButton) 
+	{
+		try
+		{
+			Uri resource = Uri.parse(uriString);
+			loadImage(resource, imageButton);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	protected void loadImage(Uri resource,ImageButton imageButton) 
+	{
+		InputStream stream  = null;
+		try 
+		{
+		
+			if (bitmap != null) 
+			{
+				bitmap.recycle();
+			}
+			stream = getContentResolver().openInputStream(resource);
+			bitmap = BitmapFactory.decodeStream(stream);
+	
+			imageButton.setImageBitmap(bitmap);
+			
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally {
+			
+			if (stream != null)
+				try {
+					stream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		}
+
+	}
 }

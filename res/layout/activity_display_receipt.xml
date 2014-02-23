@@ -52,33 +52,17 @@
          android:layout_below="@+id/locationSpinner"
          android:text="Vehicle"
           />
-     <ImageButton
-         android:id="@+id/locationAddButton1"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignBottom="@+id/locationSpinner"
+     <Button
+         android:id="@+id/locationGoButton1"
+         android:layout_width="50dip"
+         android:layout_height="50dip"
          android:layout_toRightOf="@+id/locationSpinner"
          android:layout_alignParentRight="true"
+         android:layout_alignBottom="@+id/locationSpinner"
+         android:onClick="onLocationButtonClick"
          
-         android:src="@android:drawable/ic_input_add" />
-<!--  
-	<ScrollView 
-	    android:id="@+id/layout" 
-	    android:layout_height="match_parent"         
-	    android:scrollbars="horizontal|vertical" 
-	    android:layout_width="match_parent"     
-	    android:layout_marginTop="5dip" 
-	    android:layout_marginLeft="5dip"     
-	    android:scrollbarStyle="outsideInset"
-	    android:fillViewport="true"> 
-	
-	    <HorizontalScrollView 
-	        android:id="@+id/horizontalView" 
-	        android:layout_height="wrap_content"     
-	        android:scrollbars="horizontal|vertical" 
-	        android:layout_width="wrap_content"     
-	        android:layout_marginTop="5dip">
-	        -->
+         android:background="@drawable/ic_table_go" />
+
 	        <!-- http://eclipseandroid.blogspot.com/2012/02/how-to-display-borders-in-tablelayouts.html -->
 	        <TableLayout
 	            
@@ -89,7 +73,7 @@
 	            android:layout_marginBottom="2dip"
 	            android:layout_marginLeft="2dip"
 	            android:layout_marginRight="2dip"
-	            android:layout_below="@+id/locationAddButton1"
+	            android:layout_below="@+id/locationGoButton1"
 	            android:background="#333333" >   
 	        </TableLayout>
 

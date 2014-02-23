@@ -3,19 +3,21 @@
  */
 package com.jburto2.carmaintenance;
 
-import java.util.List;
+import java.util.Calendar;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TableRow;
@@ -34,6 +36,7 @@ public class TableLayoutUtils
 {
 	
 	private static boolean dialogResult = false;
+	private static String dateString = null;
 	/**
 	 * @fn public static TableRow createTableRow(Context context)
 	 * Creates a table row with no margins and no padding that will expand to the entire length of the parent TableLayout.
@@ -72,7 +75,7 @@ public class TableLayoutUtils
 				}
 				
 				
-				displayToast(context,"Table row "+v.getId()+"clicked");
+				//displayToast(context,"Table row "+v.getId()+"clicked");
 				v.setBackgroundColor(Color.rgb(0,0,255));
 				v.setSelected(true);
 				
@@ -151,6 +154,53 @@ public class TableLayoutUtils
 	}
 	
 	/**
+	 * @fn public static TextView createDateTextView(Context context,String message,int size,int textColor,int backgroundColor)
+	 * @brief Creates a textview object that displays a datepicker on click.
+	 * @param context 
+	 * @param message Message to be displayed in the text view
+	 * @param size Text size
+	 * @param textColor Numerical representation of color. Use android.graphics.Color.rgb(red,green,blue)
+	 * @param backgroundColor Numerical representation of color. Use android.graphics.Color.rgb(red,green,blue)
+	 * @return Created TextView Object.
+	 */
+	
+	public static TextView createDateTextView(final Context context,String message,int size,int textColor,int backgroundColor)
+	{
+		/// http://stackoverflow.com/questions/11504635/layout-margin-for-text-view-programmatically
+		TextView textView = new TextView(context);
+		TableRow.LayoutParams tvlp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT);
+        textView.setLayoutParams(tvlp);
+        tvlp.setMargins(2, 2, 2, 2);
+        textView.setText(message);
+        textView.setTextSize(size);
+        textView.setBackgroundColor(backgroundColor);
+        textView.setTextColor(textColor);
+        /// http://stackoverflow.com/questions/432037/how-do-i-center-text-horizontally-and-vertical-in-a-textview-in-android
+        textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+        textView.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				// Use the current date as the default date in the picker
+				final Calendar c = Calendar.getInstance();
+				int year = c.get(Calendar.YEAR);
+				int month = c.get(Calendar.MONTH);
+				int day = c.get(Calendar.DAY_OF_MONTH);
+				
+				TableLayoutUtils.displayDatePickerDialog(context, v, year, month, day);
+
+
+			}
+		});
+
+
+        
+        return textView;
+	}
+	
+
+	/**
 	 * @fn public static EditText createEditText(Context context,String message,int size,int textColor,int backgroundColor)
 	 * @brief Creates a textview object.
 	 * @param context 
@@ -200,12 +250,10 @@ public class TableLayoutUtils
 	}
 	
 	/**
-	 * @fn public static Spinner createSpinner(Context context,String message,int size,int textColor,int backgroundColor)
+	 * @fn public static Spinner createSpinner(Context context, String[] spinnerList,	int backgroundColor)
 	 * @brief Creates a Spinner object.
 	 * @param context 
-	 * @param message Message to be displayed in the text view
-	 * @param size Text size
-	 * @param textColor Numerical representation of color. Use android.graphics.Color.rgb(red,green,blue)
+	 * @param spinnerlist list of possible values for the spinner
 	 * @param backgroundColor Numerical representation of color. Use android.graphics.Color.rgb(red,green,blue)
 	 * @return Created Spinner Object.
 	 */
@@ -393,6 +441,71 @@ public class TableLayoutUtils
 				// show it
 				alertDialog.show();
     }
+    
+    public static void displayDatePickerDialog(final Context context, final View v, int year, int month, int day)
+    {
+    	
+    	/// Date picker dialog = http://www.learn-android-easily.com/2013/06/datepicker-and-timepicker-dialog-in.html
+    	String title = "Select Date";
+    	
+        // Register  DatePickerDialog listener
+        DatePickerDialog.OnDateSetListener mDateSetListener =
+                               new DatePickerDialog.OnDateSetListener() {
+                           // the callback received when the user "sets" the Date in the DatePickerDialog
+                                   public void onDateSet(DatePicker view, int yearSelected,
+                                                         int monthOfYear, int dayOfMonth) {
+
+                                      
+	                      			//  TableLayoutUtils.displayToast(context, "Setting date");
+	                    			  
+	                      			// Set the Selected Date in Select date Button
+	                      			  if (TableLayoutUtils.getDialogResult())
+	                      			  {
+	                                      TableLayoutUtils.setDate(Integer.toString(monthOfYear+1)+"/"+dayOfMonth+"/"+yearSelected);
+		                      			  TextView tv = (TextView)v;
+		                      			  tv.setText(TableLayoutUtils.getDate());
+	                      			  }
+	                    				
+                                   }
+                               };
+
+    	DatePickerDialog dpd = new DatePickerDialog(context, mDateSetListener,year,month,day);
+
+    	/// Cancel date picker dialog = http://stackoverflow.com/questions/11444238/jelly-bean-datepickerdialog-is-there-a-way-to-cancel
+	    	dpd.setButton(DialogInterface.BUTTON_POSITIVE, "OK", 
+    	        new DialogInterface.OnClickListener() {
+    	            @Override
+    	            public void onClick(DialogInterface dialog, int which) {
+
+    	            	
+    	            	TableLayoutUtils.setDialogResult(true);
+    	            	dialog.cancel();
+    	                
+    	            }
+    	        });
+    	    dpd.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", 
+    	        new DialogInterface.OnClickListener() {
+    	            @Override
+    	            public void onClick(DialogInterface dialog, int which) {
+    	            	TableLayoutUtils.setDialogResult(false);
+    	                dialog.cancel();
+    	            }
+    	        });
+    	
+    	dpd.show();
+    	
+    }
+    
+    public static void setDate(String date)
+    {
+    	dateString = date;
+    }
+    
+    public static String getDate()
+    {
+    	return dateString;
+    }
+    
 	
 	
 	

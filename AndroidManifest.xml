@@ -22,10 +22,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+                <activity
+            android:name="com.jburto2.carmaintenance.ImagePickActivity"
+            android:label="@string/work" 
+                        android:parentActivityName="com.jburto2.carmaintenance.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jburto2.carmaintenance.MainActivity" />
+
+        </activity>
         
         <activity
             android:name="com.jburto2.carmaintenance.DisplayWorkActivity"
-            android:label="@string/work" >
+            android:label="@string/work" 
                         android:parentActivityName="com.jburto2.carmaintenance.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -27,21 +27,22 @@ public final class R {
         public static final int ic_launcher=0x7f020003;
         public static final int ic_location=0x7f020004;
         public static final int ic_receipt=0x7f020005;
-        public static final int ic_work=0x7f020006;
+        public static final int ic_table_go=0x7f020006;
+        public static final int ic_work=0x7f020007;
     }
     public static final class id {
-        public static final int Button1=0x7f080028;
-        public static final int Button2=0x7f080029;
-        public static final int Button3=0x7f08002a;
-        public static final int Button4=0x7f08002b;
-        public static final int Button5=0x7f08002c;
-        public static final int Button6=0x7f08002d;
-        public static final int action_about=0x7f08002e;
-        public static final int action_add=0x7f080030;
-        public static final int action_delete=0x7f080031;
+        public static final int Button1=0x7f080029;
+        public static final int Button2=0x7f08002a;
+        public static final int Button3=0x7f08002b;
+        public static final int Button4=0x7f08002c;
+        public static final int Button5=0x7f08002d;
+        public static final int Button6=0x7f08002e;
+        public static final int action_about=0x7f08002f;
+        public static final int action_add=0x7f080031;
+        public static final int action_delete=0x7f080032;
         public static final int addressEditText=0x7f08000f;
         public static final int addressTextView=0x7f080010;
-        public static final int create_data=0x7f08002f;
+        public static final int create_data=0x7f080030;
         public static final int dateEditText=0x7f080003;
         public static final int dateTextView=0x7f080004;
         public static final int horizontalView=0x7f080001;
@@ -53,8 +54,8 @@ public final class R {
         public static final int itemTextView=0x7f08001a;
         public static final int layout=0x7f080000;
         public static final int locationAddButton=0x7f080012;
-        public static final int locationAddButton1=0x7f080024;
         public static final int locationEditText=0x7f08000b;
+        public static final int locationGoButton1=0x7f080024;
         public static final int locationIDTextView=0x7f080022;
         public static final int locationSpinner=0x7f080011;
         public static final int locationTextView=0x7f08000c;
@@ -70,11 +71,12 @@ public final class R {
         public static final int receiptSpinner=0x7f08001c;
         public static final int receiptTextView=0x7f08001d;
         public static final int recieptImageView=0x7f080013;
+        public static final int result=0x7f080028;
         public static final int textView1=0x7f080020;
         public static final int tlGridTable=0x7f080021;
         public static final int vehicleAddButton=0x7f080018;
-        public static final int vehicleAddButton1=0x7f080027;
         public static final int vehicleEditText=0x7f080015;
+        public static final int vehicleGoButton1=0x7f080027;
         public static final int vehicleIDTextView=0x7f080025;
         public static final int vehicleSpinner=0x7f080017;
         public static final int vehicleTextView=0x7f080016;
@@ -94,11 +96,13 @@ public final class R {
         public static final int activity_display_receipt=0x7f030009;
         public static final int activity_display_vehicle=0x7f03000a;
         public static final int activity_display_work=0x7f03000b;
-        public static final int activity_main=0x7f03000c;
+        public static final int activity_image_pick=0x7f03000c;
+        public static final int activity_main=0x7f03000d;
     }
     public static final class menu {
-        public static final int main=0x7f070000;
-        public static final int table_menu=0x7f070001;
+        public static final int info=0x7f070000;
+        public static final int main=0x7f070001;
+        public static final int table_menu=0x7f070002;
     }
     public static final class string {
         public static final int about_text=0x7f050003;
