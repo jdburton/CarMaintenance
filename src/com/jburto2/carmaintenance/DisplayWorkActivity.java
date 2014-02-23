@@ -310,7 +310,7 @@ AdapterView.OnItemSelectedListener {
             tableRow.addView(editText);
             
 	        ImageButton button = new ImageButton(this);
-	        //("@android:drawable.ic_input_add");
+	       
 	        button.setImageResource(android.R.drawable.ic_menu_save);
 	        button.setId(i*NUMBER_BUTTONS);
 	        

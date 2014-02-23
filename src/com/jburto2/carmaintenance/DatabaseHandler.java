@@ -20,7 +20,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * @author jburton
  *
- * From http://www.androidhive.info/2011/11/android-sqlite-database-tutorial/
+ * Database handler from  http://www.androidhive.info/2011/11/android-sqlite-database-tutorial/
  */
 public class DatabaseHandler extends SQLiteOpenHelper {
 
