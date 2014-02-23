@@ -65,7 +65,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(DatabaseSQL.Work_IDX_ITEMS);
         db.execSQL(DatabaseSQL.Work_IDX_RECIEPT);
         db.execSQL(DatabaseSQL.Work_IDX_VEHICLE);
-        db.close();
+        
     }
  
     /// stackoverflow.com/questions/4866746/how-to-read-a-text-file-from-assets-directory-as-a-string
@@ -111,7 +111,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         // Inserting Row
         db.insert(Vehicle.TABLE_NAME, null, values);
-        db.close(); // Closing database connection
+         // Closing database connection
     }
 
     // Getting single vehicle
@@ -125,13 +125,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cursor.moveToFirst();
         	Vehicle vehicle = new Vehicle(Integer.parseInt(cursor.getString(0)),cursor.getString(1));
 	        cursor.close();
-	        db.close();
+	        
             return vehicle;
         }
         else
         {
 	        cursor.close();
-	        db.close();
+	        
         	throw new java.lang.Exception("Cannot find vehicle matching id "+id);
         }
 
@@ -147,13 +147,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cursor.moveToFirst();
         	Vehicle vehicle = new Vehicle(Integer.parseInt(cursor.getString(0)),cursor.getString(1));
 	        cursor.close();
-	        db.close();
+	        
             return vehicle;
         }
         else
         {
 	        cursor.close();
-	        db.close();
+	        
         	throw new java.lang.Exception("Cannot find vehicle matching name "+name);
         }
 
@@ -182,7 +182,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
  
         cursor.close();
-        db.close();
+        
         
         return vehicleList;
     }
@@ -199,7 +199,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         int rc = db.update(Vehicle.TABLE_NAME, values, Vehicle.KEY_ID + " = ?",
                 new String[] { String.valueOf(vehicle.getID()) });
         
-        db.close();
+        
         return rc;
     }
  
@@ -208,7 +208,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(Vehicle.TABLE_NAME, Vehicle.KEY_ID + " = ?",
                 new String[] { String.valueOf(vehicle.getID()) });
-        db.close();
+        
     }
  
  
@@ -222,7 +222,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // return count
         int count =  cursor.getCount();
         
-        db.close();
+        
         return count;
     }
     
@@ -243,7 +243,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         // Inserting Row
         db.insert(Item.TABLE_NAME, null, values);
-        db.close(); // Closing database connection
+         // Closing database connection
     }
  
  
@@ -260,14 +260,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 	        Item item = new Item(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Integer.parseInt(cursor.getString(2)),Integer.parseInt(cursor.getString(3)));
 	        cursor.close();
-	        db.close();
+	        
 	        return item;
         }
         else
         {
 
 	        cursor.close();
-	        db.close();
+	        
         	throw new java.lang.Exception("Cannot find item matching id "+id);
         }
 
@@ -287,14 +287,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	        Item item = new Item(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Integer.parseInt(cursor.getString(2)),Integer.parseInt(cursor.getString(3)));
 	        
 	        cursor.close();
-	        db.close();
+	        
 
 	        return item;
         }
         else
         {
             cursor.close();
-            db.close();
+            
         	throw new java.lang.Exception("Cannot find item matching "+name);
         }
 
@@ -325,7 +325,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         // return item list
         cursor.close();
-        db.close();
+        
         return itemList;
     }
  
@@ -344,7 +344,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 new String[] { String.valueOf(item.getID()) });
         
         
-        db.close();
+        
         return rc;
     }
  
@@ -353,7 +353,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(Item.TABLE_NAME, Item.KEY_ID + " = ?",
                 new String[] { String.valueOf(item.getID()) });
-        db.close();
+        
     }
  
  
@@ -364,7 +364,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.close();
         
-        db.close();
+        
         // return count
         return cursor.getCount();
     }
@@ -388,7 +388,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         // Inserting Row
         db.insert(Receipt.TABLE_NAME, null, values);
-        db.close(); // Closing database connection
+         // Closing database connection
     }
  
  
@@ -414,13 +414,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	        Receipt receipt = new Receipt(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Integer.parseInt(cursor.getString(2)),cursor.getString(3),Integer.parseInt(cursor.getString(4)),Integer.parseInt(cursor.getString(5)),cursor.getString(6));
 	        // return receipt
 	        cursor.close();
-	        db.close();
+	        
 	        return receipt;
 	    }
 	    else
 	    {
 	        cursor.close();
-	        db.close();
+	        
 	    	throw new java.lang.Exception("Cannot find receipt matching id "+id);
 	    }
     }
@@ -448,13 +448,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	        Receipt receipt = new Receipt(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Integer.parseInt(cursor.getString(2)),cursor.getString(3),Integer.parseInt(cursor.getString(4)),Integer.parseInt(cursor.getString(5)),cursor.getString(6));
 	        // return receipt
 	        cursor.close();
-	        db.close();
+	        
 	        return receipt;
 	    }
 	    else
 	    {
 	        cursor.close();
-	        db.close();
+	        
 	    	throw new java.lang.Exception("Cannot find receipt matching filename"+filename);
 	    }
         
@@ -489,7 +489,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // return receipt list
 
         cursor.close();
-        db.close();
+        
         return receiptList;
     }
     
@@ -522,7 +522,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         // return receipt list
         cursor.close();
-        db.close();
+        
         return receiptList;
     }
  
@@ -542,7 +542,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // updating row
         int rc = db.update(Receipt.TABLE_NAME, values, Receipt.KEY_ID + " = ?",
                 new String[] { String.valueOf(receipt.getID()) });
-        db.close();
+        
         return rc;
     }
  
@@ -551,7 +551,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(Receipt.TABLE_NAME, Receipt.KEY_ID + " = ?",
                 new String[] { String.valueOf(receipt.getID()) });
-        db.close();
+        
     }
  
  
@@ -564,7 +564,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         // return count
         int count = cursor.getCount();
-        db.close();
+        
         return count;
     }
  
@@ -579,7 +579,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         // Inserting Row
         db.insert(Location.TABLE_NAME, null, values);
-        db.close(); // Closing database connection
+         // Closing database connection
     }
 
     // Getting single location
@@ -595,13 +595,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	        Location location = new Location(Integer.parseInt(cursor.getString(0)),cursor.getString(1));
 	        // return location
 	        cursor.close();
-	        db.close();
+	        
 	        return location;
 	    }
 	    else
 	    {
 	    	cursor.close();
-	    	db.close();
+	    	
 	    	throw new java.lang.Exception("Cannot find location matching id "+id);
 	    }
     }
@@ -618,14 +618,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	        Location location = new Location(Integer.parseInt(cursor.getString(0)),cursor.getString(1));
 	        // return location
 	        cursor.close();
-	        db.close();
+	        
 	        return location;
 	    }
 	    else
 	    {
 
 	    	cursor.close();
-	    	db.close();
+	    	
 	    	throw new java.lang.Exception("Cannot find location matching "+ name);
 	    }
     }
@@ -653,7 +653,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
  
         // return location list
-        db.close();
+        
         return locationList;
     }
  
@@ -668,7 +668,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // updating row
         int rc = db.update(Location.TABLE_NAME, values, Location.KEY_ID + " = ?",
                 new String[] { String.valueOf(location.getID()) });
-        db.close();
+        
         return rc;
     }
  
@@ -677,7 +677,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(Location.TABLE_NAME, Location.KEY_ID + " = ?",
                 new String[] { String.valueOf(location.getID()) });
-        db.close();
+        
     }
  
  
@@ -690,7 +690,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         // return count
         int count = cursor.getCount();
-        db.close();
+        
         return count;
     }
 
@@ -711,7 +711,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         
         // Inserting Row
         db.insert(Work.TABLE_NAME, null, values);
-        db.close(); // Closing database connection
+         // Closing database connection
     }
  
  
@@ -735,7 +735,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 	        Work work = new Work(Integer.parseInt(cursor.getString(0)),Integer.parseInt(cursor.getString(1)),Integer.parseInt(cursor.getString(2)),Integer.parseInt(cursor.getString(3)),cursor.getString(4));
 	        cursor.close();
-	        db.close();
+	        
 	        // return work
 	        return work;
 	        
@@ -743,7 +743,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	    else
 	    {
 	    	cursor.close();
-	    	db.close();
+	    	
 	    	throw new java.lang.Exception("Cannot find work matching id "+id);
 	    }
     }
@@ -768,14 +768,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	        Work work = new Work(Integer.parseInt(cursor.getString(0)),Integer.parseInt(cursor.getString(1)),Integer.parseInt(cursor.getString(2)),Integer.parseInt(cursor.getString(3)),cursor.getString(4));
 	        // return work
 	        cursor.close();
-	        db.close();
+	        
 	        return work;
 	    }
 	    else
 	    {
 	    	
 	    	cursor.close();
-	    	db.close();
+	    	
 	    	throw new java.lang.Exception("Cannot find work for vehicleID="+vid+" itemID="+iid+" receiptID="+rid);
 	    }
     }
@@ -806,7 +806,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         // return work list
         cursor.close();
-        db.close();
+        
         return workList;
     }
  
@@ -836,7 +836,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         // return work list
         cursor.close();
-        db.close();
+        
         return workList;
     }
     
@@ -854,7 +854,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // updating row
         int rc =  db.update(Work.TABLE_NAME, values, Work.KEY_ID + " = ?",
                 new String[] { String.valueOf(work.getID()) });
-        db.close();
+        
         return rc;
     }
  
@@ -863,7 +863,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(Work.TABLE_NAME, Work.KEY_ID + " = ?",
                 new String[] { String.valueOf(work.getID()) });
-        db.close();
+        
     }
  
  
@@ -873,7 +873,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.close();
-        db.close();
+        
  
         // return count
         return cursor.getCount();
@@ -883,7 +883,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	try {
 	        SQLiteDatabase db = this.getWritableDatabase();
 	        db.delete(table_name, null, null);
-	        db.close();
+	        
     	} catch (NullPointerException npe)
     	{
     		
