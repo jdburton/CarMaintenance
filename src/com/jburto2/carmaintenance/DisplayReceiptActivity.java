@@ -201,7 +201,6 @@ AdapterView.OnItemSelectedListener {
         
         // 8
         textView = TableLayoutUtils.createTextView(this, "Receipt Uri", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
-        textView.setVisibility(View.GONE);
         tableRow.addView(textView);
 
         // 8
@@ -301,7 +300,7 @@ AdapterView.OnItemSelectedListener {
             // 3
             ImageButton imageButton = new ImageButton(this);    	
             imageButton.setClickable(true);
-            imageButton.setLayoutParams(new TableRow.LayoutParams(50,50));
+            imageButton.setLayoutParams(new TableRow.LayoutParams(60,80));
             imageButton.setScaleType(ScaleType.CENTER_CROP);
             imageButton.setOnClickListener(new View.OnClickListener() 
             {
@@ -342,8 +341,7 @@ AdapterView.OnItemSelectedListener {
             tableRow.addView(editText);
             
             // 8
-            textView = TableLayoutUtils.createEditText(this, singlereceipt.getFile(), 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
-            textView.setVisibility(View.GONE);
+            textView = TableLayoutUtils.createTextView(this, singlereceipt.getFile(), 15, Color.rgb(51, 51, 51),Color.rgb(200, 200, 200));
             tableRow.addView(textView);
             
             
@@ -526,7 +524,7 @@ AdapterView.OnItemSelectedListener {
         // 3
         ImageButton imageButton = new ImageButton(this);    	
         imageButton.setClickable(true);
-        imageButton.setLayoutParams(new TableRow.LayoutParams(50,50));
+        imageButton.setLayoutParams(new TableRow.LayoutParams(60,80));
         imageButton.setScaleType(ScaleType.CENTER_CROP);
         
         imageButton.setOnClickListener(new View.OnClickListener() 
@@ -571,8 +569,7 @@ AdapterView.OnItemSelectedListener {
         tableRow.addView(editText);
         
         // 8
-        textView = TableLayoutUtils.createEditText(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
-        textView.setVisibility(View.GONE);
+        textView = TableLayoutUtils.createTextView(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
         tableRow.addView(textView);
         
         ImageButton button = new ImageButton(this);
