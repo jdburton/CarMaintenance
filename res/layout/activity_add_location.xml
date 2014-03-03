@@ -39,8 +39,8 @@
 
 <!-- 	            	Date field -->
 
-	            <EditText
-	                android:id="@+id/locationEditText"
+	            <TextView
+	                android:id="@+id/locationTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignParentLeft="true"
@@ -49,11 +49,11 @@
 	                android:inputType="text" />
 
 	            <TextView
-	                android:id="@+id/locationTextView"
+	                android:id="@+id/locationLabelTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:layout_alignLeft="@+id/locationEditText"
-	                android:layout_below="@+id/locationEditText"
+	                android:layout_alignLeft="@+id/locationTextView"
+	                android:layout_below="@+id/locationTextView"
 	                android:text="Location Name" />
 
 	            <EditText
@@ -61,12 +61,12 @@
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignParentLeft="true"
-	                android:layout_below="@+id/locationTextView"
+	                android:layout_below="@+id/locationLabelTextView"
 	                android:ems="10"
 	                android:inputType="phone" />
 
 	            <TextView
-	                android:id="@+id/phoneTextView"
+	                android:id="@+id/phoneLabelTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignLeft="@+id/phoneEditText"
@@ -78,12 +78,12 @@
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignParentLeft="true"
-	                android:layout_below="@+id/phoneTextView"
+	                android:layout_below="@+id/phoneLabelTextView"
 	                android:inputType="textPostalAddress" >
 	           </EditText>
 
 	           <TextView
-	                android:id="@+id/addressTextView"
+	                android:id="@+id/addressLabelTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignLeft="@+id/addressEditText"
@@ -94,8 +94,8 @@
 	                android:id="@+id/noteEditText"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:layout_alignLeft="@+id/addressTextView"
-	                android:layout_below="@+id/addressTextView"
+	                android:layout_alignLeft="@+id/addressLabelTextView"
+	                android:layout_below="@+id/addressLabelTextView"
 	                android:ems="10"
 	                android:inputType="textMultiLine" >
 
@@ -103,7 +103,7 @@
 	            </EditText>
 
 	            <TextView
-	                android:id="@+id/noteTextView"
+	                android:id="@+id/noteLabelTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignLeft="@+id/noteEditText"

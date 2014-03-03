@@ -807,6 +807,11 @@ AdapterView.OnItemSelectedListener {
 		{
 			e.printStackTrace();
 		}
+		catch (java.lang.OutOfMemoryError e)
+		{
+			e.printStackTrace();
+			System.gc();
+		}
 		finally {
 			
 			if (stream != null)

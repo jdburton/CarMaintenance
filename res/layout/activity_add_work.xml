@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:context=".AddWorkActivity" >
+	tools:context=".DisplayWorkDetailActivity" >
 	<ScrollView 
 	    android:id="@+id/layout" 
 	    android:layout_height="match_parent"         
@@ -25,109 +25,162 @@
 	            android:id="@+id/worklayout"
 	            android:layout_width="wrap_content"
 	            android:layout_height="match_parent"
-	            android:layout_marginBottom="0dip"
-	            android:layout_marginLeft="0dip"
-	            android:layout_marginRight="0dip"
-	            android:layout_marginTop="0dip" >
+	            android:layout_marginBottom="5dip"
+	            android:layout_marginLeft="5dip"
+	            android:layout_marginRight="5dip"
+	            android:layout_marginTop="5dip" >
 
 
-	            <Spinner
-	                android:id="@+id/vehicleSpinner"
+	            <TextView
+	                android:id="@+id/vehicleTextView"
 	                android:layout_width="200dip"
 	                android:layout_height="wrap_content"
 	                android:layout_alignParentLeft="true"
+	                android:layout_marginTop="5dip"
+	                android:textSize="20sp"
+	                android:background="#c8c8c8"
+	                
+	                
 	                
 	                 />
 	            
+	           <Button
+			         android:id="@+id/vehicleGoButton"
+			         android:layout_width="50dip"
+			         android:layout_height="50dip"
+			         android:layout_alignTop="@+id/vehicleTextView"
+			         android:layout_toRightOf="@+id/vehicleTextView"
+			         android:onClick="onVehicleButtonClick"
+			         android:layout_alignParentRight="true"
+			         
+			         android:background="@drawable/ic_table_go" />
+	            
+	            
 	            <TextView
-	                android:id="@+id/vehicleTextView"
+	                android:id="@+id/vehicleLabelTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:layout_below="@+id/vehicleSpinner"
-	                
+	                android:layout_below="@+id/vehicleTextView"
+	                android:layout_alignParentLeft="true"
 	                android:text="Vehicle"
 	                 />
 	            
-	            <ImageButton
-	                android:id="@+id/vehicleAddButton"
+	            <TextView
+	                android:id="@+id/vehicleIdTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:layout_alignBottom="@+id/vehicleSpinner"
-	                android:layout_toRightOf="@+id/vehicleSpinner"
-	                android:src="@android:drawable/ic_input_add" />
-	            
-	            
+	                android:layout_toRightOf="@+id/vehicleTextView"
+	                android:text="VehicleID"
+	                android:visibility="gone"
+	                 />
+
 	            <!-- 
 	            
-	            	Start with database keys. Spinner, label, textview.
+	            	Start with database keys. TextView, label, textview.
 	            
 	             -->
 	             
 	             <!-- item -->
-	             <Spinner
-	                android:id="@+id/itemSpinner"
+	             <TextView
+	                android:id="@+id/itemTextView"
 	                android:layout_width="200dip"
 	                android:layout_height="wrap_content"
 	                android:layout_alignParentLeft="true"
-	                android:layout_below="@+id/vehicleTextView" />
+	                android:layout_below="@+id/vehicleGoButton"
+	                android:textSize="20sp"
+	                android:background="#c8c8c8"
+	                 />
 
 	            <TextView
-	                android:id="@+id/itemTextView"
+	                android:id="@+id/itemLabelTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignParentLeft="true"
-	                android:layout_below="@+id/itemSpinner"
+	                android:layout_below="@+id/itemTextView"
 	                android:text="Item" />
 	            
-	            <ImageButton
-	                android:id="@+id/itemAddButton"
+	            
+	           <Button
+         			android:id="@+id/itemGoButton"
+         			android:layout_width="50dip"
+         			android:layout_height="50dip"
+	                android:layout_alignTop="@+id/itemTextView"
+	                android:layout_toRightOf="@+id/itemTextView"
+         			android:onClick="onItemButtonClick"
+         			android:layout_alignParentRight="true"
+         
+         			android:background="@drawable/ic_table_go" 
+         			/>
+
+
+	            <TextView
+	                android:id="@+id/itemIdTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:layout_alignBottom="@+id/itemSpinner"
-	                android:layout_toRightOf="@+id/itemSpinner"
-	                android:src="@android:drawable/ic_input_add" />
+	                android:layout_toRightOf="@+id/itemTextView"
+	                android:text="ItemID"
+	                android:visibility="gone"
+	                 />
 	            
 	             <!-- receipt  -->
-	             <Spinner
-	                android:id="@+id/receiptSpinner"
+	             <TextView
+	                android:id="@+id/receiptTextView"
 	                android:layout_width="200dip"
 	                android:layout_height="wrap_content"
 	                android:layout_alignParentLeft="true"
-	                android:layout_below="@+id/itemTextView" />
+	                android:layout_below="@+id/itemGoButton"
+	                android:textSize="20sp"
+	                android:background="#c8c8c8"
+	                 />
 
 	            <TextView
-	                android:id="@+id/receiptTextView"
+	                android:id="@+id/receiptLabelTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignParentLeft="true"
-	                android:layout_below="@+id/receiptSpinner"
+	                android:layout_below="@+id/receiptTextView"
 	                android:text="Receipt" />
 	            
-	            	            <ImageButton
-	                android:id="@+id/receiptAddButton"
+
+	            
+	            <Button
+         			android:id="@+id/receiptGoButton"
+         			android:layout_width="50dip"
+         			android:layout_height="50dip"
+	                android:layout_toRightOf="@+id/receiptTextView"
+	                android:layout_alignTop="@+id/receiptTextView"
+         			android:onClick="onReceiptButtonClick"
+         			android:layout_alignParentRight="true"
+         
+         			android:background="@drawable/ic_table_go" 
+         			/>
+	            
+	           <TextView
+	                android:id="@+id/receiptIdTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:layout_toRightOf="@+id/receiptSpinner"
-	                android:layout_alignBottom="@+id/receiptSpinner"
-	                android:src="@android:drawable/ic_input_add" />
+	                android:layout_toRightOf="@+id/receiptTextView"
+	                android:text="ReceiptID"
+	                android:visibility="gone"
+	                 />
 	             
 	            <!-- 
 	            	Date field
-	            -->
+	            
 	            
 	            <EditText
 				    android:id="@+id/dateEditText"
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 				    android:layout_alignParentLeft="true"
-				    android:layout_below="@+id/receiptTextView"
+				    android:layout_below="@+id/receiptLabelTextView"
 				    android:ems="10"
 				    android:inputType="date" />
 
 	            
 	            
 	            <TextView
-	                android:id="@+id/dateTextView"
+	                android:id="@+id/dateLabelTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignLeft="@+id/dateEditText"
@@ -139,26 +192,27 @@
 	               android:layout_width="wrap_content"
 	               android:layout_height="wrap_content"
 	               android:layout_alignParentLeft="true"
-	               android:layout_below="@+id/dateTextView"
+	               android:layout_below="@+id/dateLabelTextView"
 	               android:ems="10"
 	               android:inputType="number" />
 	            
 	            <TextView
-	                android:id="@+id/mileageTextView"
+	                android:id="@+id/mileageLabelTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignLeft="@+id/mileageEditText"
 	                android:layout_below="@+id/mileageEditText"
 	                android:text="Mileage" />
 	            
-
+				-->
 
 	            <EditText
 	                android:id="@+id/noteEditText"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:layout_alignLeft="@+id/mileageTextView"
-	                android:layout_below="@+id/mileageTextView"
+	                android:layout_alignLeft="@+id/receiptLabelTextView"
+	                android:layout_below="@+id/receiptLabelTextView"
+	                android:layout_marginTop="10dip"
 	                android:ems="10"
 	                android:inputType="textMultiLine" >
 
@@ -166,7 +220,7 @@
 	            </EditText>
 
 	            <TextView
-	                android:id="@+id/noteTextView"
+	                android:id="@+id/noteLabelTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignLeft="@+id/noteEditText"

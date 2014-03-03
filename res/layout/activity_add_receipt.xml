@@ -30,34 +30,27 @@
 	            android:layout_marginRight="0dip"
 	            android:layout_marginTop="0dip" >
 
-<!-- 	            	Start with database keys. Spinner, label, textview. -->
+<!-- 	            	Start with database keys. TextView, label, textview. -->
 
 
 	            <!-- item -->
 
 	            <!-- receipt -->
 
-	            <Spinner
-	                android:id="@+id/locationSpinner"
+	            <TextView
+	                android:id="@+id/locationTextView"
 	                android:layout_width="200dip"
 	                android:layout_height="wrap_content"
 	                android:layout_alignParentLeft="true" />
 
 	            <TextView
-	                android:id="@+id/locationTextView"
+	                android:id="@+id/locationLabelTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignParentLeft="true"
-	                android:layout_below="@+id/locationSpinner"
+	                android:layout_below="@+id/locationTextView"
 	                android:text="Location" />
 
-	            <ImageButton
-	                android:id="@+id/locationAddButton"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_alignBottom="@+id/locationSpinner"
-	                android:layout_toRightOf="@+id/locationSpinner"
-	                android:src="@android:drawable/ic_input_add" />
 
 <!-- 	            	Date field -->
 
@@ -66,12 +59,12 @@
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignParentLeft="true"
-	                android:layout_below="@+id/locationTextView"
+	                android:layout_below="@+id/locationLabelTextView"
 	                android:ems="10"
 	                android:inputType="date" />
 
 	            <TextView
-	                android:id="@+id/dateTextView"
+	                android:id="@+id/dateLabelTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignLeft="@+id/dateEditText"
@@ -83,12 +76,12 @@
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignParentLeft="true"
-	                android:layout_below="@+id/dateTextView"
+	                android:layout_below="@+id/dateLabelTextView"
 	                android:ems="10"
 	                android:inputType="number" />
 
 	            <TextView
-	                android:id="@+id/mileageTextView"
+	                android:id="@+id/mileageLabelTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignLeft="@+id/mileageEditText"
@@ -99,8 +92,8 @@
 	                android:id="@+id/noteEditText"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:layout_alignLeft="@+id/mileageTextView"
-	                android:layout_below="@+id/mileageTextView"
+	                android:layout_alignLeft="@+id/mileageLabelTextView"
+	                android:layout_below="@+id/mileageLabelTextView"
 	                android:ems="10"
 	                android:inputType="textMultiLine" >
 
@@ -108,30 +101,37 @@
 	            </EditText>
 
 	            <TextView
-	                android:id="@+id/noteTextView"
+	                android:id="@+id/noteLabelTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignLeft="@+id/noteEditText"
 	                android:layout_below="@+id/noteEditText"
 	                android:text="Notes" />
 
-
-
-	            <ImageView
-	                android:id="@+id/recieptImageView"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_below="@+id/noteTextView"
-	                android:layout_centerHorizontal="true"
-	                android:src="@drawable/ic_launcher" />
-
 	            <ImageButton
 	                android:id="@+id/imageButton1"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignParentLeft="true"
-	                android:layout_below="@+id/noteTextView"
+	                android:layout_below="@+id/noteLabelTextView"
 	                android:src="@android:drawable/ic_menu_camera" />
+
+	            <ImageButton
+	                android:id="@+id/imageButton2"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentRight="true"
+	                android:layout_centerVertical="true"
+	                android:src="@android:drawable/ic_menu_gallery" />
+	            
+	            <ImageView
+	                android:id="@+id/recieptImageView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+
+	                android:layout_below="@+id/imageButton1"
+	                android:layout_centerHorizontal="true"
+	                android:src="@drawable/ic_receipt" />
 
 	        </RelativeLayout>
 

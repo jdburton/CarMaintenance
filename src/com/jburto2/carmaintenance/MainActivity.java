@@ -2,18 +2,13 @@ package com.jburto2.carmaintenance;
 
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 /**
  * 
@@ -88,8 +83,29 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 	}
+	
+	/**
+	 * @fn protected void onConfigurationChanged(Configuration config)
+	 * @brief Method called when configuration changes. Load landscape config if in landscape mode, default otherwise. 
+	 * 
+	 * @param config Configuration.
+	 */
 
+	public void onConfigurationChanged(Configuration config)
+	{
+		//super.onConfigurationChanged(config);
+		if (config.orientation == Configuration.ORIENTATION_LANDSCAPE)
+		{
+			setContentView(R.layout.activity_main_land);
+		}
+		else
+		{
+			setContentView(R.layout.activity_main);
+		}
+	}
+	
 	@Override
+
 	
 	/**
 	 *

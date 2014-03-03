@@ -378,7 +378,7 @@ public class TableLayoutUtils
 			try
 			{
 				TextView tv = (TextView)tr.getChildAt(j);
-				keys += Integer.toString(j)+":"+tv.getText().toString()+" | ";
+				keys += tv.getText().toString()+" | ";
 			}
 			catch (java.lang.ClassCastException c)
 			{

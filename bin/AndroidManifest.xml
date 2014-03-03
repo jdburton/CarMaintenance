@@ -41,6 +41,15 @@
                 android:value="com.jburto2.carmaintenance.MainActivity" />
 
         </activity>
+                <activity
+            android:name="com.jburto2.carmaintenance.DisplayWorkDetailActivity"
+            android:label="@string/work" 
+                        android:parentActivityName="com.jburto2.carmaintenance.DisplayWorkActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jburto2.carmaintenance.DisplayWorkActivity" />
+
+        </activity>
         <activity
             android:name="com.jburto2.carmaintenance.DisplayInfoActivity"
             android:label="@string/title_activity_about_message"
@@ -50,7 +59,7 @@
                 android:value="com.jburto2.carmaintenance.MainActivity" />
         </activity>
         <activity
-            android:name="com.jburto2.carmaintenance.DisplayWorkDetailActivity"
+            android:name="com.jburto2.carmaintenance.DisplayDetailActivity"
             android:label="@string/work"
             android:parentActivityName="com.jburto2.carmaintenance.DisplayWorkActivity" >
             <meta-data

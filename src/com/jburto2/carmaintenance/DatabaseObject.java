@@ -2,7 +2,12 @@ package com.jburto2.carmaintenance;
 
 
 
-public abstract class DatabaseObject 
+/// Class Must be serializable to pass in intent. 
+/// http://www.tutorialspoint.com/java/java_serialization.htm
+
+
+
+public abstract class DatabaseObject implements java.io.Serializable
 {
 	
 	public static final String KEY_ID = "id";

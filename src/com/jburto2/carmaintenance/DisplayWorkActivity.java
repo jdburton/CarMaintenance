@@ -197,10 +197,10 @@ AdapterView.OnItemSelectedListener {
         tableRow.addView(textView);
 	
         // 9
-//        textView = TableLayoutUtils.createTextView(this, "Clear", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
-//        tableRow.addView(textView);
+        textView = TableLayoutUtils.createTextView(this, "Detail", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        tableRow.addView(textView);
         // 10
-        textView = TableLayoutUtils.createTextView(this, "Delete", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = TableLayoutUtils.createTextView(this, "Delete", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         tableRow.addView(textView);
         
         // Override the on click listener to do nothing.
@@ -347,27 +347,29 @@ AdapterView.OnItemSelectedListener {
 	            
 	        });
 	        tableRow.addView(button);
-//	        button = new ImageButton(this);
-//	        button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
-//	        button.setId(i*NUMBER_BUTTONS+1);
-//	        button.setOnClickListener(new View.OnClickListener(){
-//	            public void onClick(View v){
-//	                 // Do some operation for minus after getting v.getId() to get the current row
-//	            	// http://stackoverflow.com/questions/14112044/android-how-to-get-the-id-of-a-parent-view
-//	            	displayToast("Button is"+v.getId()+ " on row "+ ((TableRow)v.getParent()).getId());
-//	            	//send click through to parent.
-//	            	/// http://stackoverflow.com/questions/8135032/does-making-parent-clickable-make-all-child-element-clickable-as-well
-//		            ViewParent tr = v.getParent();
-//	            	v.performClick();
-//
-//	            	
-//	            }
-//
-//	        
-//	            
-//	        });
-//	        
-//	        tableRow.addView(button);
+	        button = new ImageButton(this);
+	        button.setImageResource(android.R.drawable.ic_menu_edit);
+	        button.setId(i*NUMBER_BUTTONS+1);
+	        button.setOnClickListener(new View.OnClickListener(){
+	            public void onClick(View v){
+	                 // Do some operation for minus after getting v.getId() to get the current row
+	            	// http://stackoverflow.com/questions/14112044/android-how-to-get-the-id-of-a-parent-view
+	            	//displayToast("Button is"+v.getId()+ " on row "+ ((TableRow)v.getParent()).getId());
+	            	onEditButtonClick(v);
+	            	
+	            	//send click through to parent.
+	            	/// http://stackoverflow.com/questions/8135032/does-making-parent-clickable-make-all-child-element-clickable-as-well
+		            //ViewParent tr = v.getParent();
+	            	//v.performClick();
+
+	            	
+	            }
+
+	        
+	            
+	        });
+	        
+	        tableRow.addView(button);
 	        
 	        button = new ImageButton(this);
 	        button.setImageResource(android.R.drawable.ic_menu_delete);
@@ -570,27 +572,11 @@ AdapterView.OnItemSelectedListener {
             
         });
         tableRow.addView(button);
-//        button = new ImageButton(this);
-//        button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
-//        
-//        button.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//                 // Do some operation for minus after getting v.getId() to get the current row
-//            	// http://stackoverflow.com/questions/14112044/android-how-to-get-the-id-of-a-parent-view
-//            	displayToast("Button is"+v.getId()+ " on row "+ ((TableRow)v.getParent()).getId());
-//            	//send click through to parent.
-//            	/// http://stackoverflow.com/questions/8135032/does-making-parent-clickable-make-all-child-element-clickable-as-well
-//	            ViewParent tr = v.getParent();
-//            	v.performClick();
-//
-//            	
-//            }
-//
-//        
-//            
-//        });
-//        
-//        tableRow.addView(button);
+        button = new ImageButton(this);
+        button.setImageResource(android.R.drawable.ic_menu_edit);
+        
+        button.setEnabled(false);
+        tableRow.addView(button);
         
         button = new ImageButton(this);
         button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
@@ -619,12 +605,9 @@ AdapterView.OnItemSelectedListener {
         tableLayout.addView(tableRow);
 	}
 	
-	private void fillWorkIdFieldsFromSpinners(TableRow tr) throws Exception
+	private String getVehicleDescription(TableRow tr) throws Exception
 	{
 		String vehicleDescription;
-		String itemDescription;
-		String receiptFile;
-		
 		try 
 		{
 			vehicleDescription = ((Spinner)tr.getChildAt(4)).getSelectedItem().toString();
@@ -634,12 +617,12 @@ AdapterView.OnItemSelectedListener {
 			vehicleDescription = ((TextView)tr.getChildAt(4)).getText().toString();
 		}
 		
+		return vehicleDescription;
+	}
 		
-		
-		
-		Vehicle v = db.getVehicle(vehicleDescription);
-		((TextView)tr.getChildAt(1)).setText(Integer.toString(v.getID()));
-		
+	private String getItemDescription(TableRow tr) throws Exception
+	{
+		String itemDescription;
 		try 
 		{
 			itemDescription = ((Spinner)tr.getChildAt(5)).getSelectedItem().toString();
@@ -648,10 +631,12 @@ AdapterView.OnItemSelectedListener {
 		{
 			itemDescription = ((TextView)tr.getChildAt(5)).getText().toString();
 		}
+		return itemDescription;
+	}	
 	
-		Item i = db.getItem(itemDescription);
-		((TextView)tr.getChildAt(2)).setText(Integer.toString(i.getID()));
-		
+	private String getReceiptFile(TableRow tr) throws Exception
+	{
+		String receiptFile;
 		try
 		{
 			receiptFile = ((Spinner)tr.getChildAt(6)).getSelectedItem().toString();
@@ -660,7 +645,29 @@ AdapterView.OnItemSelectedListener {
 		{
 			receiptFile = ((TextView)tr.getChildAt(6)).getText().toString();
 		}
+		return receiptFile;
+	}
+
 	
+	
+	private void fillWorkIdFieldsFromSpinners(TableRow tr) throws Exception
+	{
+		String vehicleDescription;
+		String itemDescription;
+		String receiptFile;
+			
+		vehicleDescription = getVehicleDescription(tr);
+		
+		Vehicle v = db.getVehicle(vehicleDescription);
+		
+		((TextView)tr.getChildAt(1)).setText(Integer.toString(v.getID()));
+		
+		
+		itemDescription = getItemDescription(tr);
+		Item i = db.getItem(itemDescription);
+		((TextView)tr.getChildAt(2)).setText(Integer.toString(i.getID()));
+		
+		receiptFile = getReceiptFile(tr);
 		Receipt r = db.getReceipt(receiptFile);
 		((TextView)tr.getChildAt(3)).setText(Integer.toString(r.getID()));
 	}
@@ -706,6 +713,34 @@ AdapterView.OnItemSelectedListener {
 
 	}
 	
+	public void onEditButtonClick(View v) 
+	{
+		Intent intent = new Intent(this,DisplayWorkDetailActivity.class);
+		
+    	// Get the table row
+    	TableRow tr = (TableRow)v.getParent();
+    	
+    	Work work = getWorkFromTableRow(tr);
+    	//String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+    	
+    	/// http://stackoverflow.com/questions/2736389/how-to-pass-object-from-one-activity-to-another-in-android
+    	intent.putExtra("WorkClass", work);
+    	try
+    	{
+        intent.putExtra("VehicleDescription",getVehicleDescription(tr));
+        intent.putExtra("ItemDescription", getItemDescription(tr));
+        intent.putExtra("ReceiptFile",getReceiptFile(tr));
+
+    	}
+    	catch (Exception e)
+    	{
+    		e.printStackTrace();
+    	}
+    	
+ 
+    	
+		startActivity(intent);
+	}
 
     
 }

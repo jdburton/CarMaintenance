@@ -40,7 +40,7 @@
 <!-- 	            	Date field -->
 
 	            <EditText
-	                android:id="@+id/dateEditText"
+	                android:id="@+id/receiptTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignParentLeft="true"
@@ -48,11 +48,11 @@
 	                android:inputType="text" />
 
 	            <TextView
-	                android:id="@+id/dateTextView"
+	                android:id="@+id/receiptLabelTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:layout_alignLeft="@+id/dateEditText"
-	                android:layout_below="@+id/dateEditText"
+	                android:layout_alignLeft="@+id/receiptTextView"
+	                android:layout_below="@+id/receiptTextView"
 	                android:text="Maintenance Item" />
 
 	            <EditText
@@ -60,12 +60,12 @@
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignParentLeft="true"
-	                android:layout_below="@+id/dateTextView"
+	                android:layout_below="@+id/receiptLabelTextView"
 	                android:ems="10"
 	                android:inputType="number" />
 
 	            <TextView
-	                android:id="@+id/mileageTextView"
+	                android:id="@+id/mileageLabelTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignLeft="@+id/mileageEditText"
@@ -77,12 +77,12 @@
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignParentLeft="true"
-	                android:layout_below="@+id/mileageTextView"
+	                android:layout_below="@+id/mileageLabelTextView"
 	                android:ems="10"
 	                android:inputType="number" />
 
 	            <TextView
-	                android:id="@+id/intervalTextView"
+	                android:id="@+id/intervalLabelTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignLeft="@+id/intervalEditText"
@@ -94,8 +94,8 @@
 	                android:id="@+id/noteEditText"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:layout_alignLeft="@+id/intervalTextView"
-	                android:layout_below="@+id/intervalTextView"
+	                android:layout_alignLeft="@+id/intervalLabelTextView"
+	                android:layout_below="@+id/intervalLabelTextView"
 	                android:ems="10"
 	                android:inputType="textMultiLine" >
 
@@ -103,7 +103,7 @@
 	            </EditText>
 
 	            <TextView
-	                android:id="@+id/noteTextView"
+	                android:id="@+id/noteLabelTextView"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignLeft="@+id/noteEditText"

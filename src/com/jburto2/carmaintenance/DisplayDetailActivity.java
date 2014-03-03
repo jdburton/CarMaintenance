@@ -1,13 +1,15 @@
 package com.jburto2.carmaintenance;
 
-
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.webkit.WebView;
 
 /**
  * 
@@ -18,7 +20,7 @@ import android.widget.TextView;
  * @brief This class controls activities that displays the information page. 
  */
 
-public class DisplayWorkDetailActivity extends DisplayDetailActivity {
+public abstract class DisplayDetailActivity extends Activity {
 
 	@SuppressLint("NewApi")
 	@Override
@@ -35,39 +37,40 @@ public class DisplayWorkDetailActivity extends DisplayDetailActivity {
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_add_work);
-		
-        // Get the message from the intent
-        Intent intent = getIntent();
-        Work work = (Work)intent.getSerializableExtra("WorkClass");
-        String vehicleDescription = intent.getStringExtra("VehicleDescription");
-        String receiptLocation = intent.getStringExtra("ReceiptFile");
-        String itemDescription = intent.getStringExtra("ItemDescription");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            // Show the Up button in the action bar.
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
-        TextView vehicleId = (TextView) findViewById(R.id.vehicleIdTextView);
-        TextView itemId = (TextView) findViewById(R.id.itemIdTextView);
-        TextView receiptId = (TextView) findViewById(R.id.receiptIdTextView);
-
-        TextView vehicleField = (TextView) findViewById(R.id.vehicleTextView);
-        TextView itemField = (TextView) findViewById(R.id.itemTextView);
-        TextView receiptField = (TextView) findViewById(R.id.receiptTextView);
-
-        
-        EditText workDescription = (EditText) findViewById(R.id.noteEditText);
-		
-        vehicleId.setText(Integer.toString(work.getVehicleID()));
-        itemId.setText(Integer.toString(work.getItemID()));
-        receiptId.setText(Integer.toString(work.getReceiptID()));
-        
-        vehicleField.setText(vehicleDescription);
-        itemField.setText(itemDescription);
-        receiptField.setText(receiptLocation);
-        
-        workDescription.setText(work.getNotes());
 
 	}
 
+	/**
+	 * @fn private void setupActionBar()
+	 * 
+	 * Set up the {@link android.app.ActionBar}, if the API is available.
+	 * This enables the up/home button to allow users to return to the main screen.
+	 * 
+	 */
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void setupActionBar() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+		}
+	}
 
+	@Override
+	/**
+	 * @fn public boolean onCreateOptionsMenu(Menu menu) 
+	 * @brief Inflate the menu; this adds items to the action bar if it is present.
+	 * @param menu The menu
+	 * @return true
+	 */
+	public boolean onCreateOptionsMenu(Menu menu) {
+		
+		getMenuInflater().inflate(R.menu.detail_menu, menu);
+		return true;
+	}
 
 	@Override
 	/**
