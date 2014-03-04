@@ -68,6 +68,7 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
 
 	protected void drawTable(){
 		
+		super.drawTable();
 		
 		// Get the Table Layout 
 	    TableLayout tableLayout = (TableLayout) findViewById(R.id.tlGridTable);
@@ -101,13 +102,28 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
 
         // 3
         textView = TableLayoutUtils.createTextView(this, "Save", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        
+	    if (autoSave)
+        {
+        	textView.setVisibility(View.GONE);
+        }
+        else
+        {
+        	textView.setVisibility(View.VISIBLE);
+        }
         tableRow.addView(textView);
+
 	
         // 4
 //        textView = TableLayoutUtils.createTextView(this, "Clear", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
 //        tableRow.addView(textView);
         // 5
-        textView = TableLayoutUtils.createTextView(this, "Delete", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = TableLayoutUtils.createTextView(this, "Delete", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        tableRow.addView(textView);
+        
+        // New Row Indicator = Must be last 
+        textView = TableLayoutUtils.createTextView(this, "New Row", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+        textView.setVisibility(View.GONE);
         tableRow.addView(textView);
         
         // Override the on click listener to do nothing.
@@ -161,44 +177,10 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
             textView = TableLayoutUtils.createTextView(this, location.getLocationDescription(), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
             tableRow.addView(textView);
             
-	        ImageButton button = new ImageButton(this);
-	        
-	        button.setImageResource(android.R.drawable.ic_menu_save);
-	        button.setId(i*NUMBER_BUTTONS);
-	        
-	        button.setOnClickListener(new View.OnClickListener(){
-	            public void onClick(View v){
-	            	
-	            	 //save button.
-	            	
-	            	
-	            	// Get the table row
-	            	TableRow tr = (TableRow)v.getParent();
-	            	
-	            	Location location = getLocationFromTableRow(tr);
-	            	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
-	            	//displayToast(keys);
-	            	
+            addSaveFunctionToRow(tableRow);
+            
+	        ImageButton button;
 
-	            	try 
-	            	{
-	            		db.updateLocation(location);	
-	            	}
-	            	catch (Exception e)
-	            	{
-	            		displayMessageDialog(e.getMessage(),e.toString());
-	            	}
-	            	
-	            	//displayToast(keys);
-	            	//send click through to parent.
-	            	tr.performClick();
-	            	
-	            	
-	            }
-	        
-	            
-	        });
-	        tableRow.addView(button);
 //	        button = new ImageButton(this);
 //	        button.setImageResource(android.R.drawable.ic_menu_edit);
 //	        button.setId(i*NUMBER_BUTTONS+1);
@@ -262,6 +244,11 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
 	        });
 	        
 	        tableRow.addView(button);
+	        
+	        // New Row Indicator = Must be last 
+	        textView = TableLayoutUtils.createTextView(this, "false", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+	        textView.setVisibility(View.GONE);
+	        tableRow.addView(textView);
 
 	        tableLayout.addView(tableRow);
 	        
@@ -277,6 +264,8 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
 	
 	@SuppressLint("NewApi")
 	protected void addNewRow() {
+		
+		super.addNewRow();
 		// Get the Table Layout 
 	    TableLayout tableLayout = (TableLayout) findViewById(R.id.tlGridTable);
 	    //TODO: Next 3 lines in XML
@@ -299,49 +288,8 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
         EditText editText = TableLayoutUtils.createEditText(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
         tableRow.addView(editText);
         
-        ImageButton button = new ImageButton(this);
+        addSaveFunctionToRow(tableRow);
         
-        button.setImageResource(android.R.drawable.ic_menu_save);
-        //button.setId(i*NUMBER_BUTTONS);
-        
-        button.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-            	
-            	 //save button.
-            	
-            	
-            	// Get the table row
-            	TableRow tr = (TableRow)v.getParent();
-            	
-
-            	Location location = getLocationFromTableRow(tr);
-            	
-            	
-            	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
-            	//displayToast(keys);
-            	
-            	
-            	
-
-            	try 
-            	{
-            		db.addLocation(location);	
-            	}
-            	catch (Exception e)
-            	{
-            		displayMessageDialog(e.getMessage(),e.toString());
-            	}
-            	
-            	//displayToast(keys);
-            	//send click through to parent.
-            	tr.performClick();
-            	drawTable();
-            	
-            }
-        
-            
-        });
-        tableRow.addView(button);
 //        button = new ImageButton(this);
 //        button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
 //        
@@ -364,7 +312,7 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
 //        
 //        tableRow.addView(button);
         
-        button = new ImageButton(this);
+        ImageButton button = new ImageButton(this);
         button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
         
         button.setOnClickListener(new View.OnClickListener(){
@@ -387,6 +335,11 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
             
         });
         tableRow.addView(button);
+        
+        // New Row Indicator = Must be last 
+        textView = TableLayoutUtils.createTextView(this, "true", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+        textView.setVisibility(View.GONE);
+        tableRow.addView(textView);
         
         tableLayout.addView(tableRow);
 	}
@@ -419,6 +372,50 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
 			drawTable();
 		}
 	}
+	
+	
+	protected void updateRow(TableRow tr)
+	{
+    	Location location = getLocationFromTableRow(tr);
+    	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+    	//displayToast(keys);
+    	
+
+    	try 
+    	{
+    		db.updateLocation(location);	
+    	}
+    	catch (Exception e)
+    	{
+    		displayMessageDialog(e.getMessage(),e.toString());
+    	}
+		
+	}
+	
+	protected void saveNewRow(TableRow tr) 
+	{
+
+    	Location location = getLocationFromTableRow(tr);
+    	
+    	
+    	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+    	//displayToast(keys);
+    	try 
+    	{
+    		db.addLocation(location);	
+    	}
+    	catch (Exception e)
+    	{
+    		displayMessageDialog(e.getMessage(),e.toString());
+    	}
+    	
+    	//displayToast(keys);
+    	
+    	drawTable();
+
+		
+	}
+	
 	
 
 

@@ -4,17 +4,12 @@ package com.jburto2.carmaintenance;
 import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewParent;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -119,6 +114,8 @@ AdapterView.OnItemSelectedListener {
 
 	protected void drawTable(){
 		
+	    
+	    super.drawTable();
 		
 		// Get the Table Layout 
 	    TableLayout tableLayout = (TableLayout) findViewById(R.id.tlGridTable);
@@ -141,6 +138,7 @@ AdapterView.OnItemSelectedListener {
 	    }		
 		
 
+
         
         
         // Create the labels
@@ -148,28 +146,28 @@ AdapterView.OnItemSelectedListener {
     	TableRow tableRow = TableLayoutUtils.createTableRow(this);
     	tableRow.setId(0);
     	
-    	TextView textView = TableLayoutUtils.createTextView(this, "Work ID", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+    	TextView textView = TableLayoutUtils.createTextView(this, "Work ID", 15,TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
     	// 1
-    	textView = TableLayoutUtils.createTextView(this, "Vehicle ID", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+    	textView = TableLayoutUtils.createTextView(this, "Vehicle ID", 15,TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
     	// 2
-    	textView = TableLayoutUtils.createTextView(this,"Item ID", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+    	textView = TableLayoutUtils.createTextView(this,"Item ID", 15,TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
     	// 3 
-    	textView = TableLayoutUtils.createTextView(this, "Receipt ID", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+    	textView = TableLayoutUtils.createTextView(this, "Receipt ID", 15, TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
     	
     	// 4
     	
-        textView = TableLayoutUtils.createTextView(this, "Vehicle Descripton", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = TableLayoutUtils.createTextView(this, "Vehicle Descripton", 15, TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
         if (vid < 0)
         {
         	textView.setVisibility(View.VISIBLE);
@@ -181,27 +179,42 @@ AdapterView.OnItemSelectedListener {
         tableRow.addView(textView);
         
         // 5
-        textView = TableLayoutUtils.createTextView(this, "Maintenance Item", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = TableLayoutUtils.createTextView(this, "Maintenance Item", 15, TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
         tableRow.addView(textView);
         
         // 6
-        textView = TableLayoutUtils.createTextView(this, "Receipt File", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = TableLayoutUtils.createTextView(this, "Receipt File", 15,TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
         tableRow.addView(textView);
         
         // 7
-        textView = TableLayoutUtils.createTextView(this, "Work Notes", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = TableLayoutUtils.createTextView(this, "Work Notes", 15,TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
         tableRow.addView(textView);
 
-        // 8
-        textView = TableLayoutUtils.createTextView(this, "Save", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
-        tableRow.addView(textView);
-	
+	    // 8
+	    textView = TableLayoutUtils.createTextView(this, "Save", 15,TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
+	    if (autoSave)
+        {
+        	textView.setVisibility(View.GONE);
+        }
+        else
+        {
+        	textView.setVisibility(View.VISIBLE);
+        }
+	    tableRow.addView(textView);
+	    
         // 9
-        textView = TableLayoutUtils.createTextView(this, "Detail", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = TableLayoutUtils.createTextView(this, "Detail", 15,TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
         tableRow.addView(textView);
         // 10
-        textView = TableLayoutUtils.createTextView(this, "Delete", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = TableLayoutUtils.createTextView(this, "Delete", 15,TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
         tableRow.addView(textView);
+        
+        // 11 - Must be last 
+        textView = TableLayoutUtils.createTextView(this, "New Row", 15,TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
+        textView.setVisibility(View.GONE);
+        tableRow.addView(textView);
+        
+        
         
         // Override the on click listener to do nothing.
         tableRow.setOnClickListener(new View.OnClickListener() {
@@ -266,27 +279,27 @@ AdapterView.OnItemSelectedListener {
         	        	
             // Data
         	// 0
-        	textView = TableLayoutUtils.createTextView(this, Integer.toString(workitem.getID()), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+        	textView = TableLayoutUtils.createTextView(this, Integer.toString(workitem.getID()), 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
         	textView.setVisibility(View.GONE);
         	tableRow.addView(textView);
             
         	// 1
-        	textView = TableLayoutUtils.createTextView(this, Integer.toString(workitem.getVehicleID()), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+        	textView = TableLayoutUtils.createTextView(this, Integer.toString(workitem.getVehicleID()), 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
         	textView.setVisibility(View.GONE);
         	tableRow.addView(textView);
             
         	// 2
-        	textView = TableLayoutUtils.createTextView(this, Integer.toString(workitem.getItemID()), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+        	textView = TableLayoutUtils.createTextView(this, Integer.toString(workitem.getItemID()), 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
         	textView.setVisibility(View.GONE);
         	tableRow.addView(textView);
             
         	// 3 
-        	textView = TableLayoutUtils.createTextView(this, Integer.toString(workitem.getReceiptID()), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+        	textView = TableLayoutUtils.createTextView(this, Integer.toString(workitem.getReceiptID()), 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
         	textView.setVisibility(View.GONE);
         	tableRow.addView(textView);
         	
         	// 4
-            textView = TableLayoutUtils.createTextView(this, vehicle.getVehicleDescription(), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+            textView = TableLayoutUtils.createTextView(this, vehicle.getVehicleDescription(), 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
             if (vid < 0)
             {
             	textView.setVisibility(View.VISIBLE);
@@ -298,80 +311,35 @@ AdapterView.OnItemSelectedListener {
             tableRow.addView(textView);
             
             // 5
-            textView = TableLayoutUtils.createTextView(this, item.getItemDescription(), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+            textView = TableLayoutUtils.createTextView(this, item.getItemDescription(), 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
             tableRow.addView(textView);
             
             // 6
-            textView = TableLayoutUtils.createTextView(this, receipt.getFile(), 15,Color.rgb(51, 51, 51), Color.rgb(200,200,200));
+            textView = TableLayoutUtils.createTextView(this, receipt.getFile(), 15,TableLayoutUtils.DARK_GRAY, TableLayoutUtils.LIGHT_GRAY);
             tableRow.addView(textView);
             
             // 7
-            EditText editText = TableLayoutUtils.createEditText(this, workitem.getNotes(), 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+            EditText editText = TableLayoutUtils.createEditText(this, workitem.getNotes(), 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.WHITE);
             tableRow.addView(editText);
             
+            // Add either the save button or autosave functionality
+            addSaveFunctionToRow(tableRow);
+            
+	        
 	        ImageButton button = new ImageButton(this);
-	       
-	        button.setImageResource(android.R.drawable.ic_menu_save);
-	        button.setId(i*NUMBER_BUTTONS);
 	        
-	        button.setOnClickListener(new View.OnClickListener(){
-	            public void onClick(View v){
-	            	
-	            	 //save button.
-	            	
-	            	
-	            	// Get the table row
-	            	TableRow tr = (TableRow)v.getParent();
-	            	
-	            	Work work = getWorkFromTableRow(tr);
-	            	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
-	            	//displayToast(keys);
-	            	
+	    	button = new ImageButton(this);
+	    	button.setImageResource(android.R.drawable.ic_menu_edit);
+	    	button.setOnClickListener(new View.OnClickListener(){
+		    	public void onClick(View v){
+		    		onEditButtonClick(v);
+		    	}
 
-	            	try 
-	            	{
-	            		db.updateWork(work);	
-	            	}
-	            	catch (Exception e)
-	            	{
-	            		displayMessageDialog(e.getMessage(),e.toString());
-	            	}
-	            	
-	            	//displayToast(keys);
-	            	//send click through to parent.
-	            	tr.performClick();
-	            	
-	            	
-	            }
-	        
-	            
-	        });
-	        tableRow.addView(button);
-	        button = new ImageButton(this);
-	        button.setImageResource(android.R.drawable.ic_menu_edit);
-	        button.setId(i*NUMBER_BUTTONS+1);
-	        button.setOnClickListener(new View.OnClickListener(){
-	            public void onClick(View v){
-	                 // Do some operation for minus after getting v.getId() to get the current row
-	            	// http://stackoverflow.com/questions/14112044/android-how-to-get-the-id-of-a-parent-view
-	            	//displayToast("Button is"+v.getId()+ " on row "+ ((TableRow)v.getParent()).getId());
-	            	onEditButtonClick(v);
-	            	
-	            	//send click through to parent.
-	            	/// http://stackoverflow.com/questions/8135032/does-making-parent-clickable-make-all-child-element-clickable-as-well
-		            //ViewParent tr = v.getParent();
-	            	//v.performClick();
+	    	});
 
-	            	
-	            }
-
+	    	tableRow.addView(button);
 	        
-	            
-	        });
-	        
-	        tableRow.addView(button);
-	        
-	        button = new ImageButton(this);
+	    	button = new ImageButton(this);
 	        button.setImageResource(android.R.drawable.ic_menu_delete);
 	        button.setId(i*NUMBER_BUTTONS+1);
 	        button.setOnClickListener(new View.OnClickListener(){
@@ -412,21 +380,24 @@ AdapterView.OnItemSelectedListener {
 	        });
 	        
 	        tableRow.addView(button);
-
-	        tableLayout.addView(tableRow);
 	        
-
+	        // New Row Indicator = Must be last 
+            textView = TableLayoutUtils.createTextView(this, "false", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+	        textView.setVisibility(View.GONE);
+	        
+	        tableRow.addView(textView);
+	        
+	        tableLayout.addView(tableRow);
         
         }
         
-     
-
-        
-        
-	}
+ 	}
 	
 	@SuppressLint("NewApi")
 	protected void addNewRow() {
+		
+		super.addNewRow();
+		
 		// Get the Table Layout 
 	    TableLayout tableLayout = (TableLayout) findViewById(R.id.tlGridTable);
 	    //TODO: Next 3 lines in XML
@@ -451,22 +422,22 @@ AdapterView.OnItemSelectedListener {
         
         // Data
     	// 0
-    	TextView textView = TableLayoutUtils.createTextView(this, "-1", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+    	TextView textView = TableLayoutUtils.createTextView(this, "-1", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
     	// 1
-    	textView = TableLayoutUtils.createTextView(this, Integer.toString(vid), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+    	textView = TableLayoutUtils.createTextView(this, Integer.toString(vid), 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
     	// 2
-    	textView = TableLayoutUtils.createTextView(this, "-1", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+    	textView = TableLayoutUtils.createTextView(this, "-1", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
     	// 3 
-    	textView = TableLayoutUtils.createTextView(this, "-1", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+    	textView = TableLayoutUtils.createTextView(this, "-1", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
     	
@@ -480,14 +451,14 @@ AdapterView.OnItemSelectedListener {
             {
             	vehicleArray[i] = vehicleList.get(i).getVehicleDescription();
             }
-            spinner = TableLayoutUtils.createSpinner(this, vehicleArray, Color.rgb(225, 225, 255) );
+            spinner = TableLayoutUtils.createSpinner(this, vehicleArray, TableLayoutUtils.LIGHT_BLUE );
             tableRow.addView(spinner);
     	}
     	else
     	{
     		Spinner vSpinner = (Spinner) findViewById(R.id.vehicleSpinner);
     		
-	        textView = TableLayoutUtils.createTextView(this, vSpinner.getSelectedItem().toString() , 15, Color.rgb(51, 51, 51),Color.rgb(255,255,255));
+	        textView = TableLayoutUtils.createTextView(this, vSpinner.getSelectedItem().toString() , 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.WHITE);
 	    	textView.setVisibility(View.GONE);
 	        tableRow.addView(textView);
 
@@ -501,7 +472,7 @@ AdapterView.OnItemSelectedListener {
         {
         	itemArray[i] = itemList.get(i).getItemDescription();
         }
-        spinner = TableLayoutUtils.createSpinner(this, itemArray, Color.rgb(225, 225, 255) );
+        spinner = TableLayoutUtils.createSpinner(this, itemArray, TableLayoutUtils.LIGHT_BLUE );
         tableRow.addView(spinner);
         
 
@@ -512,67 +483,18 @@ AdapterView.OnItemSelectedListener {
         {
         	receiptArray[i] = receiptList.get(i).getFile();
         }
-        spinner = TableLayoutUtils.createSpinner(this, receiptArray, Color.rgb(255, 255, 255) );
+        spinner = TableLayoutUtils.createSpinner(this, receiptArray, TableLayoutUtils.WHITE );
         tableRow.addView(spinner);
         
         // 7
-        EditText editText = TableLayoutUtils.createEditText(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+        EditText editText = TableLayoutUtils.createEditText(this, "", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.WHITE);
         tableRow.addView(editText);
+
+        //Save button or autosave
+        addSaveFunctionToRow(tableRow);
         
+        //Edit button. Not enabled.
         ImageButton button = new ImageButton(this);
-        
-        button.setImageResource(android.R.drawable.ic_menu_save);
-        //button.setId(i*NUMBER_BUTTONS);
-        
-        button.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-            	
-            	 //save button.
-            	
-            	
-            	// Get the table row
-            	TableRow tr = (TableRow)v.getParent();
-            	
-            	//fill the hidden fields from the database.
-            	try {
-            		fillWorkIdFieldsFromSpinners(tr);
-            	}
-            	catch (Exception e)
-            	{
-            		displayMessageDialog(e.toString(),e.getMessage());
-            		tr.performClick();
-            		return;
-            	}
-
-            	Work work = getWorkFromTableRow(tr);
-            	
-            	
-            	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
-            	//displayToast(keys);
-            	
-            	
-            	
-
-            	try 
-            	{
-            		db.addWork(work);	
-            	}
-            	catch (Exception e)
-            	{
-            		displayMessageDialog(e.getMessage(),e.toString());
-            	}
-            	
-            	//displayToast(keys);
-            	//send click through to parent.
-            	tr.performClick();
-            	drawTable();
-            	
-            }
-        
-            
-        });
-        tableRow.addView(button);
-        button = new ImageButton(this);
         button.setImageResource(android.R.drawable.ic_menu_edit);
         
         button.setEnabled(false);
@@ -580,6 +502,7 @@ AdapterView.OnItemSelectedListener {
         
         button = new ImageButton(this);
         button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
+        
         
         button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -601,6 +524,11 @@ AdapterView.OnItemSelectedListener {
             
         });
         tableRow.addView(button);
+        
+        // New Row Indicator = Must be last 
+        textView = TableLayoutUtils.createTextView(this, "true", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+        textView.setVisibility(View.GONE);
+        tableRow.addView(textView);
         
         tableLayout.addView(tableRow);
 	}
@@ -740,6 +668,73 @@ AdapterView.OnItemSelectedListener {
  
     	
 		startActivity(intent);
+	}
+	
+	protected void updateRow(TableRow tr)
+	{
+		
+		
+		Work work = getWorkFromTableRow(tr);
+		String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+		//displayToast(keys);
+		
+	
+		try 
+		{
+			db.updateWork(work);	
+		}
+		catch (Exception e)
+		{
+			displayMessageDialog(e.getMessage(),e.toString());
+		}
+		
+		//displayToast("Updating...");
+		//send click through to parent.
+		
+	}
+	
+	protected void saveNewRow(TableRow tr) 
+	{
+     	 //save button.
+    	
+    	
+    	//fill the hidden fields from the database.
+    	try {
+    		fillWorkIdFieldsFromSpinners(tr);
+    	}
+    	catch (Exception e)
+    	{
+    		displayMessageDialog(e.toString(),e.getMessage());
+    		tr.performClick();
+    		return;
+    	}
+
+    	Work work = getWorkFromTableRow(tr);
+    	
+    	
+    	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+    	//displayToast(keys);
+    	try 
+    	{
+    		db.addWork(work);	
+    	}
+    	catch (android.database.sqlite.SQLiteConstraintException e)
+    	{
+    		displayMessageDialog("Could not add new record","Record " +keys+ " is already in the database.");
+    	}
+    	catch (Exception e)
+    	
+    	{
+    		displayMessageDialog(e.getMessage(),e.toString());
+    	}
+    	
+    	//displayToast(keys);
+    	//send click through to parent.
+    	displayToast("Saving...");
+    	
+    	drawTable();
+    	
+
 	}
 
     

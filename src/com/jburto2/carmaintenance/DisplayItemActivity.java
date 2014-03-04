@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -69,6 +70,8 @@ public class DisplayItemActivity extends DisplayTableActivity {
 
 	protected void drawTable(){
 		
+		super.drawTable();
+	    
 		
 		// Get the Table Layout 
 	    TableLayout tableLayout = (TableLayout) findViewById(R.id.tlGridTable);
@@ -110,13 +113,27 @@ public class DisplayItemActivity extends DisplayTableActivity {
 
         // 3
         textView = TableLayoutUtils.createTextView(this, "Save", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+	    if (autoSave)
+        {
+        	textView.setVisibility(View.GONE);
+        }
+        else
+        {
+        	textView.setVisibility(View.VISIBLE);
+        }
         tableRow.addView(textView);
+
 	
         // 4
         //textView = TableLayoutUtils.createTextView(this, "Clear", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         //tableRow.addView(textView);
         // 5
         textView = TableLayoutUtils.createTextView(this, "Delete", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        tableRow.addView(textView);
+        
+        // New Row Indicator = Must be last 
+        textView = TableLayoutUtils.createTextView(this, "New Row", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+        textView.setVisibility(View.GONE);
         tableRow.addView(textView);
         
         // Override the on click listener to do nothing.
@@ -179,47 +196,11 @@ public class DisplayItemActivity extends DisplayTableActivity {
         	tableRow.addView(textView);
             
 
-            
+            addSaveFunctionToRow(tableRow);
 
             
-	        ImageButton button = new ImageButton(this);
+	        ImageButton button;
 	        
-	        button.setImageResource(android.R.drawable.ic_menu_save);
-	        button.setId(i*NUMBER_BUTTONS);
-	        
-	        button.setOnClickListener(new View.OnClickListener(){
-	            public void onClick(View v){
-	            	
-	            	 //save button.
-	            	
-	            	
-	            	// Get the table row
-	            	TableRow tr = (TableRow)v.getParent();
-	            	
-	            	Item item = getItemFromTableRow(tr);
-	            	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
-	            	//displayToast(keys);
-	            	
-
-	            	try 
-	            	{
-	            		db.updateItem(item);	
-	            	}
-	            	catch (Exception e)
-	            	{
-	            		displayMessageDialog(e.getMessage(),e.toString());
-	            	}
-	            	
-	            	//displayToast(keys);
-	            	//send click through to parent.
-	            	tr.performClick();
-	            	
-	            	
-	            }
-	        
-	            
-	        });
-	        tableRow.addView(button);
 //	        button = new ImageButton(this);
 //	        button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
 //	        button.setId(i*NUMBER_BUTTONS+1);
@@ -283,6 +264,11 @@ public class DisplayItemActivity extends DisplayTableActivity {
 	        });
 	        
 	        tableRow.addView(button);
+	        
+	        // New Row Indicator = Must be last 
+	        textView = TableLayoutUtils.createTextView(this, "false", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+	        textView.setVisibility(View.GONE);
+	        tableRow.addView(textView);
 
 	        tableLayout.addView(tableRow);
 	        
@@ -298,6 +284,8 @@ public class DisplayItemActivity extends DisplayTableActivity {
 	
 	@SuppressLint("NewApi")
 	protected void addNewRow() {
+
+		super.addNewRow();
 		// Get the Table Layout 
 	    TableLayout tableLayout = (TableLayout) findViewById(R.id.tlGridTable);
 	    //TODO: Next 3 lines in XML
@@ -328,51 +316,9 @@ public class DisplayItemActivity extends DisplayTableActivity {
      	editText = TableLayoutUtils.createEditText(this, "0", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
      	tableRow.addView(editText);
          
-
+     	addSaveFunctionToRow(tableRow);
         
-        ImageButton button = new ImageButton(this);
-        
-        button.setImageResource(android.R.drawable.ic_menu_save);
-        //button.setId(i*NUMBER_BUTTONS);
-        
-        button.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-            	
-            	 //save button.
-            	
-            	
-            	// Get the table row
-            	TableRow tr = (TableRow)v.getParent();
-            	
-
-            	Item item = getItemFromTableRow(tr);
-            	
-            	
-            	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
-            	//displayToast(keys);
-            	
-            	
-            	
-
-            	try 
-            	{
-            		db.addItem(item);	
-            	}
-            	catch (Exception e)
-            	{
-            		displayMessageDialog(e.getMessage(),e.toString());
-            	}
-            	
-            	//displayToast(keys);
-            	//send click through to parent.
-            	tr.performClick();
-            	drawTable();
-            	
-            }
-        
-            
-        });
-        tableRow.addView(button);
+        ImageButton button;
 //        button = new ImageButton(this);
 //        button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
 //        
@@ -419,6 +365,11 @@ public class DisplayItemActivity extends DisplayTableActivity {
         });
         tableRow.addView(button);
         
+        // New Row Indicator = Must be last 
+        textView = TableLayoutUtils.createTextView(this, "true", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+        textView.setVisibility(View.GONE);
+        tableRow.addView(textView);
+        
         tableLayout.addView(tableRow);
 	}
 	
@@ -454,6 +405,48 @@ public class DisplayItemActivity extends DisplayTableActivity {
 		}
 	}
 	
+	protected void updateRow(TableRow tr)
+	{
+		
+    	
+    	Item item = getItemFromTableRow(tr);
+    	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+    	//displayToast(keys);
+    	
+
+    	try 
+    	{
+    		db.updateItem(item);	
+    	}
+    	catch (Exception e)
+    	{
+    		displayMessageDialog(e.getMessage(),e.toString());
+    	}
+    	
+    	//displayToast(keys);
+    	//send click through to parent.
+	}
+	
+	protected void saveNewRow(TableRow tr) 
+	{
+
+    	Item item = getItemFromTableRow(tr);
+    	
+    	
+    	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+
+    	try 
+    	{
+    		db.addItem(item);	
+    	}
+    	catch (Exception e)
+    	{
+    		displayMessageDialog(e.getMessage(),e.toString());
+    	}
+    	
+    	drawTable();
+		
+	}
 
 
 

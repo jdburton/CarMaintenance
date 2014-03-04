@@ -31,12 +31,19 @@ public class MainActivity extends Activity {
 	    db.deleteAllRecordsFromTable(Vehicle.TABLE_NAME);
 	    db.deleteAllRecordsFromTable(Receipt.TABLE_NAME);
 	    db.deleteAllRecordsFromTable(Work.TABLE_NAME);
-		db.addVehicle(new Vehicle(0,"Chevette"));
-		db.addVehicle(new Vehicle(0,"DeLorian"));
-		db.addItem(new Item(0,"Blinker Fluid",10000,12));
-		db.addItem(new Item(0,"Muffler bearings",20000,24));
-		db.addItem(new Item(0,"Flux Capacitor",75000,60));
-		db.addLocation(new Location(0,"Jiffy Lube"));
+	    try
+	    {
+			db.addVehicle(new Vehicle(0,"Chevette"));
+			db.addVehicle(new Vehicle(0,"DeLorian"));
+			db.addItem(new Item(0,"Blinker Fluid",10000,12));
+			db.addItem(new Item(0,"Muffler bearings",20000,24));
+			db.addItem(new Item(0,"Flux Capacitor",75000,60));
+			db.addLocation(new Location(0,"Jiffy Lube"));
+	    }
+	    catch (Exception e)
+	    {
+	    
+	    }
 		Location l = null;
 		try {
 		l = db.getLocation("Jiffy Lube");
@@ -48,7 +55,14 @@ public class MainActivity extends Activity {
 		}
 		
 		//this(0,file, location_id, date, amount, mileage,  notes)
-		db.addReceipt(new Receipt(0,"none",l.getID(),"02/04/2012",1999,90210,"Replaced blinker fluid. Checked muffler bearings." ));
+		try
+		{
+			db.addReceipt(new Receipt(0,"none",l.getID(),"02/04/2012",1999,90210,"Replaced blinker fluid. Checked muffler bearings." ));
+		}
+		catch (Exception e)
+		{
+		
+		}
 		Receipt r = null;
 		Vehicle v = null;
 		Item it = null;
@@ -65,9 +79,14 @@ public class MainActivity extends Activity {
 			displayMessageDialog("SQLite fail",e.getMessage());
 			return;
 		}
+		try
+		{
+			db.addWork(new Work(0,v.getID(),it.getID(),r.getID(),"50ML Blinker Fluid"));
+			db.addWork(new Work(0,v.getID(),it2.getID(),r.getID(),"Muffler bearings fine"));
+		}
+		catch (Exception e)
+		{}
 		
-		db.addWork(new Work(0,v.getID(),it.getID(),r.getID(),"50ML Blinker Fluid"));
-		db.addWork(new Work(0,v.getID(),it2.getID(),r.getID(),"Muffler bearings fine"));
 	}
 	
 	@Override
@@ -82,6 +101,8 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		
 	}
 	
 	/**

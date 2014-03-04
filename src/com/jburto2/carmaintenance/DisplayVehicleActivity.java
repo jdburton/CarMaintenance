@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
@@ -18,6 +19,7 @@ import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -71,6 +73,7 @@ public class DisplayVehicleActivity extends DisplayTableActivity  {
 
 	protected void drawTable(){
 		
+		super.drawTable();
 		
 		// Get the Table Layout 
 	    TableLayout tableLayout = (TableLayout) findViewById(R.id.tlGridTable);
@@ -103,14 +106,30 @@ public class DisplayVehicleActivity extends DisplayTableActivity  {
         
 
         // 3
+
         textView = TableLayoutUtils.createTextView(this, "Save", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        
+	    if (autoSave)
+        {
+        	textView.setVisibility(View.GONE);
+        }
+        else
+        {
+        	textView.setVisibility(View.VISIBLE);
+        }
         tableRow.addView(textView);
-	
+
+
         // 4
 //        textView = TableLayoutUtils.createTextView(this, "Clear", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
 //        tableRow.addView(textView);
         // 5
         textView = TableLayoutUtils.createTextView(this, "Delete", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        tableRow.addView(textView);
+        
+        // Must be last 
+        textView = TableLayoutUtils.createTextView(this, "New Row", 15,TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
+        textView.setVisibility(View.GONE);
         tableRow.addView(textView);
         
         // Override the on click listener to do nothing.
@@ -163,44 +182,14 @@ public class DisplayVehicleActivity extends DisplayTableActivity  {
         	// 1
             textView = TableLayoutUtils.createTextView(this, vehicle.getVehicleDescription(), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
             tableRow.addView(textView);
-            
-	        ImageButton button = new ImageButton(this);
-	        button.setImageResource(android.R.drawable.ic_menu_save);
-	        button.setId(i*NUMBER_BUTTONS);
-	        
-	        button.setOnClickListener(new View.OnClickListener(){
-	            public void onClick(View v){
-	            	
-	            	 //save button.
-	            	
-	            	
-	            	// Get the table row
-	            	TableRow tr = (TableRow)v.getParent();
-	            	
-	            	Vehicle vehicle = getVehicleFromTableRow(tr);
-	            	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
-	            	displayToast(keys);
-	            	
 
-	            	try 
-	            	{
-	            		db.updateVehicle(vehicle);	
-	            	}
-	            	catch (Exception e)
-	            	{
-	            		displayMessageDialog(e.getMessage(),e.toString());
-	            	}
-	            	
-	            	displayToast(keys);
-	            	//send click through to parent.
-	            	tr.performClick();
-	            	
-	            	
-	            }
-	        
-	            
-	        });
-	        tableRow.addView(button);
+            addSaveFunctionToRow(tableRow);
+            
+            ImageButton button;
+            /// if autosave is enabled, must override the row listener. Otherwise, enable the button.
+
+
+
 //	        button = new ImageButton(this);
 //	        button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
 //	        button.setId(i*NUMBER_BUTTONS+1);
@@ -264,6 +253,11 @@ public class DisplayVehicleActivity extends DisplayTableActivity  {
 	        });
 	        
 	        tableRow.addView(button);
+	        
+	        // New Row Indicator = Must be last 
+	        textView = TableLayoutUtils.createTextView(this, "false", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+	        textView.setVisibility(View.GONE);
+	        tableRow.addView(textView);
 
 	        tableLayout.addView(tableRow);
 	        
@@ -279,6 +273,9 @@ public class DisplayVehicleActivity extends DisplayTableActivity  {
 	
 	@SuppressLint("NewApi")
 	protected void addNewRow() {
+		
+	    super.addNewRow();
+		
 		// Get the Table Layout 
 	    TableLayout tableLayout = (TableLayout) findViewById(R.id.tlGridTable);
 	    //TODO: Next 3 lines in XML
@@ -301,49 +298,12 @@ public class DisplayVehicleActivity extends DisplayTableActivity  {
         EditText editText = TableLayoutUtils.createEditText(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
         tableRow.addView(editText);
         
-        ImageButton button = new ImageButton(this);
+        addSaveFunctionToRow(tableRow);
         
-        button.setImageResource(android.R.drawable.ic_menu_save);
-        //button.setId(i*NUMBER_BUTTONS);
-        
-        button.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-            	
-            	 //save button.
-            	
-            	
-            	// Get the table row
-            	TableRow tr = (TableRow)v.getParent();
-            	
+        ImageButton button;
 
-            	Vehicle vehicle = getVehicleFromTableRow(tr);
-            	
-            	
-            	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
-            	displayToast(keys);
-            	
-            	
-            	
-
-            	try 
-            	{
-            		db.addVehicle(vehicle);	
-            	}
-            	catch (Exception e)
-            	{
-            		displayMessageDialog(e.getMessage(),e.toString());
-            	}
-            	
-            	displayToast(keys);
-            	//send click through to parent.
-            	tr.performClick();
-            	drawTable();
-            	
-            }
         
-            
-        });
-        tableRow.addView(button);
+      
 //        button = new ImageButton(this);
 //        button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
 //        
@@ -390,6 +350,11 @@ public class DisplayVehicleActivity extends DisplayTableActivity  {
         });
         tableRow.addView(button);
         
+        // New Row Indicator = Must be last 
+        textView = TableLayoutUtils.createTextView(this, "true", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+        textView.setVisibility(View.GONE);
+        tableRow.addView(textView);
+        
         tableLayout.addView(tableRow);
 	}
 	
@@ -422,6 +387,57 @@ public class DisplayVehicleActivity extends DisplayTableActivity  {
 		}
 	}
 	
+	protected void saveNewRow(TableRow tr)
+      {
+        	// Get the table row
+    
+        	Vehicle vehicle = getVehicleFromTableRow(tr);
+        	
+        	
+        	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+        	//displayToast(keys);
+        	try 
+        	{
+        		db.addVehicle(vehicle);	
+        	}
+        	catch (android.database.sqlite.SQLiteConstraintException e)
+        	{
+        		displayMessageDialog("Could not add new vehicle","Vehicle "+keys+" is already in the database.");
+        	}
+        	catch (Exception e)
+        	{
+        		displayMessageDialog(e.getMessage(),e.toString());
+        	}
+        	
+        	//displayToast(keys);
+        	//send click through to parent.
+        	tr.performClick();
+        	drawTable();
+      }
+	
+	protected void updateRow(TableRow tr)
+    {
+    	Vehicle vehicle = getVehicleFromTableRow(tr);
+    	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+    	displayToast(keys);
+    	
+
+    	try 
+    	{
+    		db.updateVehicle(vehicle);	
+    	}
+    	catch (Exception e)
+    	{
+    		displayMessageDialog(e.getMessage(),e.toString());
+    	}
+    	
+    	//displayToast(keys);
+    	//send click through to parent.
+    	tr.performClick();
+    	
+    	
+    }
+
 
 
     

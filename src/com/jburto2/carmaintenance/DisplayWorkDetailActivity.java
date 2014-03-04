@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -102,5 +103,30 @@ public class DisplayWorkDetailActivity extends DisplayDetailActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	public void onVehicleButtonClick(View v) {
+		
+
+	    Intent intent = new Intent(this, DisplayVehicleActivity.class);
+	    startActivity(intent);
+
+	}
+	public void onReceiptButtonClick(View v) {
+		
+
+	    Intent intent = new Intent(this, DisplayReceiptActivity.class);
+	    startActivity(intent);
+
+	}
+	
+	public void onItemButtonClick(View v) {
+		
+
+	    Intent intent = new Intent(this, DisplayItemActivity.class);
+	    startActivity(intent);
+
+	}
+	
+	
 
 }

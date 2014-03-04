@@ -127,6 +127,8 @@ AdapterView.OnItemSelectedListener {
 
 	protected void drawTable(){
 		
+		super.drawTable();
+
 		
 		// Get the Table Layout 
 	    TableLayout tableLayout = (TableLayout) findViewById(R.id.tlGridTable);
@@ -203,15 +205,30 @@ AdapterView.OnItemSelectedListener {
         textView = TableLayoutUtils.createTextView(this, "Receipt Uri", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         tableRow.addView(textView);
 
-        // 8
+        // 9
         textView = TableLayoutUtils.createTextView(this, "Save", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        
+	    if (autoSave)
+        {
+        	textView.setVisibility(View.GONE);
+        }
+        else
+        {
+        	textView.setVisibility(View.VISIBLE);
+        }
         tableRow.addView(textView);
-	
+
+		
         // 9
         //textView = TableLayoutUtils.createTextView(this, "Edit", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         //tableRow.addView(textView);
         // 10
         textView = TableLayoutUtils.createTextView(this, "Delete", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        tableRow.addView(textView);
+        
+        // New Row Indicator = Must be last 
+        textView = TableLayoutUtils.createTextView(this, "New Row", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+        textView.setVisibility(View.GONE);
         tableRow.addView(textView);
         
         // Override the on click listener to do nothing.
@@ -344,47 +361,12 @@ AdapterView.OnItemSelectedListener {
             textView = TableLayoutUtils.createTextView(this, singlereceipt.getFile(), 15, Color.rgb(51, 51, 51),Color.rgb(200, 200, 200));
             tableRow.addView(textView);
             
+            addSaveFunctionToRow(tableRow);
             
             
-	        ImageButton button = new ImageButton(this);
+	        ImageButton button; 
 	        
-	        button.setImageResource(android.R.drawable.ic_menu_save);
-	        button.setId(i*NUMBER_BUTTONS);
-	        
-	        button.setOnClickListener(new View.OnClickListener(){
-	            public void onClick(View v){
-	            	
-	            	 //save button.
-	            	
-	            	
-	            	// Get the table row
-	            	TableRow tr = (TableRow)v.getParent();
-	            	
-	            	Receipt receipt = getReceiptFromTableRow(tr);
-	            	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
-	            	//(keys);
-	            	
 
-	            	try 
-	            	{
-	            		db.updateReceipt(receipt);	
-	            	}
-	            	catch (Exception e)
-	            	{
-	            		displayMessageDialog(e.getMessage(),e.toString());
-	            	}
-	            	
-	            	//(keys);
-	            	//send click through to parent.
-	            	tr.performClick();
-	            	
-	            	
-	            }
-	        
-	            
-	        });
-	        tableRow.addView(button);
-	        
 //	        button = new ImageButton(this);
 //	        button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
 //	        button.setId(i*NUMBER_BUTTONS+1);
@@ -448,6 +430,11 @@ AdapterView.OnItemSelectedListener {
 	        });
 	        
 	        tableRow.addView(button);
+	        
+	        // New Row Indicator = Must be last 
+	        textView = TableLayoutUtils.createTextView(this, "false", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+	        textView.setVisibility(View.GONE);
+	        tableRow.addView(textView);
 
 	        tableLayout.addView(tableRow);
 	        
@@ -463,6 +450,8 @@ AdapterView.OnItemSelectedListener {
 	
 	@SuppressLint("NewApi")
 	protected void addNewRow() {
+		
+		super.addNewRow();
 		// Get the Table Layout 
 	    TableLayout tableLayout = (TableLayout) findViewById(R.id.tlGridTable);
 	    //TODO: Next 3 lines in XML
@@ -561,8 +550,6 @@ AdapterView.OnItemSelectedListener {
         // 6
         editText = TableLayoutUtils.createEditText(this, "0", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
         tableRow.addView(editText);
-
-
         
         // 7
         editText = TableLayoutUtils.createEditText(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
@@ -571,60 +558,10 @@ AdapterView.OnItemSelectedListener {
         // 8
         textView = TableLayoutUtils.createTextView(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
         tableRow.addView(textView);
-        
-        ImageButton button = new ImageButton(this);
-        
-        button.setImageResource(android.R.drawable.ic_menu_save);
-        //button.setId(i*NUMBER_BUTTONS);
-        
-        button.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-            	
-            	 //save button.
-            	
-            	
-            	// Get the table row
-            	TableRow tr = (TableRow)v.getParent();
-            	
-            	//fill the hidden fields from the database.
-            	try {
-            		fillReceiptIdFieldsFromSpinners(tr);
-            	}
-            	catch (Exception e)
-            	{
-            		displayMessageDialog(e.toString(),e.getMessage());
-            		tr.performClick();
-            		return;
-            	}
 
-            	Receipt receipt = getReceiptFromTableRow(tr);
-            	
-            	
-            	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
-            	//(keys);
-            	
-            	
-            	
+        addSaveFunctionToRow(tableRow);
+        ImageButton button;
 
-            	try 
-            	{
-            		db.addReceipt(receipt);	
-            	}
-            	catch (Exception e)
-            	{
-            		displayMessageDialog(e.getMessage(),e.toString());
-            	}
-            	
-            	//(keys);
-            	//send click through to parent.
-            	tr.performClick();
-            	drawTable();
-            	
-            }
-        
-            
-        });
-        tableRow.addView(button);
 //        button = new ImageButton(this);
 //        button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
 //        
@@ -671,7 +608,13 @@ AdapterView.OnItemSelectedListener {
         });
         tableRow.addView(button);
         
+        // New Row Indicator = Must be last 
+        textView = TableLayoutUtils.createTextView(this, "true", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+        textView.setVisibility(View.GONE);
+        tableRow.addView(textView);
+        
         tableLayout.addView(tableRow);
+        
 	}
 	
 	private void fillReceiptIdFieldsFromSpinners(TableRow tr) throws Exception
@@ -733,6 +676,59 @@ AdapterView.OnItemSelectedListener {
 			db.deleteAllRecordsFromTable(Receipt.TABLE_NAME);
 			drawTable();
 		}
+	}
+	
+	protected void updateRow(TableRow tr)
+	{
+    	Receipt receipt = getReceiptFromTableRow(tr);
+    	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+    	//(keys);
+    	
+
+    	try 
+    	{
+    		db.updateReceipt(receipt);	
+    	}
+    	catch (Exception e)
+    	{
+    		displayMessageDialog(e.getMessage(),e.toString());
+    	}
+    	
+
+	}
+	
+	protected void saveNewRow(TableRow tr)
+	{
+	  	//fill the hidden fields from the database.
+		try {
+			fillReceiptIdFieldsFromSpinners(tr);
+		}
+		catch (Exception e)
+		{
+			displayMessageDialog(e.toString(),e.getMessage());
+			tr.performClick();
+			return;
+		}
+	
+		Receipt receipt = getReceiptFromTableRow(tr);
+		
+		
+		String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+		//(keys);
+		
+		
+		
+	
+		try 
+		{
+			db.addReceipt(receipt);	
+		}
+		catch (Exception e)
+		{
+			displayMessageDialog(e.getMessage(),e.toString());
+		}
+		
+		drawTable();
 	}
 	
 	public void onLocationButtonClick(View v) {

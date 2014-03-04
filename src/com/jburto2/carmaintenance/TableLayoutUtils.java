@@ -37,6 +37,18 @@ public class TableLayoutUtils
 	
 	private static boolean dialogResult = false;
 	private static String dateString = null;
+	public static final int DARK_GRAY = Color.rgb(51, 51, 51);
+	public static final int WHITE = Color.rgb(255, 255, 255);
+	public static final int LIGHT_GRAY = Color.rgb(200, 200, 200);
+	public static final int BLUE = Color.rgb(0, 0, 255);
+	public static final int LIGHT_BLUE = Color.rgb(200, 200, 255);
+	public static final int GREEN = Color.rgb(0, 255, 0);
+	public static final int LIGHT_GREEN = Color.rgb(200, 255, 200);
+	public static final int RED = Color.rgb(255, 0, 255);
+	public static final int LIGHT_RED = Color.rgb(255, 200, 200);
+	public static int HIGHLIGHT_COLOR = BLUE;
+	public static int SPINNER_COLOR = LIGHT_BLUE;
+	
 	/**
 	 * @fn public static TableRow createTableRow(Context context)
 	 * Creates a table row with no margins and no padding that will expand to the entire length of the parent TableLayout.
@@ -53,7 +65,7 @@ public class TableLayoutUtils
     	tableRow.setFocusable(true);
     	tableRow.setClickable(true);
     	tableRow.requestDisallowInterceptTouchEvent(false);
-    	//tableRow.setBackgroundColor(Color.rgb(51,51,51));
+    	//tableRow.setBackgroundColor(DARK_GRAY);
 
     	tableRow.setOnClickListener(new View.OnClickListener() {
 			
@@ -64,6 +76,8 @@ public class TableLayoutUtils
 				// get the table Row
 				//TableRow tr = (TableRow)v;
 				// get the table layout above
+				
+
 				ViewGroup tl = (ViewGroup)v.getParent();
 				
 				for (int index = 0; index < tl.getChildCount(); index++)
@@ -71,12 +85,12 @@ public class TableLayoutUtils
 					// unselect all children
 					View unselected = tl.getChildAt(index);
 					unselected.setSelected(false);
-					unselected.setBackgroundColor(Color.rgb(51, 51, 51));
+					unselected.setBackgroundColor(DARK_GRAY);
 				}
 				
 				
 				//displayToast(context,"Table row "+v.getId()+"clicked");
-				v.setBackgroundColor(Color.rgb(0,0,255));
+				v.setBackgroundColor(HIGHLIGHT_COLOR);
 				v.setSelected(true);
 				
 
@@ -338,7 +352,7 @@ public class TableLayoutUtils
      * 
      */
     
-    public static void displayMessageDialog(Context context, String message, String title)
+    public static void displayMessageDialog(Context context, String title, String message)
     {
     	
 

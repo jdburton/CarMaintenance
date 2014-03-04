@@ -102,7 +102,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
  
     // Adding new vehicle
-    void addVehicle(Vehicle vehicle) {
+    void addVehicle(Vehicle vehicle) throws Exception {
         SQLiteDatabase db = this.getWritableDatabase();
  
         ContentValues values = new ContentValues();
@@ -110,7 +110,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(Vehicle.KEY_VEHICLEDESCRIPTION, vehicle.getVehicleDescription()); // Vehicle description
  
         // Inserting Row
-        db.insert(Vehicle.TABLE_NAME, null, values);
+        db.insertOrThrow(Vehicle.TABLE_NAME, null, values);
          // Closing database connection
     }
 
@@ -231,7 +231,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
  
     // Adding new item
-    void addItem(Item item) {
+    void addItem(Item item) throws Exception {
         SQLiteDatabase db = this.getWritableDatabase();
  
         ContentValues values = new ContentValues();
@@ -242,7 +242,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(Item.KEY_ITEMTIMEINTERVAL, item.getTimeInterval());
  
         // Inserting Row
-        db.insert(Item.TABLE_NAME, null, values);
+        db.insertOrThrow(Item.TABLE_NAME, null, values);
          // Closing database connection
     }
  
@@ -374,7 +374,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
  
     // Adding new receipt
-    void addReceipt(Receipt receipt) {
+    void addReceipt(Receipt receipt)  throws Exception {
         SQLiteDatabase db = this.getWritableDatabase();
  
         ContentValues values = new ContentValues();
@@ -387,7 +387,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(Receipt.KEY_RECEIPTNOTES, receipt.getNotes());
  
         // Inserting Row
-        db.insert(Receipt.TABLE_NAME, null, values);
+        db.insertOrThrow(Receipt.TABLE_NAME, null, values);
          // Closing database connection
     }
  
@@ -570,7 +570,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
     
     // Adding new location
-    void addLocation(Location location) {
+    void addLocation(Location location) throws Exception {
         SQLiteDatabase db = this.getWritableDatabase();
  
         ContentValues values = new ContentValues();
@@ -578,7 +578,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(Location.KEY_LOCATIONDESCRIPTION, location.getLocationDescription()); // Location description
  
         // Inserting Row
-        db.insert(Location.TABLE_NAME, null, values);
+        db.insertOrThrow(Location.TABLE_NAME, null, values);
          // Closing database connection
     }
 
@@ -699,7 +699,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
  
     // Adding new work
-    void addWork(Work work) {
+    void addWork(Work work) throws Exception {
         SQLiteDatabase db = this.getWritableDatabase();
  
         ContentValues values = new ContentValues();
@@ -710,7 +710,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(Work.KEY_WORKNOTES, work.getNotes()); // Work description
         
         // Inserting Row
-        db.insert(Work.TABLE_NAME, null, values);
+        db.insertOrThrow(Work.TABLE_NAME, null, values);
          // Closing database connection
     }
  
