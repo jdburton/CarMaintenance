@@ -3,6 +3,7 @@ package com.jburto2.carmaintenance;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -98,10 +99,15 @@ public class DisplayInfoActivity extends Activity {
 	 */
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case android.R.id.home:
-
-			NavUtils.navigateUpFromSameTask(this);
-			return true;
+			case android.R.id.home:
+	
+				NavUtils.navigateUpFromSameTask(this);
+				return true;
+		    
+		    case R.id.action_settings:
+		    	Intent intent = new Intent(this, SettingsActivity.class);
+		    	startActivity(intent);
+		    	break;
 		}
 		return super.onOptionsItemSelected(item);
 	}

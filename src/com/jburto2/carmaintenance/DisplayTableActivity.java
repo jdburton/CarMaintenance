@@ -1,28 +1,19 @@
 package com.jburto2.carmaintenance;
 
 
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
-import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
@@ -39,6 +30,9 @@ public abstract class DisplayTableActivity extends Activity  {
 	
 	public DatabaseHandler db = new DatabaseHandler(this);
 	protected boolean autoSave = false;
+	protected int colorTheme = TableLayoutUtils.HIGHLIGHT_COLOR;
+	
+	
 
 	
 	@Override
@@ -52,21 +46,35 @@ public abstract class DisplayTableActivity extends Activity  {
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+	    /// Preferences from http://developer.android.com/guide/topics/data/data-storage.html#pref
+	    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+	    autoSave = settings.getBoolean(SettingsActivity.KEY_AUTOSAVE, false);
+	    TableLayoutUtils.setHighlightColor(Integer.parseInt(settings.getString(SettingsActivity.KEY_HIGHLIGHT_COLOR, "2")));
+	    colorTheme = TableLayoutUtils.HIGHLIGHT_COLOR;
 
 
 	}
 	
+	@Override
+    protected void onResume() {
+        super.onResume();
 
+        // if any settings have changed, redraw the table on resume.
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        if (autoSave != settings.getBoolean(SettingsActivity.KEY_AUTOSAVE, false) || colorTheme != TableLayoutUtils.HIGHLIGHT_COLOR )
+        {
+	        drawTable();
+        }
+    }
 
 	
 	@SuppressLint("NewApi")
 
 	protected void drawTable(){
-	    /// Preferences from http://developer.android.com/guide/topics/data/data-storage.html#pref
-	    SharedPreferences settings = getSharedPreferences("CarMaintenance",MODE_PRIVATE);
-	    //boolean autoSave = settings.valueOf("autoSave", false);
-		
+	    //displayToast("Autosave is "+autoSave);
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+	    autoSave = settings.getBoolean(SettingsActivity.KEY_AUTOSAVE, false);
+	    
 		
 
 	}
@@ -75,19 +83,14 @@ public abstract class DisplayTableActivity extends Activity  {
 	protected void addNewRow() {
 		
 	    /// Preferences from http://developer.android.com/guide/topics/data/data-storage.html#pref
-	    SharedPreferences settings = getSharedPreferences("CarMaintenance",MODE_PRIVATE);
-	    //boolean autoSave = settings.valueOf("autoSave", false);
+	    SharedPreferences settings =  PreferenceManager.getDefaultSharedPreferences(this);
+	    autoSave = settings.getBoolean(SettingsActivity.KEY_AUTOSAVE, false);
 		
 	}
 	
 	
 
-	
 
-	protected void deleteAllRows()
-	{
-		
-	}
 	
 
 
@@ -138,6 +141,12 @@ public abstract class DisplayTableActivity extends Activity  {
 	    case R.id.action_delete:
 	    	deleteAllRows();
 	    	break;
+	    	
+		    
+	    case R.id.action_settings:
+	    	intent = new Intent(this, SettingsActivity.class);
+	    	startActivity(intent);
+	    	break;
 	    }
 	    return true;
 	}
@@ -169,15 +178,14 @@ public abstract class DisplayTableActivity extends Activity  {
 		TableLayoutUtils.displayMessageDialog(this,title,message);
     }
     
-    protected void updateRow(TableRow tr)
-    {
-    	
-    }
+    protected abstract void updateRow(TableRow tr);
     
-    protected void saveNewRow(TableRow tr) 
-    {
-    	
-    }
+    protected abstract void saveNewRow(TableRow tr);
+
+    protected abstract void deleteAllRows();
+
+    
+
 
     protected void addSaveFunctionToRow(TableRow tableRow)
     {

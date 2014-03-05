@@ -71,6 +71,7 @@ AdapterView.OnItemSelectedListener {
 		// Apply the adapter to the spinner
 		spinner.setAdapter(adapter);
 		spinner.setOnItemSelectedListener(this);
+		//spinner.setBackgroundColor(TableLayoutUtils.SPINNER_COLOR);
 		
 		
 		drawTable();
@@ -124,6 +125,7 @@ AdapterView.OnItemSelectedListener {
 	    tableLayout.setShowDividers(TableLayout.SHOW_DIVIDER_BEGINNING | TableLayout.SHOW_DIVIDER_END | TableLayout.SHOW_DIVIDER_MIDDLE);
 	    tableLayout.setDividerPadding(2);
 	    tableLayout.removeAllViews();
+	    
 	    
 	    TextView vehicleID = (TextView) findViewById(R.id.vehicleIDTextView);
 	    
@@ -451,7 +453,7 @@ AdapterView.OnItemSelectedListener {
             {
             	vehicleArray[i] = vehicleList.get(i).getVehicleDescription();
             }
-            spinner = TableLayoutUtils.createSpinner(this, vehicleArray, TableLayoutUtils.LIGHT_BLUE );
+            spinner = TableLayoutUtils.createSpinner(this, vehicleArray);
             tableRow.addView(spinner);
     	}
     	else
@@ -472,7 +474,7 @@ AdapterView.OnItemSelectedListener {
         {
         	itemArray[i] = itemList.get(i).getItemDescription();
         }
-        spinner = TableLayoutUtils.createSpinner(this, itemArray, TableLayoutUtils.LIGHT_BLUE );
+        spinner = TableLayoutUtils.createSpinner(this, itemArray);
         tableRow.addView(spinner);
         
 
@@ -483,7 +485,7 @@ AdapterView.OnItemSelectedListener {
         {
         	receiptArray[i] = receiptList.get(i).getFile();
         }
-        spinner = TableLayoutUtils.createSpinner(this, receiptArray, TableLayoutUtils.WHITE );
+        spinner = TableLayoutUtils.createSpinner(this, receiptArray);
         tableRow.addView(spinner);
         
         // 7

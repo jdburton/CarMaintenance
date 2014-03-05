@@ -88,20 +88,27 @@ public abstract class DisplayDetailActivity extends Activity {
 	 */
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case android.R.id.home:
-		case R.id.action_cancel:
+			case android.R.id.home:
+				NavUtils.navigateUpFromSameTask(this);
+				break;
 
-
-			NavUtils.navigateUpFromSameTask(this);
-			break;
-		case R.id.action_save:
-			TableLayoutUtils.displayToast(this, "Saving...");
-			break;
-			
-	    case R.id.action_about:
-	    	Intent intent = new Intent(this, DisplayInfoActivity.class);
-	    	startActivity(intent);
-	    	break;
+			case R.id.action_cancel:
+				
+				super.onBackPressed();
+				break;
+			case R.id.action_save:
+				TableLayoutUtils.displayToast(this, "Saving...");
+				break;
+				
+		    case R.id.action_about:
+		    	Intent intent = new Intent(this, DisplayInfoActivity.class);
+		    	startActivity(intent);
+		    	break;
+			    
+		    case R.id.action_settings:
+		    	intent = new Intent(this, SettingsActivity.class);
+		    	startActivity(intent);
+		    	break;
 		}
 		return super.onOptionsItemSelected(item);
 	}

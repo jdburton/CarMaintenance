@@ -82,7 +82,7 @@ public class DisplayVehicleActivity extends DisplayTableActivity  {
 	    tableLayout.setShowDividers(TableLayout.SHOW_DIVIDER_BEGINNING | TableLayout.SHOW_DIVIDER_END | TableLayout.SHOW_DIVIDER_MIDDLE);
 	    tableLayout.setDividerPadding(2);
 	    tableLayout.removeAllViews();
-	    
+	   
 
         
         

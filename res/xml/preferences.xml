@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:title="@string/settings">
+    
+    <CheckBoxPreference
+        android:key="autoSave"
+        android:title="@string/autosave"
+        android:summary="@string/autosaveDescription"
+        android:defaultValue="false" />
+    <ListPreference
+        
+        android:key="highlightColor"
+        android:title="@string/highlight"
+        android:dialogTitle="@string/highlightColorTitle"
+        android:entries="@array/highlightColorEntries"
+        android:entryValues="@array/highlightColorValues"
+        android:defaultValue="@string/highlightColorDefault" />
+</PreferenceScreen>

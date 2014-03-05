@@ -217,6 +217,11 @@ public class MainActivity extends Activity {
 	    	startActivity(intent);
 	    	break;
 	    
+	    case R.id.action_settings:
+	    	intent = new Intent(this, SettingsActivity.class);
+	    	startActivity(intent);
+	    	break;
+	    	
 	    case R.id.create_data:
 	    	createData();
 	    	break;

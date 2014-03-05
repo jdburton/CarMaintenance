@@ -138,6 +138,7 @@ AdapterView.OnItemSelectedListener {
 	    tableLayout.setDividerPadding(2);
 	    tableLayout.removeAllViews();
 	    
+	    
 	    TextView locationID = (TextView) findViewById(R.id.locationIDTextView);
 	    
 	    int vid = -1;
@@ -496,7 +497,7 @@ AdapterView.OnItemSelectedListener {
             {
             	locationArray[i] = locationList.get(i).getLocationDescription();
             }
-            spinner = TableLayoutUtils.createSpinner(this, locationArray, Color.rgb(225, 225, 255) );
+            spinner = TableLayoutUtils.createSpinner(this, locationArray);
             tableRow.addView(spinner);
     	}
     	else

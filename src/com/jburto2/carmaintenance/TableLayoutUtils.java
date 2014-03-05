@@ -44,10 +44,24 @@ public class TableLayoutUtils
 	public static final int LIGHT_BLUE = Color.rgb(200, 200, 255);
 	public static final int GREEN = Color.rgb(0, 255, 0);
 	public static final int LIGHT_GREEN = Color.rgb(200, 255, 200);
-	public static final int RED = Color.rgb(255, 0, 255);
+	public static final int RED = Color.rgb(255, 0, 0);
 	public static final int LIGHT_RED = Color.rgb(255, 200, 200);
+	public static final int MAGENTA = Color.rgb(255, 0, 255);
+	public static final int LIGHT_MAGENTA = Color.rgb(255, 200, 255);
+	public static final int YELLOW = Color.rgb(255, 255, 0);
+	public static final int LIGHT_YELLOW = Color.rgb(255, 255, 200);
+	public static final int CYAN = Color.rgb(0, 255, 255);
+	public static final int LIGHT_CYAN = Color.rgb(200, 255, 255);
+	
 	public static int HIGHLIGHT_COLOR = BLUE;
 	public static int SPINNER_COLOR = LIGHT_BLUE;
+	public static final int OPTION_RED = 0;
+	public static final int OPTION_GREEN = 1;
+	public static final int OPTION_BLUE = 2;
+	public static final int OPTION_MAGENTA = 3;
+	public static final int OPTION_YELLOW = 4;
+	public static final int OPTION_CYAN = 5;
+	
 	
 	/**
 	 * @fn public static TableRow createTableRow(Context context)
@@ -262,6 +276,18 @@ public class TableLayoutUtils
         
         return editText;
 	}
+	/**
+	 * @fn public static Spinner createSpinner(Context context, String[] spinnerList,	int backgroundColor)
+	 * @brief Creates a Spinner object with default background.
+	 * @param context 
+	 * @param spinnerlist list of possible values for the spinner
+	 * @return Created Spinner Object.
+	 */
+	
+	public static Spinner createSpinner(Context context, String[] spinnerList)
+	{
+		return createSpinner(context,spinnerList,SPINNER_COLOR);
+	}
 	
 	/**
 	 * @fn public static Spinner createSpinner(Context context, String[] spinnerList,	int backgroundColor)
@@ -271,6 +297,7 @@ public class TableLayoutUtils
 	 * @param backgroundColor Numerical representation of color. Use android.graphics.Color.rgb(red,green,blue)
 	 * @return Created Spinner Object.
 	 */
+	
 	
 	public static Spinner createSpinner(Context context, String[] spinnerList,	int backgroundColor)
 	{
@@ -300,6 +327,7 @@ public class TableLayoutUtils
     	// Apply the adapter to the spinner
     	spinner.setAdapter(adapter);
     	//spinner.setOnItemSelectedListener(context);
+    	
     	
         //spinner.setTextColor(textColor);
         /// http://stackoverflow.com/questions/432037/how-do-i-center-text-horizontally-and-vertical-in-a-textview-in-android
@@ -518,6 +546,45 @@ public class TableLayoutUtils
     public static String getDate()
     {
     	return dateString;
+    }
+    
+    public static void setHighlightColor(int colorPreference)
+    {
+    	
+    	switch (colorPreference)
+    	{
+	    	case OPTION_RED:
+	    		HIGHLIGHT_COLOR = RED;
+	    		SPINNER_COLOR=LIGHT_RED;
+	    		break;
+	    		
+	    	case OPTION_GREEN:
+	    		HIGHLIGHT_COLOR = GREEN;
+	    		SPINNER_COLOR=LIGHT_GREEN;
+	    		break;
+	    		
+	    	case OPTION_MAGENTA:
+	    		HIGHLIGHT_COLOR = MAGENTA;
+        		SPINNER_COLOR=LIGHT_MAGENTA;
+        		break;
+
+	    	case OPTION_YELLOW:
+        		HIGHLIGHT_COLOR = YELLOW;
+        		SPINNER_COLOR=LIGHT_YELLOW;
+        		break;
+        		
+        	case OPTION_CYAN:
+        		HIGHLIGHT_COLOR = CYAN;
+        		SPINNER_COLOR=LIGHT_CYAN;
+        		break;
+        		
+        	case OPTION_BLUE:
+        			default:
+            		HIGHLIGHT_COLOR = BLUE;
+            		SPINNER_COLOR=LIGHT_BLUE;
+            		break;
+    	}
+    	
     }
     
 	

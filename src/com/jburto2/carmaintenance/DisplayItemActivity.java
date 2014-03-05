@@ -81,6 +81,7 @@ public class DisplayItemActivity extends DisplayTableActivity {
 	    tableLayout.setDividerPadding(2);
 	    tableLayout.removeAllViews();
 	    
+	    
 
         
         

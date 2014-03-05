@@ -8,6 +8,10 @@
 package com.jburto2.carmaintenance;
 
 public final class R {
+    public static final class array {
+        public static final int highlightColorEntries=0x7f070000;
+        public static final int highlightColorValues=0x7f070001;
+    }
     public static final class attr {
     }
     public static final class dimen {
@@ -17,8 +21,8 @@ public final class R {
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
-        public static final int activity_horizontal_margin=0x7f040000;
-        public static final int activity_vertical_margin=0x7f040001;
+        public static final int activity_horizontal_margin=0x7f050000;
+        public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
         public static final int ic_about=0x7f020000;
@@ -31,70 +35,71 @@ public final class R {
         public static final int ic_work=0x7f020007;
     }
     public static final class id {
-        public static final int Button1=0x7f080034;
-        public static final int Button2=0x7f080035;
-        public static final int Button3=0x7f080036;
-        public static final int Button4=0x7f080037;
-        public static final int Button5=0x7f080038;
-        public static final int Button6=0x7f080039;
-        public static final int action_about=0x7f08003c;
-        public static final int action_add=0x7f08003e;
-        public static final int action_cancel=0x7f08003b;
-        public static final int action_delete=0x7f08003f;
-        public static final int action_save=0x7f08003a;
-        public static final int addressEditText=0x7f08000f;
-        public static final int addressLabelTextView=0x7f080010;
-        public static final int create_data=0x7f08003d;
-        public static final int dateEditText=0x7f080011;
-        public static final int dateLabelTextView=0x7f080012;
-        public static final int dateTextView=0x7f080027;
-        public static final int horizontalView=0x7f080001;
-        public static final int imageButton1=0x7f080013;
-        public static final int imageButton2=0x7f080014;
-        public static final int intervalEditText=0x7f080007;
-        public static final int intervalLabelTextView=0x7f080008;
-        public static final int itemAddButton=0x7f080024;
-        public static final int itemGoButton=0x7f08001c;
-        public static final int itemIdTextView=0x7f08001d;
-        public static final int itemLabelTextView=0x7f08001b;
-        public static final int itemSpinner=0x7f080023;
-        public static final int itemTextView=0x7f08001a;
-        public static final int layout=0x7f080000;
-        public static final int locationGoButton1=0x7f08002f;
-        public static final int locationIDTextView=0x7f08002d;
-        public static final int locationLabelTextView=0x7f08000c;
-        public static final int locationSpinner=0x7f08002c;
-        public static final int locationTextView=0x7f08000b;
-        public static final int locationTextView1=0x7f08002e;
-        public static final int maintenanceTextView=0x7f080020;
-        public static final int mileageEditText=0x7f080005;
-        public static final int mileageLabelTextView=0x7f080006;
-        public static final int mileageTextView=0x7f080028;
-        public static final int noteEditText=0x7f080009;
-        public static final int noteLabelTextView=0x7f08000a;
-        public static final int noteTextView=0x7f080029;
-        public static final int phoneEditText=0x7f08000d;
-        public static final int phoneLabelTextView=0x7f08000e;
-        public static final int receiptAddButton=0x7f080026;
-        public static final int receiptGoButton=0x7f08001e;
-        public static final int receiptIdTextView=0x7f08001f;
-        public static final int receiptLabelTextView=0x7f080004;
-        public static final int receiptSpinner=0x7f080025;
-        public static final int receiptTextView=0x7f080003;
-        public static final int recieptImageView=0x7f080015;
-        public static final int result=0x7f080033;
-        public static final int textView1=0x7f08002a;
-        public static final int tlGridTable=0x7f08002b;
-        public static final int vehicleAddButton=0x7f080022;
-        public static final int vehicleGoButton=0x7f080018;
-        public static final int vehicleGoButton1=0x7f080032;
-        public static final int vehicleIDTextView=0x7f080030;
-        public static final int vehicleIdTextView=0x7f080019;
-        public static final int vehicleLabelTextView=0x7f080017;
-        public static final int vehicleSpinner=0x7f080021;
-        public static final int vehicleTextView=0x7f080016;
-        public static final int vehicleTextView1=0x7f080031;
-        public static final int worklayout=0x7f080002;
+        public static final int Button1=0x7f0a0034;
+        public static final int Button2=0x7f0a0035;
+        public static final int Button3=0x7f0a0036;
+        public static final int Button4=0x7f0a0037;
+        public static final int Button5=0x7f0a0038;
+        public static final int Button6=0x7f0a0039;
+        public static final int action_about=0x7f0a003c;
+        public static final int action_add=0x7f0a003f;
+        public static final int action_cancel=0x7f0a003b;
+        public static final int action_delete=0x7f0a0040;
+        public static final int action_save=0x7f0a003a;
+        public static final int action_settings=0x7f0a003d;
+        public static final int addressEditText=0x7f0a000f;
+        public static final int addressLabelTextView=0x7f0a0010;
+        public static final int create_data=0x7f0a003e;
+        public static final int dateEditText=0x7f0a0011;
+        public static final int dateLabelTextView=0x7f0a0012;
+        public static final int dateTextView=0x7f0a0027;
+        public static final int horizontalView=0x7f0a0001;
+        public static final int imageButton1=0x7f0a0013;
+        public static final int imageButton2=0x7f0a0014;
+        public static final int intervalEditText=0x7f0a0007;
+        public static final int intervalLabelTextView=0x7f0a0008;
+        public static final int itemAddButton=0x7f0a0024;
+        public static final int itemGoButton=0x7f0a001c;
+        public static final int itemIdTextView=0x7f0a001d;
+        public static final int itemLabelTextView=0x7f0a001b;
+        public static final int itemSpinner=0x7f0a0023;
+        public static final int itemTextView=0x7f0a001a;
+        public static final int layout=0x7f0a0000;
+        public static final int locationGoButton1=0x7f0a002f;
+        public static final int locationIDTextView=0x7f0a002d;
+        public static final int locationLabelTextView=0x7f0a000c;
+        public static final int locationSpinner=0x7f0a002c;
+        public static final int locationTextView=0x7f0a000b;
+        public static final int locationTextView1=0x7f0a002e;
+        public static final int maintenanceTextView=0x7f0a0020;
+        public static final int mileageEditText=0x7f0a0005;
+        public static final int mileageLabelTextView=0x7f0a0006;
+        public static final int mileageTextView=0x7f0a0028;
+        public static final int noteEditText=0x7f0a0009;
+        public static final int noteLabelTextView=0x7f0a000a;
+        public static final int noteTextView=0x7f0a0029;
+        public static final int phoneEditText=0x7f0a000d;
+        public static final int phoneLabelTextView=0x7f0a000e;
+        public static final int receiptAddButton=0x7f0a0026;
+        public static final int receiptGoButton=0x7f0a001e;
+        public static final int receiptIdTextView=0x7f0a001f;
+        public static final int receiptLabelTextView=0x7f0a0004;
+        public static final int receiptSpinner=0x7f0a0025;
+        public static final int receiptTextView=0x7f0a0003;
+        public static final int recieptImageView=0x7f0a0015;
+        public static final int result=0x7f0a0033;
+        public static final int textView1=0x7f0a002a;
+        public static final int tlGridTable=0x7f0a002b;
+        public static final int vehicleAddButton=0x7f0a0022;
+        public static final int vehicleGoButton=0x7f0a0018;
+        public static final int vehicleGoButton1=0x7f0a0032;
+        public static final int vehicleIDTextView=0x7f0a0030;
+        public static final int vehicleIdTextView=0x7f0a0019;
+        public static final int vehicleLabelTextView=0x7f0a0017;
+        public static final int vehicleSpinner=0x7f0a0021;
+        public static final int vehicleTextView=0x7f0a0016;
+        public static final int vehicleTextView1=0x7f0a0031;
+        public static final int worklayout=0x7f0a0002;
     }
     public static final class layout {
         public static final int activity_add_item=0x7f030000;
@@ -114,35 +119,43 @@ public final class R {
         public static final int activity_main_land=0x7f03000e;
     }
     public static final class menu {
-        public static final int detail_menu=0x7f070000;
-        public static final int info=0x7f070001;
-        public static final int main=0x7f070002;
-        public static final int table_menu=0x7f070003;
+        public static final int detail_menu=0x7f090000;
+        public static final int info=0x7f090001;
+        public static final int main=0x7f090002;
+        public static final int table_menu=0x7f090003;
     }
     public static final class string {
-        public static final int about_text=0x7f050003;
-        public static final int action_about=0x7f050002;
-        public static final int action_settings=0x7f050001;
-        public static final int app_name=0x7f050000;
-        public static final int create_data=0x7f050016;
-        public static final int item=0x7f050012;
-        public static final int items=0x7f05000e;
-        public static final int location=0x7f050015;
-        public static final int locations=0x7f050010;
-        public static final int receipt=0x7f050014;
-        public static final int receipts=0x7f05000f;
-        public static final int sql_file=0x7f050004;
-        public static final int title_activity_about_message=0x7f050005;
-        public static final int title_activity_item_message=0x7f050007;
-        public static final int title_activity_location_message=0x7f050009;
-        public static final int title_activity_lookup_message=0x7f05000b;
-        public static final int title_activity_receipt_message=0x7f05000a;
-        public static final int title_activity_vehicle_message=0x7f050008;
-        public static final int title_activity_whois_message=0x7f05000c;
-        public static final int title_activity_work_message=0x7f050006;
-        public static final int vehicle=0x7f050011;
-        public static final int vehicles=0x7f05000d;
-        public static final int work=0x7f050013;
+        public static final int about_text=0x7f060002;
+        public static final int action_about=0x7f060001;
+        public static final int app_name=0x7f060000;
+        public static final int autosave=0x7f06001c;
+        public static final int autosaveDescription=0x7f06001d;
+        public static final int blue=0x7f060018;
+        public static final int create_data=0x7f060015;
+        public static final int green=0x7f060017;
+        public static final int highlight=0x7f06001a;
+        public static final int highlightColorDefault=0x7f06001e;
+        public static final int highlightColorTitle=0x7f06001b;
+        public static final int item=0x7f060011;
+        public static final int items=0x7f06000d;
+        public static final int location=0x7f060014;
+        public static final int locations=0x7f06000f;
+        public static final int receipt=0x7f060013;
+        public static final int receipts=0x7f06000e;
+        public static final int red=0x7f060019;
+        public static final int settings=0x7f060016;
+        public static final int sql_file=0x7f060003;
+        public static final int title_activity_about_message=0x7f060004;
+        public static final int title_activity_item_message=0x7f060006;
+        public static final int title_activity_location_message=0x7f060008;
+        public static final int title_activity_lookup_message=0x7f06000a;
+        public static final int title_activity_receipt_message=0x7f060009;
+        public static final int title_activity_vehicle_message=0x7f060007;
+        public static final int title_activity_whois_message=0x7f06000b;
+        public static final int title_activity_work_message=0x7f060005;
+        public static final int vehicle=0x7f060010;
+        public static final int vehicles=0x7f06000c;
+        public static final int work=0x7f060012;
     }
     public static final class style {
         /** 
@@ -166,10 +179,13 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f060000;
+        public static final int AppBaseTheme=0x7f080000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f060001;
+        public static final int AppTheme=0x7f080001;
+    }
+    public static final class xml {
+        public static final int preferences=0x7f040000;
     }
 }
