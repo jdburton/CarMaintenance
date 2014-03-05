@@ -241,7 +241,7 @@ public class MainActivity extends Activity {
     public void displayToast(String message)
     {
     	Context context = this.getApplicationContext();
-		TableLayoutUtils.displayToast(context, message);
+		LayoutUtils.displayToast(context, message);
     }
     
     /**
@@ -256,7 +256,7 @@ public class MainActivity extends Activity {
     public void displayMessageDialog(String message, String title)
     {
     	
-		TableLayoutUtils.displayMessageDialog(this, message, title);
+		LayoutUtils.displayMessageDialog(this, message, title);
     }
     
     

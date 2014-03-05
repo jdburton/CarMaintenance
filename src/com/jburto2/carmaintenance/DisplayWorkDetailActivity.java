@@ -1,13 +1,22 @@
 package com.jburto2.carmaintenance;
 
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -20,6 +29,11 @@ import android.widget.TextView;
  */
 
 public class DisplayWorkDetailActivity extends DisplayDetailActivity {
+	
+	public static final int IMAGE_REQUEST_CODE = 1;
+	private TextView imageTextViewHolder;
+	private Bitmap bitmap;
+	private ImageView imageViewHolder;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -53,12 +67,22 @@ public class DisplayWorkDetailActivity extends DisplayDetailActivity {
         TextView itemField = (TextView) findViewById(R.id.itemTextView);
         TextView receiptField = (TextView) findViewById(R.id.receiptTextView);
 
+        ImageView receiptImage = (ImageView) findViewById(R.id.receiptImageView);
         
         EditText workDescription = (EditText) findViewById(R.id.noteEditText);
 		
         vehicleId.setText(Integer.toString(work.getVehicleID()));
         itemId.setText(Integer.toString(work.getItemID()));
         receiptId.setText(Integer.toString(work.getReceiptID()));
+        //loadImage(receiptLocation,)
+        try
+        {
+        	receiptImage.setImageURI(Uri.parse(receiptLocation));
+        }
+        catch (Exception e)
+        {
+        	System.err.println("Could not load image "+receiptLocation);
+        }
         
         vehicleField.setText(vehicleDescription);
         itemField.setText(itemDescription);
@@ -93,7 +117,7 @@ public class DisplayWorkDetailActivity extends DisplayDetailActivity {
 			NavUtils.navigateUpFromSameTask(this);
 			break;
 		case R.id.action_save:
-			TableLayoutUtils.displayToast(this, "Saving...");
+			LayoutUtils.displayToast(this, "Saving...");
 			break;
 			
 	    case R.id.action_about:
@@ -127,6 +151,53 @@ public class DisplayWorkDetailActivity extends DisplayDetailActivity {
 
 	}
 	
+	// Working with an image picker from http://www.vogella.com/tutorials/AndroidCamera/article.html
+
+	protected void loadImage(String uriString, ImageView imageView) 
+	{
+		try
+		{
+			Uri resource = Uri.parse(uriString);
+			loadImage(resource, imageView);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	protected void loadImage(Uri resource,ImageView imageView) 
+	{
+		InputStream stream  = null;
+		Bitmap bitmap = null;
+		try 
+		{
+
+			stream = getContentResolver().openInputStream(resource);
+			bitmap = BitmapFactory.decodeStream(stream);
+	
+			imageView.setImageBitmap(bitmap);
+			
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		catch (java.lang.OutOfMemoryError e)
+		{
+			e.printStackTrace();
+			System.gc();
+		}
+		finally {
+			
+			if (stream != null)
+				try {
+					stream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		}
+
+	}
 	
 
 }

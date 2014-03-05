@@ -97,7 +97,7 @@ public abstract class DisplayDetailActivity extends Activity {
 				super.onBackPressed();
 				break;
 			case R.id.action_save:
-				TableLayoutUtils.displayToast(this, "Saving...");
+				LayoutUtils.displayToast(this, "Saving...");
 				break;
 				
 		    case R.id.action_about:

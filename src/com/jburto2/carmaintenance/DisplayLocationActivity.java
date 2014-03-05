@@ -84,25 +84,25 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
         
         // Create the labels
     	// 0
-    	TableRow tableRow = TableLayoutUtils.createTableRow(this);
+    	TableRow tableRow = LayoutUtils.createTableRow(this);
     	tableRow.setId(0);
     	
         
     	// 1
-    	TextView textView = TableLayoutUtils.createTextView(this, "Location ID", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+    	TextView textView = LayoutUtils.createTextView(this, "Location ID", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
 
     	// 2
     	
-        textView = TableLayoutUtils.createTextView(this, "Location Descripton", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Location Descripton", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
 
         tableRow.addView(textView);
         
 
         // 3
-        textView = TableLayoutUtils.createTextView(this, "Save", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Save", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         
 	    if (autoSave)
         {
@@ -116,14 +116,14 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
 
 	
         // 4
-//        textView = TableLayoutUtils.createTextView(this, "Clear", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+//        textView = LayoutUtils.createTextView(this, "Clear", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
 //        tableRow.addView(textView);
         // 5
-        textView = TableLayoutUtils.createTextView(this, "Delete", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Delete", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         tableRow.addView(textView);
         
         // New Row Indicator = Must be last 
-        textView = TableLayoutUtils.createTextView(this, "New Row", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+        textView = LayoutUtils.createTextView(this, "New Row", 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
         textView.setVisibility(View.GONE);
         tableRow.addView(textView);
         
@@ -155,7 +155,7 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
         for (int i = 0; i < locationlist.size(); i++){
         	
             // First row: Entered data
-        	tableRow = TableLayoutUtils.createTableRow(this);
+        	tableRow = LayoutUtils.createTableRow(this);
         	tableRow.setId(i+1);
 
         	
@@ -168,14 +168,14 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
         	        	
             // Data
         	// 0
-        	textView = TableLayoutUtils.createTextView(this, Integer.toString(location.getID()), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+        	textView = LayoutUtils.createTextView(this, Integer.toString(location.getID()), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
         	textView.setVisibility(View.GONE);
         	tableRow.addView(textView);
             
 
         	
         	// 1
-            textView = TableLayoutUtils.createTextView(this, location.getLocationDescription(), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+            textView = LayoutUtils.createTextView(this, location.getLocationDescription(), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
             tableRow.addView(textView);
             
             addSaveFunctionToRow(tableRow);
@@ -215,7 +215,7 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
 	            	TableRow tr = (TableRow)v.getParent();
 	            	
 	            	Location location = getLocationFromTableRow(tr);
-	            	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+	            	String keys = LayoutUtils.getKeysFromTableRow(tr);
 	            	//displayToast(keys);
 	            	
 
@@ -247,7 +247,7 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
 	        tableRow.addView(button);
 	        
 	        // New Row Indicator = Must be last 
-	        textView = TableLayoutUtils.createTextView(this, "false", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+	        textView = LayoutUtils.createTextView(this, "false", 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
 	        textView.setVisibility(View.GONE);
 	        tableRow.addView(textView);
 
@@ -275,18 +275,18 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
 	    tableLayout.setDividerPadding(2);
 	    
 
-        TableRow tableRow = TableLayoutUtils.createTableRow(this);
+        TableRow tableRow = LayoutUtils.createTableRow(this);
         
         // Data
     	// 0
-    	TextView textView = TableLayoutUtils.createTextView(this, "-1", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+    	TextView textView = LayoutUtils.createTextView(this, "-1", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
     
         
         // 1
-        EditText editText = TableLayoutUtils.createEditText(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+        EditText editText = LayoutUtils.createEditText(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
         tableRow.addView(editText);
         
         addSaveFunctionToRow(tableRow);
@@ -338,7 +338,7 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
         tableRow.addView(button);
         
         // New Row Indicator = Must be last 
-        textView = TableLayoutUtils.createTextView(this, "true", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+        textView = LayoutUtils.createTextView(this, "true", 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
         textView.setVisibility(View.GONE);
         tableRow.addView(textView);
         
@@ -365,8 +365,8 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
 
 	protected void deleteAllRows()
 	{
-		TableLayoutUtils.displayYesNoDialog(this, "Delete All", "Delete All Rows in Location Table?");
-		if(TableLayoutUtils.getDialogResult())
+		LayoutUtils.displayYesNoDialog(this, "Delete All", "Delete All Rows in Location Table?");
+		if(LayoutUtils.getDialogResult())
 		{
 			displayToast("Deleted all rows!");
 			db.deleteAllRecordsFromTable(Location.TABLE_NAME);
@@ -378,7 +378,7 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
 	protected void updateRow(TableRow tr)
 	{
     	Location location = getLocationFromTableRow(tr);
-    	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+    	String keys = LayoutUtils.getKeysFromTableRow(tr);
     	//displayToast(keys);
     	
 
@@ -399,7 +399,7 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
     	Location location = getLocationFromTableRow(tr);
     	
     	
-    	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+    	String keys = LayoutUtils.getKeysFromTableRow(tr);
     	//displayToast(keys);
     	try 
     	{

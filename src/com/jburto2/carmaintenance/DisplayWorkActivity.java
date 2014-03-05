@@ -71,7 +71,7 @@ AdapterView.OnItemSelectedListener {
 		// Apply the adapter to the spinner
 		spinner.setAdapter(adapter);
 		spinner.setOnItemSelectedListener(this);
-		//spinner.setBackgroundColor(TableLayoutUtils.SPINNER_COLOR);
+		//spinner.setBackgroundColor(LayoutUtils.SPINNER_COLOR);
 		
 		
 		drawTable();
@@ -145,31 +145,31 @@ AdapterView.OnItemSelectedListener {
         
         // Create the labels
     	// 0
-    	TableRow tableRow = TableLayoutUtils.createTableRow(this);
+    	TableRow tableRow = LayoutUtils.createTableRow(this);
     	tableRow.setId(0);
     	
-    	TextView textView = TableLayoutUtils.createTextView(this, "Work ID", 15,TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
+    	TextView textView = LayoutUtils.createTextView(this, "Work ID", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
     	// 1
-    	textView = TableLayoutUtils.createTextView(this, "Vehicle ID", 15,TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
+    	textView = LayoutUtils.createTextView(this, "Vehicle ID", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
     	// 2
-    	textView = TableLayoutUtils.createTextView(this,"Item ID", 15,TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
+    	textView = LayoutUtils.createTextView(this,"Item ID", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
     	// 3 
-    	textView = TableLayoutUtils.createTextView(this, "Receipt ID", 15, TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
+    	textView = LayoutUtils.createTextView(this, "Receipt ID", 15, LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
     	
     	// 4
     	
-        textView = TableLayoutUtils.createTextView(this, "Vehicle Descripton", 15, TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
+        textView = LayoutUtils.createTextView(this, "Vehicle Descripton", 15, LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
         if (vid < 0)
         {
         	textView.setVisibility(View.VISIBLE);
@@ -181,19 +181,19 @@ AdapterView.OnItemSelectedListener {
         tableRow.addView(textView);
         
         // 5
-        textView = TableLayoutUtils.createTextView(this, "Maintenance Item", 15, TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
+        textView = LayoutUtils.createTextView(this, "Maintenance Item", 15, LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
         tableRow.addView(textView);
         
         // 6
-        textView = TableLayoutUtils.createTextView(this, "Receipt File", 15,TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
+        textView = LayoutUtils.createTextView(this, "Receipt File", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
         tableRow.addView(textView);
         
         // 7
-        textView = TableLayoutUtils.createTextView(this, "Work Notes", 15,TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
+        textView = LayoutUtils.createTextView(this, "Work Notes", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
         tableRow.addView(textView);
 
 	    // 8
-	    textView = TableLayoutUtils.createTextView(this, "Save", 15,TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
+	    textView = LayoutUtils.createTextView(this, "Save", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
 	    if (autoSave)
         {
         	textView.setVisibility(View.GONE);
@@ -205,14 +205,14 @@ AdapterView.OnItemSelectedListener {
 	    tableRow.addView(textView);
 	    
         // 9
-        textView = TableLayoutUtils.createTextView(this, "Detail", 15,TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
+        textView = LayoutUtils.createTextView(this, "Detail", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
         tableRow.addView(textView);
         // 10
-        textView = TableLayoutUtils.createTextView(this, "Delete", 15,TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
+        textView = LayoutUtils.createTextView(this, "Delete", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
         tableRow.addView(textView);
         
         // 11 - Must be last 
-        textView = TableLayoutUtils.createTextView(this, "New Row", 15,TableLayoutUtils.LIGHT_GRAY, TableLayoutUtils.DARK_GRAY);
+        textView = LayoutUtils.createTextView(this, "New Row", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
         textView.setVisibility(View.GONE);
         tableRow.addView(textView);
         
@@ -253,7 +253,7 @@ AdapterView.OnItemSelectedListener {
         for (int i = 0; i < worklist.size(); i++){
         	
             // First row: Entered data
-        	tableRow = TableLayoutUtils.createTableRow(this);
+        	tableRow = LayoutUtils.createTableRow(this);
         	tableRow.setId(i+1);
 
         	
@@ -281,27 +281,27 @@ AdapterView.OnItemSelectedListener {
         	        	
             // Data
         	// 0
-        	textView = TableLayoutUtils.createTextView(this, Integer.toString(workitem.getID()), 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+        	textView = LayoutUtils.createTextView(this, Integer.toString(workitem.getID()), 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
         	textView.setVisibility(View.GONE);
         	tableRow.addView(textView);
             
         	// 1
-        	textView = TableLayoutUtils.createTextView(this, Integer.toString(workitem.getVehicleID()), 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+        	textView = LayoutUtils.createTextView(this, Integer.toString(workitem.getVehicleID()), 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
         	textView.setVisibility(View.GONE);
         	tableRow.addView(textView);
             
         	// 2
-        	textView = TableLayoutUtils.createTextView(this, Integer.toString(workitem.getItemID()), 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+        	textView = LayoutUtils.createTextView(this, Integer.toString(workitem.getItemID()), 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
         	textView.setVisibility(View.GONE);
         	tableRow.addView(textView);
             
         	// 3 
-        	textView = TableLayoutUtils.createTextView(this, Integer.toString(workitem.getReceiptID()), 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+        	textView = LayoutUtils.createTextView(this, Integer.toString(workitem.getReceiptID()), 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
         	textView.setVisibility(View.GONE);
         	tableRow.addView(textView);
         	
         	// 4
-            textView = TableLayoutUtils.createTextView(this, vehicle.getVehicleDescription(), 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+            textView = LayoutUtils.createTextView(this, vehicle.getVehicleDescription(), 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
             if (vid < 0)
             {
             	textView.setVisibility(View.VISIBLE);
@@ -313,15 +313,15 @@ AdapterView.OnItemSelectedListener {
             tableRow.addView(textView);
             
             // 5
-            textView = TableLayoutUtils.createTextView(this, item.getItemDescription(), 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+            textView = LayoutUtils.createTextView(this, item.getItemDescription(), 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
             tableRow.addView(textView);
             
             // 6
-            textView = TableLayoutUtils.createTextView(this, receipt.getFile(), 15,TableLayoutUtils.DARK_GRAY, TableLayoutUtils.LIGHT_GRAY);
+            textView = LayoutUtils.createTextView(this, receipt.getFile(), 15,LayoutUtils.DARK_GRAY, LayoutUtils.LIGHT_GRAY);
             tableRow.addView(textView);
             
             // 7
-            EditText editText = TableLayoutUtils.createEditText(this, workitem.getNotes(), 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.WHITE);
+            EditText editText = LayoutUtils.createEditText(this, workitem.getNotes(), 15, LayoutUtils.DARK_GRAY,LayoutUtils.WHITE);
             tableRow.addView(editText);
             
             // Add either the save button or autosave functionality
@@ -352,7 +352,7 @@ AdapterView.OnItemSelectedListener {
 	            	TableRow tr = (TableRow)v.getParent();
 	            	
 	            	Work work = getWorkFromTableRow(tr);
-	            	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+	            	String keys = LayoutUtils.getKeysFromTableRow(tr);
 	            	//displayToast(keys);
 	            	
 
@@ -384,7 +384,7 @@ AdapterView.OnItemSelectedListener {
 	        tableRow.addView(button);
 	        
 	        // New Row Indicator = Must be last 
-            textView = TableLayoutUtils.createTextView(this, "false", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+            textView = LayoutUtils.createTextView(this, "false", 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
 	        textView.setVisibility(View.GONE);
 	        
 	        tableRow.addView(textView);
@@ -420,26 +420,26 @@ AdapterView.OnItemSelectedListener {
 	    	
 	    }		
         // now add the new row
-        TableRow tableRow = TableLayoutUtils.createTableRow(this);
+        TableRow tableRow = LayoutUtils.createTableRow(this);
         
         // Data
     	// 0
-    	TextView textView = TableLayoutUtils.createTextView(this, "-1", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+    	TextView textView = LayoutUtils.createTextView(this, "-1", 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
     	// 1
-    	textView = TableLayoutUtils.createTextView(this, Integer.toString(vid), 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+    	textView = LayoutUtils.createTextView(this, Integer.toString(vid), 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
     	// 2
-    	textView = TableLayoutUtils.createTextView(this, "-1", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+    	textView = LayoutUtils.createTextView(this, "-1", 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
     	// 3 
-    	textView = TableLayoutUtils.createTextView(this, "-1", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+    	textView = LayoutUtils.createTextView(this, "-1", 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
     	
@@ -453,14 +453,14 @@ AdapterView.OnItemSelectedListener {
             {
             	vehicleArray[i] = vehicleList.get(i).getVehicleDescription();
             }
-            spinner = TableLayoutUtils.createSpinner(this, vehicleArray);
+            spinner = LayoutUtils.createSpinner(this, vehicleArray);
             tableRow.addView(spinner);
     	}
     	else
     	{
     		Spinner vSpinner = (Spinner) findViewById(R.id.vehicleSpinner);
     		
-	        textView = TableLayoutUtils.createTextView(this, vSpinner.getSelectedItem().toString() , 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.WHITE);
+	        textView = LayoutUtils.createTextView(this, vSpinner.getSelectedItem().toString() , 15, LayoutUtils.DARK_GRAY,LayoutUtils.WHITE);
 	    	textView.setVisibility(View.GONE);
 	        tableRow.addView(textView);
 
@@ -474,7 +474,7 @@ AdapterView.OnItemSelectedListener {
         {
         	itemArray[i] = itemList.get(i).getItemDescription();
         }
-        spinner = TableLayoutUtils.createSpinner(this, itemArray);
+        spinner = LayoutUtils.createSpinner(this, itemArray);
         tableRow.addView(spinner);
         
 
@@ -485,11 +485,11 @@ AdapterView.OnItemSelectedListener {
         {
         	receiptArray[i] = receiptList.get(i).getFile();
         }
-        spinner = TableLayoutUtils.createSpinner(this, receiptArray);
+        spinner = LayoutUtils.createSpinner(this, receiptArray);
         tableRow.addView(spinner);
         
         // 7
-        EditText editText = TableLayoutUtils.createEditText(this, "", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.WHITE);
+        EditText editText = LayoutUtils.createEditText(this, "", 15, LayoutUtils.DARK_GRAY,LayoutUtils.WHITE);
         tableRow.addView(editText);
 
         //Save button or autosave
@@ -528,7 +528,7 @@ AdapterView.OnItemSelectedListener {
         tableRow.addView(button);
         
         // New Row Indicator = Must be last 
-        textView = TableLayoutUtils.createTextView(this, "true", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+        textView = LayoutUtils.createTextView(this, "true", 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
         textView.setVisibility(View.GONE);
         tableRow.addView(textView);
         
@@ -626,8 +626,8 @@ AdapterView.OnItemSelectedListener {
 	
 	protected void deleteAllRows()
 	{
-		TableLayoutUtils.displayYesNoDialog(this, "Delete All", "Delete All Rows in Work Table?");
-		if(TableLayoutUtils.getDialogResult())
+		LayoutUtils.displayYesNoDialog(this, "Delete All", "Delete All Rows in Work Table?");
+		if(LayoutUtils.getDialogResult())
 		{
 			displayToast("Deleted all rows!");
 			db.deleteAllRecordsFromTable(Work.TABLE_NAME);
@@ -651,7 +651,7 @@ AdapterView.OnItemSelectedListener {
     	TableRow tr = (TableRow)v.getParent();
     	
     	Work work = getWorkFromTableRow(tr);
-    	//String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+    	//String keys = LayoutUtils.getKeysFromTableRow(tr);
     	
     	/// http://stackoverflow.com/questions/2736389/how-to-pass-object-from-one-activity-to-another-in-android
     	intent.putExtra("WorkClass", work);
@@ -677,7 +677,7 @@ AdapterView.OnItemSelectedListener {
 		
 		
 		Work work = getWorkFromTableRow(tr);
-		String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+		String keys = LayoutUtils.getKeysFromTableRow(tr);
 		//displayToast(keys);
 		
 	
@@ -714,7 +714,7 @@ AdapterView.OnItemSelectedListener {
     	Work work = getWorkFromTableRow(tr);
     	
     	
-    	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+    	String keys = LayoutUtils.getKeysFromTableRow(tr);
     	//displayToast(keys);
     	try 
     	{
@@ -738,6 +738,7 @@ AdapterView.OnItemSelectedListener {
     	
 
 	}
+	
 
     
 }

@@ -131,6 +131,16 @@
 	                android:layout_below="@+id/itemGoButton"
 	                android:textSize="20sp"
 	                android:background="#c8c8c8"
+	                android:visibility="gone"
+	                 />
+				<ImageView
+	                android:id="@+id/receiptImageView"
+	                android:layout_width="200dip"
+	                android:layout_height="300dip"
+	                android:layout_alignParentLeft="true"
+	                android:layout_below="@+id/itemGoButton"
+	                android:textSize="20sp"
+	                android:background="#c8c8c8"
 	                 />
 
 	            <TextView
@@ -138,7 +148,7 @@
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignParentLeft="true"
-	                android:layout_below="@+id/receiptTextView"
+	                android:layout_below="@+id/receiptImageView"
 	                android:text="Receipt" />
 	            
 
@@ -147,8 +157,8 @@
          			android:id="@+id/receiptGoButton"
          			android:layout_width="50dip"
          			android:layout_height="50dip"
-	                android:layout_toRightOf="@+id/receiptTextView"
-	                android:layout_alignTop="@+id/receiptTextView"
+	                android:layout_toRightOf="@+id/receiptImageView"
+	                android:layout_alignTop="@+id/receiptImageView"
          			android:onClick="onReceiptButtonClick"
          			android:layout_alignParentRight="true"
          

@@ -1,6 +1,7 @@
 package com.jburto2.carmaintenance;
 
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -11,17 +12,16 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewParent;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -43,7 +43,7 @@ AdapterView.OnItemSelectedListener {
 	public static final int IMAGE_REQUEST_CODE = 1;
 	private TextView imageTextViewHolder;
 	private Bitmap bitmap;
-	private ImageButton imageButtonHolder;
+	private ImageView imageViewHolder;
 
 	
 	@Override
@@ -156,22 +156,22 @@ AdapterView.OnItemSelectedListener {
         
         // Create the labels
     	// 0
-    	TableRow tableRow = TableLayoutUtils.createTableRow(this);
+    	TableRow tableRow = LayoutUtils.createTableRow(this);
     	tableRow.setId(0);
     	
-    	TextView textView = TableLayoutUtils.createTextView(this, "Receipt ID", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+    	TextView textView = LayoutUtils.createTextView(this, "Receipt ID", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
     	// 1
-    	textView = TableLayoutUtils.createTextView(this, "Location ID", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+    	textView = LayoutUtils.createTextView(this, "Location ID", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
 
     	// 2
     	
-        textView = TableLayoutUtils.createTextView(this, "Location Descripton", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Location Descripton", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         if (vid < 0)
         {
         	textView.setVisibility(View.VISIBLE);
@@ -183,31 +183,31 @@ AdapterView.OnItemSelectedListener {
         tableRow.addView(textView);
         
         // 3
-        textView = TableLayoutUtils.createTextView(this, "Receipt Image", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Receipt Image", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         tableRow.addView(textView);
 
         // 4
-        textView = TableLayoutUtils.createTextView(this, "Date", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Date", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         tableRow.addView(textView);
         
         // 5
-        textView = TableLayoutUtils.createTextView(this, "Mileage", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Mileage", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         tableRow.addView(textView);
         
         // 6
-        textView = TableLayoutUtils.createTextView(this, "Amount", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Amount", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         tableRow.addView(textView);
 
         // 7
-        textView = TableLayoutUtils.createTextView(this, "Receipt Notes", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Receipt Notes", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         tableRow.addView(textView);
         
         // 8
-        textView = TableLayoutUtils.createTextView(this, "Receipt Uri", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Receipt Uri", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         tableRow.addView(textView);
 
         // 9
-        textView = TableLayoutUtils.createTextView(this, "Save", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Save", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         
 	    if (autoSave)
         {
@@ -221,14 +221,14 @@ AdapterView.OnItemSelectedListener {
 
 		
         // 9
-        //textView = TableLayoutUtils.createTextView(this, "Edit", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        //textView = LayoutUtils.createTextView(this, "Edit", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         //tableRow.addView(textView);
         // 10
-        textView = TableLayoutUtils.createTextView(this, "Delete", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Delete", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         tableRow.addView(textView);
         
         // New Row Indicator = Must be last 
-        textView = TableLayoutUtils.createTextView(this, "New Row", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+        textView = LayoutUtils.createTextView(this, "New Row", 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
         textView.setVisibility(View.GONE);
         tableRow.addView(textView);
         
@@ -267,7 +267,7 @@ AdapterView.OnItemSelectedListener {
         for (int i = 0; i < receiptlist.size(); i++){
         	
             // First row: Entered data
-        	tableRow = TableLayoutUtils.createTableRow(this);
+        	tableRow = LayoutUtils.createTableRow(this);
         	tableRow.setId(i+1);
 
         	
@@ -293,18 +293,18 @@ AdapterView.OnItemSelectedListener {
         	        	
             // Data
         	// 0
-        	textView = TableLayoutUtils.createTextView(this, Integer.toString(singlereceipt.getID()), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+        	textView = LayoutUtils.createTextView(this, Integer.toString(singlereceipt.getID()), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
         	textView.setVisibility(View.GONE);
         	tableRow.addView(textView);
             
         	// 1
-        	textView = TableLayoutUtils.createTextView(this, Integer.toString(singlereceipt.getLocationID()), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+        	textView = LayoutUtils.createTextView(this, Integer.toString(singlereceipt.getLocationID()), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
         	textView.setVisibility(View.GONE);
         	tableRow.addView(textView);
      
 
         	// 2
-            textView = TableLayoutUtils.createTextView(this, location.getLocationDescription(), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+            textView = LayoutUtils.createTextView(this, location.getLocationDescription(), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
             if (vid < 0)
             {
             	textView.setVisibility(View.VISIBLE);
@@ -338,28 +338,37 @@ AdapterView.OnItemSelectedListener {
                 }
             });
             
-            loadImage(singlereceipt.getFile(),imageButton);
+            //LayoutUtils.loadImage(this,singlereceipt.getFile(),imageViewHolder);
+            try
+            {
+            	imageButton.setImageURI(Uri.parse(singlereceipt.getFile()));
+            }
+            catch (Exception e)
+            {
+    			imageButton.setImageResource(R.drawable.ic_receipt);
+    				
+            }
             tableRow.addView(imageButton);
             
             // 4
             
-            textView = TableLayoutUtils.createDateTextView(this, singlereceipt.getDate(), 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+            textView = LayoutUtils.createDateTextView(this, singlereceipt.getDate(), 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
             tableRow.addView(textView);
             
             // 5
-            EditText editText = TableLayoutUtils.createEditText(this, Integer.toString(singlereceipt.getMileage()), 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+            EditText editText = LayoutUtils.createEditText(this, Integer.toString(singlereceipt.getMileage()), 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
             tableRow.addView(editText);
             
             // 6
-            editText = TableLayoutUtils.createEditText(this, Integer.toString(singlereceipt.getAmount()), 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+            editText = LayoutUtils.createEditText(this, Integer.toString(singlereceipt.getAmount()), 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
             tableRow.addView(editText);
 
             // 7
-             editText = TableLayoutUtils.createEditText(this, singlereceipt.getNotes(), 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+             editText = LayoutUtils.createEditText(this, singlereceipt.getNotes(), 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
             tableRow.addView(editText);
             
             // 8
-            textView = TableLayoutUtils.createTextView(this, singlereceipt.getFile(), 15, Color.rgb(51, 51, 51),Color.rgb(200, 200, 200));
+            textView = LayoutUtils.createTextView(this, singlereceipt.getFile(), 15, Color.rgb(51, 51, 51),Color.rgb(200, 200, 200));
             tableRow.addView(textView);
             
             addSaveFunctionToRow(tableRow);
@@ -401,7 +410,7 @@ AdapterView.OnItemSelectedListener {
 	            	TableRow tr = (TableRow)v.getParent();
 	            	
 	            	Receipt receipt = getReceiptFromTableRow(tr);
-	            	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+	            	String keys = LayoutUtils.getKeysFromTableRow(tr);
 	            	
 	            	
 
@@ -433,7 +442,7 @@ AdapterView.OnItemSelectedListener {
 	        tableRow.addView(button);
 	        
 	        // New Row Indicator = Must be last 
-	        textView = TableLayoutUtils.createTextView(this, "false", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+	        textView = LayoutUtils.createTextView(this, "false", 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
 	        textView.setVisibility(View.GONE);
 	        tableRow.addView(textView);
 
@@ -473,16 +482,16 @@ AdapterView.OnItemSelectedListener {
 	    	
 	    }		
         // now add the new row
-        TableRow tableRow = TableLayoutUtils.createTableRow(this);
+        TableRow tableRow = LayoutUtils.createTableRow(this);
         
         // Data
     	// 0
-    	TextView textView = TableLayoutUtils.createTextView(this, "-1", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+    	TextView textView = LayoutUtils.createTextView(this, "-1", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
     	// 1
-    	textView = TableLayoutUtils.createTextView(this, Integer.toString(vid), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+    	textView = LayoutUtils.createTextView(this, Integer.toString(vid), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
@@ -497,14 +506,14 @@ AdapterView.OnItemSelectedListener {
             {
             	locationArray[i] = locationList.get(i).getLocationDescription();
             }
-            spinner = TableLayoutUtils.createSpinner(this, locationArray);
+            spinner = LayoutUtils.createSpinner(this, locationArray);
             tableRow.addView(spinner);
     	}
     	else
     	{
     		Spinner vSpinner = (Spinner) findViewById(R.id.locationSpinner);
     		
-	        textView = TableLayoutUtils.createTextView(this, vSpinner.getSelectedItem().toString() , 15, Color.rgb(51, 51, 51),Color.rgb(255,255,255));
+	        textView = LayoutUtils.createTextView(this, vSpinner.getSelectedItem().toString() , 15, Color.rgb(51, 51, 51),Color.rgb(255,255,255));
 	    	textView.setVisibility(View.GONE);
 	        tableRow.addView(textView);
 
@@ -514,7 +523,7 @@ AdapterView.OnItemSelectedListener {
         // 3
         ImageButton imageButton = new ImageButton(this);    	
         imageButton.setClickable(true);
-        imageButton.setLayoutParams(new TableRow.LayoutParams(60,80));
+        imageButton.setLayoutParams(new TableRow.LayoutParams(120,160));
         imageButton.setScaleType(ScaleType.CENTER_CROP);
         
         imageButton.setOnClickListener(new View.OnClickListener() 
@@ -534,30 +543,35 @@ AdapterView.OnItemSelectedListener {
             }
         });
         
+        //imageButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_receipt));
+
+		imageButton.setImageResource(R.drawable.ic_receipt);
+
+        
         tableRow.addView(imageButton);
         // TODO: Override with image selection.
         
         
         // 4
-        textView = TableLayoutUtils.createDateTextView(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+        textView = LayoutUtils.createDateTextView(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
         //TODO: Override with date picker dialog.
 
         tableRow.addView(textView);
         
         // 5
-        EditText editText = TableLayoutUtils.createEditText(this, "0", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+        EditText editText = LayoutUtils.createEditText(this, "0", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
         tableRow.addView(editText);
         
         // 6
-        editText = TableLayoutUtils.createEditText(this, "0", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+        editText = LayoutUtils.createEditText(this, "0", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
         tableRow.addView(editText);
         
         // 7
-        editText = TableLayoutUtils.createEditText(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+        editText = LayoutUtils.createEditText(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
         tableRow.addView(editText);
         
         // 8
-        textView = TableLayoutUtils.createTextView(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+        textView = LayoutUtils.createTextView(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
         tableRow.addView(textView);
 
         addSaveFunctionToRow(tableRow);
@@ -610,7 +624,7 @@ AdapterView.OnItemSelectedListener {
         tableRow.addView(button);
         
         // New Row Indicator = Must be last 
-        textView = TableLayoutUtils.createTextView(this, "true", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+        textView = LayoutUtils.createTextView(this, "true", 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
         textView.setVisibility(View.GONE);
         tableRow.addView(textView);
         
@@ -670,8 +684,8 @@ AdapterView.OnItemSelectedListener {
 	
 	protected void deleteAllRows()
 	{
-		TableLayoutUtils.displayYesNoDialog(this, "Delete All", "Delete All Rows in Receipt Table?");
-		if(TableLayoutUtils.getDialogResult())
+		LayoutUtils.displayYesNoDialog(this, "Delete All", "Delete All Rows in Receipt Table?");
+		if(LayoutUtils.getDialogResult())
 		{
 			displayToast("Deleted all rows!");
 			db.deleteAllRecordsFromTable(Receipt.TABLE_NAME);
@@ -682,7 +696,7 @@ AdapterView.OnItemSelectedListener {
 	protected void updateRow(TableRow tr)
 	{
     	Receipt receipt = getReceiptFromTableRow(tr);
-    	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+    	String keys = LayoutUtils.getKeysFromTableRow(tr);
     	//(keys);
     	
 
@@ -714,7 +728,7 @@ AdapterView.OnItemSelectedListener {
 		Receipt receipt = getReceiptFromTableRow(tr);
 		
 		
-		String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+		String keys = LayoutUtils.getKeysFromTableRow(tr);
 		//(keys);
 		
 		
@@ -744,7 +758,7 @@ AdapterView.OnItemSelectedListener {
 	
 	public void onImageFieldClick(ImageButton iv, TextView tv) {
 		// save the view.
-		imageButtonHolder = iv;
+		imageViewHolder = iv;
 		imageTextViewHolder = tv;
 		
 		
@@ -764,60 +778,20 @@ AdapterView.OnItemSelectedListener {
 		if (requestCode == IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK)
 		{
 			imageTextViewHolder.setText(data.getDataString());
-			loadImage(data.getData(),imageButtonHolder);
-		}
-			
-			
-
-		
-	}
-	
-	protected void loadImage(String uriString, ImageButton imageButton) 
-	{
-		try
-		{
-			Uri resource = Uri.parse(uriString);
-			loadImage(resource, imageButton);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
-	
-	protected void loadImage(Uri resource,ImageButton imageButton) 
-	{
-		InputStream stream  = null;
-		try 
-		{
-		
-			if (bitmap != null) 
+			//LayoutUtils.loadImage(this,data.getData(),imageViewHolder);
+			try
 			{
-				bitmap.recycle();
+				imageViewHolder.setImageURI(data.getData());
 			}
-			stream = getContentResolver().openInputStream(resource);
-			bitmap = BitmapFactory.decodeStream(stream);
-	
-			imageButton.setImageBitmap(bitmap);
+			catch (Exception e)
+			{
+				imageViewHolder.setImageResource(R.drawable.ic_receipt);
+			}
 			
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		catch (java.lang.OutOfMemoryError e)
-		{
-			e.printStackTrace();
-			System.gc();
-		}
-		finally {
 			
-			if (stream != null)
-				try {
-					stream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
 		}
-
+		
 	}
+	
+
 }

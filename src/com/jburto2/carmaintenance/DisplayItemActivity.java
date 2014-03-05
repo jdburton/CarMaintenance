@@ -87,33 +87,33 @@ public class DisplayItemActivity extends DisplayTableActivity {
         
         // Create the labels
     	// 0
-    	TableRow tableRow = TableLayoutUtils.createTableRow(this);
+    	TableRow tableRow = LayoutUtils.createTableRow(this);
     	tableRow.setId(0);
     	
         
     	// 1
-    	TextView textView = TableLayoutUtils.createTextView(this, "Item ID", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+    	TextView textView = LayoutUtils.createTextView(this, "Item ID", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
 
     	// 2
     	
-        textView = TableLayoutUtils.createTextView(this, "Item Descripton", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Item Descripton", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
 
         tableRow.addView(textView);
         
         
-        textView = TableLayoutUtils.createTextView(this, "Mileage Interval", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Mileage Interval", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
 
         tableRow.addView(textView);
         
-        textView = TableLayoutUtils.createTextView(this, "Time Interval (Months)", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Time Interval (Months)", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
 
         tableRow.addView(textView);
 
         // 3
-        textView = TableLayoutUtils.createTextView(this, "Save", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Save", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
 	    if (autoSave)
         {
         	textView.setVisibility(View.GONE);
@@ -126,14 +126,14 @@ public class DisplayItemActivity extends DisplayTableActivity {
 
 	
         // 4
-        //textView = TableLayoutUtils.createTextView(this, "Clear", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        //textView = LayoutUtils.createTextView(this, "Clear", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         //tableRow.addView(textView);
         // 5
-        textView = TableLayoutUtils.createTextView(this, "Delete", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Delete", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
         tableRow.addView(textView);
         
         // New Row Indicator = Must be last 
-        textView = TableLayoutUtils.createTextView(this, "New Row", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+        textView = LayoutUtils.createTextView(this, "New Row", 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
         textView.setVisibility(View.GONE);
         tableRow.addView(textView);
         
@@ -165,7 +165,7 @@ public class DisplayItemActivity extends DisplayTableActivity {
         for (int i = 0; i < itemlist.size(); i++){
         	
             // First row: Entered data
-        	tableRow = TableLayoutUtils.createTableRow(this);
+        	tableRow = LayoutUtils.createTableRow(this);
         	tableRow.setId(i+1);
 
         	
@@ -178,22 +178,22 @@ public class DisplayItemActivity extends DisplayTableActivity {
         	        	
             // Data
         	// 0
-        	textView = TableLayoutUtils.createTextView(this, Integer.toString(item.getID()), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+        	textView = LayoutUtils.createTextView(this, Integer.toString(item.getID()), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
         	textView.setVisibility(View.GONE);
         	tableRow.addView(textView);
             
 
         	
         	// 1
-            textView = TableLayoutUtils.createTextView(this, item.getItemDescription(), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+            textView = LayoutUtils.createTextView(this, item.getItemDescription(), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
             tableRow.addView(textView);
             
             // 2
-        	textView = TableLayoutUtils.createTextView(this, Integer.toString(item.getMileageInterval()), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+        	textView = LayoutUtils.createTextView(this, Integer.toString(item.getMileageInterval()), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
         	tableRow.addView(textView);
         	
         	// 3
-        	textView = TableLayoutUtils.createTextView(this, Integer.toString(item.getTimeInterval()), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+        	textView = LayoutUtils.createTextView(this, Integer.toString(item.getTimeInterval()), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
         	tableRow.addView(textView);
             
 
@@ -235,7 +235,7 @@ public class DisplayItemActivity extends DisplayTableActivity {
 	            	TableRow tr = (TableRow)v.getParent();
 	            	
 	            	Item item = getItemFromTableRow(tr);
-	            	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+	            	String keys = LayoutUtils.getKeysFromTableRow(tr);
 	            	//displayToast(keys);
 	            	
 
@@ -267,7 +267,7 @@ public class DisplayItemActivity extends DisplayTableActivity {
 	        tableRow.addView(button);
 	        
 	        // New Row Indicator = Must be last 
-	        textView = TableLayoutUtils.createTextView(this, "false", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+	        textView = LayoutUtils.createTextView(this, "false", 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
 	        textView.setVisibility(View.GONE);
 	        tableRow.addView(textView);
 
@@ -295,26 +295,26 @@ public class DisplayItemActivity extends DisplayTableActivity {
 	    tableLayout.setDividerPadding(2);
 	    
 
-        TableRow tableRow = TableLayoutUtils.createTableRow(this);
+        TableRow tableRow = LayoutUtils.createTableRow(this);
         
         // Data
     	// 0
-    	TextView textView = TableLayoutUtils.createTextView(this, "-1", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+    	TextView textView = LayoutUtils.createTextView(this, "-1", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
     
         
         // 1
-        EditText editText = TableLayoutUtils.createEditText(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+        EditText editText = LayoutUtils.createEditText(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
         tableRow.addView(editText);
         
         // 2
-     	editText = TableLayoutUtils.createEditText(this, "0", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+     	editText = LayoutUtils.createEditText(this, "0", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
      	tableRow.addView(editText);
      	
      	// 3
-     	editText = TableLayoutUtils.createEditText(this, "0", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+     	editText = LayoutUtils.createEditText(this, "0", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
      	tableRow.addView(editText);
          
      	addSaveFunctionToRow(tableRow);
@@ -367,7 +367,7 @@ public class DisplayItemActivity extends DisplayTableActivity {
         tableRow.addView(button);
         
         // New Row Indicator = Must be last 
-        textView = TableLayoutUtils.createTextView(this, "true", 15, TableLayoutUtils.DARK_GRAY,TableLayoutUtils.LIGHT_GRAY);
+        textView = LayoutUtils.createTextView(this, "true", 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
         textView.setVisibility(View.GONE);
         tableRow.addView(textView);
         
@@ -397,8 +397,8 @@ public class DisplayItemActivity extends DisplayTableActivity {
 
 	protected void deleteAllRows()
 	{
-		TableLayoutUtils.displayYesNoDialog(this, "Delete All", "Delete All Rows in Item Table?");
-		if(TableLayoutUtils.getDialogResult())
+		LayoutUtils.displayYesNoDialog(this, "Delete All", "Delete All Rows in Item Table?");
+		if(LayoutUtils.getDialogResult())
 		{
 			displayToast("Deleted all rows!");
 			db.deleteAllRecordsFromTable(Item.TABLE_NAME);
@@ -411,7 +411,7 @@ public class DisplayItemActivity extends DisplayTableActivity {
 		
     	
     	Item item = getItemFromTableRow(tr);
-    	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+    	String keys = LayoutUtils.getKeysFromTableRow(tr);
     	//displayToast(keys);
     	
 
@@ -434,7 +434,7 @@ public class DisplayItemActivity extends DisplayTableActivity {
     	Item item = getItemFromTableRow(tr);
     	
     	
-    	String keys = TableLayoutUtils.getKeysFromTableRow(tr);
+    	String keys = LayoutUtils.getKeysFromTableRow(tr);
 
     	try 
     	{

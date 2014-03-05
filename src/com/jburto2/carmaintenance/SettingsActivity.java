@@ -33,7 +33,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
     	ListPreference highlightPreference = (ListPreference) findPreference(KEY_HIGHLIGHT_COLOR);
     	highlightPreference.setSummary(highlightPreference.getEntry());
-    	TableLayoutUtils.setHighlightColor(Integer.parseInt(highlightPreference.getValue()));
+    	LayoutUtils.setHighlightColor(Integer.parseInt(highlightPreference.getValue()));
 
 
         
@@ -41,7 +41,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
     
     @SuppressWarnings("deprecation")
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-    	//TableLayoutUtils.displayToast(this, key);
+    	//LayoutUtils.displayToast(this, key);
         if (key.equals(SettingsActivity.KEY_AUTOSAVE)) {
         	
 
@@ -50,7 +50,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
         {
         	ListPreference highlightPreference = (ListPreference) findPreference(key);
         	highlightPreference.setSummary(highlightPreference.getEntry());
-        	TableLayoutUtils.setHighlightColor(Integer.parseInt(highlightPreference.getValue()));
+        	LayoutUtils.setHighlightColor(Integer.parseInt(highlightPreference.getValue()));
         	
         }
     }

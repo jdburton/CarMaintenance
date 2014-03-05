@@ -3,6 +3,8 @@
  */
 package com.jburto2.carmaintenance;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Calendar;
 
 import android.annotation.SuppressLint;
@@ -12,6 +14,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +23,7 @@ import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -26,13 +31,13 @@ import android.widget.Toast;
 
 /**
  * @author jburton
- * @class TableLayoutUtils
+ * @class LayoutUtils
  * 
  * @brief A series of static methods that create widgets for a table layout.
  *
  */
 @SuppressLint("NewApi")
-public class TableLayoutUtils 
+public class LayoutUtils 
 {
 	
 	private static boolean dialogResult = false;
@@ -216,7 +221,7 @@ public class TableLayoutUtils
 				int month = c.get(Calendar.MONTH);
 				int day = c.get(Calendar.DAY_OF_MONTH);
 				
-				TableLayoutUtils.displayDatePickerDialog(context, v, year, month, day);
+				LayoutUtils.displayDatePickerDialog(context, v, year, month, day);
 
 
 			}
@@ -461,7 +466,7 @@ public class TableLayoutUtils
 						// if this button is clicked, just close
 						// the dialog box and do nothing
 						dialog.cancel();
-						TableLayoutUtils.setDialogResult(false);
+						LayoutUtils.setDialogResult(false);
 						
 					}
 				  })
@@ -471,7 +476,7 @@ public class TableLayoutUtils
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				// TODO Auto-generated method stub
-				TableLayoutUtils.setDialogResult(true);
+				LayoutUtils.setDialogResult(true);
 				
 			}
 					
@@ -498,14 +503,14 @@ public class TableLayoutUtils
                                                          int monthOfYear, int dayOfMonth) {
 
                                       
-	                      			//  TableLayoutUtils.displayToast(context, "Setting date");
+	                      			//  LayoutUtils.displayToast(context, "Setting date");
 	                    			  
 	                      			// Set the Selected Date in Select date Button
-	                      			  if (TableLayoutUtils.getDialogResult())
+	                      			  if (LayoutUtils.getDialogResult())
 	                      			  {
-	                                      TableLayoutUtils.setDate(Integer.toString(monthOfYear+1)+"/"+dayOfMonth+"/"+yearSelected);
+	                                      LayoutUtils.setDate(Integer.toString(monthOfYear+1)+"/"+dayOfMonth+"/"+yearSelected);
 		                      			  TextView tv = (TextView)v;
-		                      			  tv.setText(TableLayoutUtils.getDate());
+		                      			  tv.setText(LayoutUtils.getDate());
 	                      			  }
 	                    				
                                    }
@@ -520,7 +525,7 @@ public class TableLayoutUtils
     	            public void onClick(DialogInterface dialog, int which) {
 
     	            	
-    	            	TableLayoutUtils.setDialogResult(true);
+    	            	LayoutUtils.setDialogResult(true);
     	            	dialog.cancel();
     	                
     	            }
@@ -529,7 +534,7 @@ public class TableLayoutUtils
     	        new DialogInterface.OnClickListener() {
     	            @Override
     	            public void onClick(DialogInterface dialog, int which) {
-    	            	TableLayoutUtils.setDialogResult(false);
+    	            	LayoutUtils.setDialogResult(false);
     	                dialog.cancel();
     	            }
     	        });
@@ -587,6 +592,32 @@ public class TableLayoutUtils
     	
     }
     
+	public static void loadImage(final Context context, String uriString, ImageView imageView) 
+	{
+		try
+		{
+			Uri resource = Uri.parse(uriString);
+			loadImage(context, resource, imageView);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public static void loadImage(final Context context, Uri resource,ImageView imageView) 
+	{
+		Drawable drawable;
+		try {
+		    InputStream inputStream = context.getContentResolver().openInputStream(resource);
+		    drawable = Drawable.createFromStream(inputStream, resource.toString() );
+		} catch (FileNotFoundException e) {
+		    drawable = context.getResources().getDrawable(R.drawable.ic_receipt);
+		}
+		
+		imageView.setBackgroundDrawable(drawable);
+
+	}
 	
 	
 	

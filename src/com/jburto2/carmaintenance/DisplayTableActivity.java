@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
@@ -30,7 +31,7 @@ public abstract class DisplayTableActivity extends Activity  {
 	
 	public DatabaseHandler db = new DatabaseHandler(this);
 	protected boolean autoSave = false;
-	protected int colorTheme = TableLayoutUtils.HIGHLIGHT_COLOR;
+	protected int colorTheme = LayoutUtils.HIGHLIGHT_COLOR;
 	
 	
 
@@ -49,10 +50,21 @@ public abstract class DisplayTableActivity extends Activity  {
 	    /// Preferences from http://developer.android.com/guide/topics/data/data-storage.html#pref
 	    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 	    autoSave = settings.getBoolean(SettingsActivity.KEY_AUTOSAVE, false);
-	    TableLayoutUtils.setHighlightColor(Integer.parseInt(settings.getString(SettingsActivity.KEY_HIGHLIGHT_COLOR, "2")));
-	    colorTheme = TableLayoutUtils.HIGHLIGHT_COLOR;
+	    LayoutUtils.setHighlightColor(Integer.parseInt(settings.getString(SettingsActivity.KEY_HIGHLIGHT_COLOR, "2")));
+	    colorTheme = LayoutUtils.HIGHLIGHT_COLOR;
 
 
+	}
+	
+	@Override
+	protected void onPause()
+	{
+		super.onPause();
+		
+		if (autoSave)
+		{			
+		saveAllRows();
+		}
 	}
 	
 	@Override
@@ -61,7 +73,7 @@ public abstract class DisplayTableActivity extends Activity  {
 
         // if any settings have changed, redraw the table on resume.
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-        if (autoSave != settings.getBoolean(SettingsActivity.KEY_AUTOSAVE, false) || colorTheme != TableLayoutUtils.HIGHLIGHT_COLOR )
+        if (autoSave != settings.getBoolean(SettingsActivity.KEY_AUTOSAVE, false) || colorTheme != LayoutUtils.HIGHLIGHT_COLOR )
         {
 	        drawTable();
         }
@@ -142,7 +154,11 @@ public abstract class DisplayTableActivity extends Activity  {
 	    	deleteAllRows();
 	    	break;
 	    	
-		    
+	    case R.id.action_save:
+	    	displayToast("Saving all rows...");
+	    	saveAllRows();
+	    	break;
+	    	
 	    case R.id.action_settings:
 	    	intent = new Intent(this, SettingsActivity.class);
 	    	startActivity(intent);
@@ -160,7 +176,7 @@ public abstract class DisplayTableActivity extends Activity  {
     public void displayToast(String message)
     {
     	Context context = this.getApplicationContext();
-    	TableLayoutUtils.displayToast(context,message);
+    	LayoutUtils.displayToast(context,message);
     }
     
     /**
@@ -175,7 +191,7 @@ public abstract class DisplayTableActivity extends Activity  {
     public void displayMessageDialog(String title, String message )
     {
     	
-		TableLayoutUtils.displayMessageDialog(this,title,message);
+		LayoutUtils.displayMessageDialog(this,title,message);
     }
     
     protected abstract void updateRow(TableRow tr);
@@ -183,6 +199,49 @@ public abstract class DisplayTableActivity extends Activity  {
     protected abstract void saveNewRow(TableRow tr);
 
     protected abstract void deleteAllRows();
+    
+    protected void saveAllRows()
+    {
+    	// Grid table MUST be named tlGridTable!
+    	ViewGroup tl = (ViewGroup) findViewById(R.id.tlGridTable);
+    	saveAllRows(tl);
+    }
+    
+    protected void saveAllRows(ViewGroup tl)
+    {
+    	
+    	// skip first row of labels
+		for (int index = 1; index < tl.getChildCount(); index++)
+		{
+			// unselect all children
+			TableRow unselected;
+			try 
+			{
+				unselected = (TableRow)tl.getChildAt(index);
+			}
+			catch (java.lang.ClassCastException cce)
+			{
+				continue;
+			}
+
+			// Check the new row flag at the end.
+			String flag = ((TextView)unselected.getChildAt(unselected.getChildCount()-1)).getText().toString();
+
+			if (Boolean.valueOf(flag))
+			{
+				saveNewRow(unselected);
+			}
+			else
+			{
+				updateRow(unselected);
+			}
+			
+			unselected.setSelected(false);
+			unselected.setBackgroundColor(LayoutUtils.DARK_GRAY);
+		}
+    	
+    	
+    }
 
     
 
@@ -246,12 +305,12 @@ public abstract class DisplayTableActivity extends Activity  {
 					}
 					else
 					{
-						update = false;
+						return;
 					}
 					
 					ViewGroup tl = (ViewGroup)v.getParent();
-					
-					for (int index = 0; index < tl.getChildCount(); index++)
+					//skip the first row of lables
+					for (int index = 1; index < tl.getChildCount(); index++)
 					{
 						// unselect all children
 						TableRow unselected;
@@ -265,7 +324,7 @@ public abstract class DisplayTableActivity extends Activity  {
 						}
 						
 						// if we need to update
-						if ( unselected.isSelected() && update == true )
+						if ( unselected.isSelected())
 						{
 							// Check the new row flag at the end.
 							String flag = ((TextView)unselected.getChildAt(unselected.getChildCount()-1)).getText().toString();
@@ -280,12 +339,13 @@ public abstract class DisplayTableActivity extends Activity  {
 							}
 						}
 						unselected.setSelected(false);
-						unselected.setBackgroundColor(TableLayoutUtils.DARK_GRAY);
+						unselected.setBackgroundColor(LayoutUtils.DARK_GRAY);
 					}
+
 					
 					
 					//displayToast(context,"Table row "+v.getId()+"clicked");
-					v.setBackgroundColor(TableLayoutUtils.HIGHLIGHT_COLOR);
+					v.setBackgroundColor(LayoutUtils.HIGHLIGHT_COLOR);
 					v.setSelected(true);
 					
 					
