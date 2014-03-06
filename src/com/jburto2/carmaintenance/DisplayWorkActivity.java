@@ -2,18 +2,20 @@ package com.jburto2.carmaintenance;
 
 
 import java.util.List;
+import java.util.StringTokenizer;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -317,8 +319,43 @@ AdapterView.OnItemSelectedListener {
             tableRow.addView(textView);
             
             // 6
-            textView = LayoutUtils.createTextView(this, receipt.getFile(), 15,LayoutUtils.DARK_GRAY, LayoutUtils.LIGHT_GRAY);
+        	int locationID =  receipt.getLocationID();
+        	Location location;
+        	String locationDescr;
+			try {
+				location = db.getLocationById(locationID);
+				locationDescr = location.getLocationDescription();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				locationDescr = "Not Found";
+			}
+        	
+        	
+            textView = LayoutUtils.createTextView(this, locationDescr + " | "+receipt.getDate(), 15,LayoutUtils.DARK_GRAY, LayoutUtils.LIGHT_GRAY);
             tableRow.addView(textView);
+            
+//            // 6
+//            ImageView imageView = new ImageView(this);    	
+//            
+//            imageView.setLayoutParams(new TableRow.LayoutParams(60,80));
+//            imageView.setScaleType(ScaleType.CENTER_CROP);
+//
+//            
+//            //LayoutUtils.loadImage(this,singlereceipt.getFile(),imageViewHolder);
+//            try
+//            {
+//            	imageView.setImageURI(Uri.parse(receipt.getFile()));
+//            	imageView.setTag(receipt.getFile());
+//            }
+//            catch (Exception e)
+//            {
+//    			imageView.setImageResource(R.drawable.ic_receipt);
+//    			imageView.setTag("default");
+//    				
+//            }
+//            
+//            tableRow.addView(imageView);
             
             // 7
             EditText editText = LayoutUtils.createEditText(this, workitem.getNotes(), 15, LayoutUtils.DARK_GRAY,LayoutUtils.WHITE);
@@ -483,10 +520,26 @@ AdapterView.OnItemSelectedListener {
         String [] receiptArray = new String [receiptList.size()];
         for (int i = 0; i < receiptList.size(); i++)
         {
-        	receiptArray[i] = receiptList.get(i).getFile();
+        	
+        	int locationID =  receiptList.get(i).getLocationID();
+        	Location location;
+        	String locationDescr;
+			try {
+				location = db.getLocationById(locationID);
+				locationDescr = location.getLocationDescription();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				locationDescr = "Not Found";
+			}
+        	
+        	receiptArray[i] = locationDescr + " | "+receiptList.get(i).getDate(); 
         }
         spinner = LayoutUtils.createSpinner(this, receiptArray);
+        
         tableRow.addView(spinner);
+        
+        
         
         // 7
         EditText editText = LayoutUtils.createEditText(this, "", 15, LayoutUtils.DARK_GRAY,LayoutUtils.WHITE);
@@ -564,7 +617,7 @@ AdapterView.OnItemSelectedListener {
 		return itemDescription;
 	}	
 	
-	private String getReceiptFile(TableRow tr) throws Exception
+	private String getReceiptField(TableRow tr) throws Exception
 	{
 		String receiptFile;
 		try
@@ -577,14 +630,45 @@ AdapterView.OnItemSelectedListener {
 		}
 		return receiptFile;
 	}
-
 	
+	private String getReceiptFile(TableRow tr) throws Exception
+	{
+		return getReceiptFromTable(tr).getFile();
+	}
+
+	private Receipt getReceiptFromTable(TableRow tr) throws Exception
+	{
+		// This is ugly, but it's late and I'm tired.
+		
+		String receiptField = getReceiptField(tr);
+		
+		/// http://stackoverflow.com/questions/12375003/java-string-split-with-multicharacter-delimiter
+		String [] result = receiptField.split(" \\| ");
+		String locationDescr = result[0];
+		String date = result[1];
+		
+		Location location = db.getLocation(locationDescr);
+		
+		
+		List<Receipt> receiptList = db.getAllReceiptsByLocationId(location.getID());
+		
+	    for (int index = 0; index < receiptList.size(); index++)
+	    {
+	    	Receipt r = receiptList.get(index);
+	    	if (r.getDate().equals(date))
+	    	{
+	    		
+	    		return r;
+	    	}
+	    }
+	    return null;
+	}
 	
 	private void fillWorkIdFieldsFromSpinners(TableRow tr) throws Exception
 	{
 		String vehicleDescription;
 		String itemDescription;
-		String receiptFile;
+		
 			
 		vehicleDescription = getVehicleDescription(tr);
 		
@@ -597,9 +681,14 @@ AdapterView.OnItemSelectedListener {
 		Item i = db.getItem(itemDescription);
 		((TextView)tr.getChildAt(2)).setText(Integer.toString(i.getID()));
 		
-		receiptFile = getReceiptFile(tr);
-		Receipt r = db.getReceipt(receiptFile);
-		((TextView)tr.getChildAt(3)).setText(Integer.toString(r.getID()));
+		Receipt r = getReceiptFromTable(tr); 
+		if (r != null)
+		{
+			((TextView)tr.getChildAt(3)).setText(Integer.toString(r.getID()));
+		}
+
+		
+		
 	}
 	
 	private Work getWorkFromTableRow(TableRow tr)

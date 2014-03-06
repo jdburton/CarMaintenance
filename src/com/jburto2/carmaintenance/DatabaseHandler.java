@@ -459,6 +459,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	    }
         
     }
+
      
     // Getting All Receipts
     public List<Receipt> getAllReceipts() {

@@ -281,6 +281,8 @@ public class LayoutUtils
         
         return editText;
 	}
+	
+	
 	/**
 	 * @fn public static Spinner createSpinner(Context context, String[] spinnerList,	int backgroundColor)
 	 * @brief Creates a Spinner object with default background.

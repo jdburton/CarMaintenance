@@ -41,6 +41,8 @@ public class DatabaseSQL {
 	"  \"ReceiptAmount\" INTEGER,\n" +
 	"  \"ReceiptMileage\" INTEGER NOT NULL,\n" +
 	"  \"ReceiptNotes\" VARCHAR(255),\n" +
+	"  CONSTRAINT \"Secondary\"\n" +
+	"    UNIQUE(\"Location_idLocation\",\"ReceiptDate\"),\n"+
 	"  CONSTRAINT \"ReceiptFile_UNIQUE\"\n" +
 	"    UNIQUE(\"ReceiptFile\"),\n" +
 	"  CONSTRAINT \"fk_Receipt_Location1\"\n" +
