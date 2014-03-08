@@ -39,7 +39,6 @@ public class DatabaseSQL {
 	"  \"Location_idLocation\" INTEGER NOT NULL,\n" +
 	"  \"ReceiptDate\" DATETIME,\n" +
 	"  \"ReceiptAmount\" INTEGER,\n" +
-	"  \"ReceiptMileage\" INTEGER NOT NULL,\n" +
 	"  \"ReceiptNotes\" VARCHAR(255),\n" +
 	"  CONSTRAINT \"Secondary\"\n" +
 	"    UNIQUE(\"Location_idLocation\",\"ReceiptDate\"),\n"+
@@ -58,6 +57,7 @@ public class DatabaseSQL {
 	"  \"Vehicle_idVehicle\" INTEGER NOT NULL,\n" +
 	"  \"Items_idItem\" INTEGER NOT NULL,\n" +
 	"  \"Receipt_idReceipt\" INTEGER NOT NULL,\n" +
+	"  \"WorkMileage\" INTEGER NOT NULL,\n" +
 	"  \"WorkNotes\" VARCHAR(255),\n" +
 	"  CONSTRAINT \"Secondary\"\n" +
 	"    UNIQUE(\"Vehicle_idVehicle\",\"Items_idItem\",\"Receipt_idReceipt\"),\n"+

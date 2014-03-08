@@ -4,11 +4,9 @@
 package com.jburto2.carmaintenance;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import android.content.ContentValues;
@@ -16,6 +14,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 
 /**
  * @author jburton
@@ -102,7 +101,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
  
     // Adding new vehicle
-    void addVehicle(Vehicle vehicle) throws Exception {
+    public void addVehicle(Vehicle vehicle) throws Exception {
         SQLiteDatabase db = this.getWritableDatabase();
  
         ContentValues values = new ContentValues();
@@ -115,7 +114,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Getting single vehicle
-    Vehicle getVehicleById(int id) throws Exception {
+    public Vehicle getVehicleById(int id) throws Exception {
         SQLiteDatabase db = this.getReadableDatabase();
  
         Cursor cursor = db.query(Vehicle.TABLE_NAME, new String[] { Vehicle.KEY_ID, Vehicle.KEY_VEHICLEDESCRIPTION }, Vehicle.KEY_ID + "=?",
@@ -137,7 +136,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
     // Getting single vehicle
-    Vehicle getVehicle(String name) throws Exception {
+    public Vehicle getVehicle(String name) throws Exception {
         SQLiteDatabase db = this.getReadableDatabase();
  
         Cursor cursor = db.query(Vehicle.TABLE_NAME, new String[] { Vehicle.KEY_ID, Vehicle.KEY_VEHICLEDESCRIPTION }, Vehicle.KEY_VEHICLEDESCRIPTION + "=?",
@@ -383,7 +382,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(Receipt.KEY_LOCATION_IDLOCATION, receipt.getLocationID());
         values.put(Receipt.KEY_RECEIPTDATE, receipt.getDate());
         values.put(Receipt.KEY_RECEIPTAMOUNT, receipt.getAmount());
-        values.put(Receipt.KEY_RECEIPTMILEAGE, receipt.getMileage());
         values.put(Receipt.KEY_RECEIPTNOTES, receipt.getNotes());
  
         // Inserting Row
@@ -403,7 +401,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 							Receipt.KEY_LOCATION_IDLOCATION,
 							Receipt.KEY_RECEIPTDATE,
 							Receipt.KEY_RECEIPTAMOUNT,
-							Receipt.KEY_RECEIPTMILEAGE,
 							Receipt.KEY_RECEIPTNOTES  }, Receipt.KEY_ID + "=?",
                 new String[] { Integer.toString(id) }, null, null, null, null);
         if (cursor.getCount() > 0)
@@ -411,7 +408,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cursor.moveToFirst();
 	        
 	
-	        Receipt receipt = new Receipt(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Integer.parseInt(cursor.getString(2)),cursor.getString(3),Integer.parseInt(cursor.getString(4)),Integer.parseInt(cursor.getString(5)),cursor.getString(6));
+	        Receipt receipt = new Receipt(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Integer.parseInt(cursor.getString(2)),cursor.getString(3),Integer.parseInt(cursor.getString(4)),cursor.getString(5));
 	        // return receipt
 	        cursor.close();
 	        
@@ -436,7 +433,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				Receipt.KEY_LOCATION_IDLOCATION,
 				Receipt.KEY_RECEIPTDATE,
 				Receipt.KEY_RECEIPTAMOUNT,
-				Receipt.KEY_RECEIPTMILEAGE,
+				
 				Receipt.KEY_RECEIPTNOTES
         		
         }, Receipt.KEY_RECEIPTFILE + "=?",
@@ -445,7 +442,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         {
             cursor.moveToFirst();
 	          
-	        Receipt receipt = new Receipt(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Integer.parseInt(cursor.getString(2)),cursor.getString(3),Integer.parseInt(cursor.getString(4)),Integer.parseInt(cursor.getString(5)),cursor.getString(6));
+	        Receipt receipt = new Receipt(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Integer.parseInt(cursor.getString(2)),cursor.getString(3),Integer.parseInt(cursor.getString(4)),cursor.getString(5));
 	        // return receipt
 	        cursor.close();
 	        
@@ -456,6 +453,40 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	        cursor.close();
 	        
 	    	throw new java.lang.Exception("Cannot find receipt matching filename"+filename);
+	    }
+        
+    }
+    
+    // Getting single receipt
+    Receipt getReceiptByLocationAndDate(int lid, String date) throws Exception {
+        SQLiteDatabase db = this.getReadableDatabase();
+        
+ 
+        Cursor cursor = db.query(Receipt.TABLE_NAME, new String[] { 
+        		Receipt.KEY_ID, 
+				Receipt.KEY_RECEIPTFILE,
+				Receipt.KEY_LOCATION_IDLOCATION,
+				Receipt.KEY_RECEIPTDATE,
+				Receipt.KEY_RECEIPTAMOUNT,
+				Receipt.KEY_RECEIPTNOTES
+        		
+        }, Receipt.KEY_LOCATION_IDLOCATION + "=? and "+ Receipt.KEY_RECEIPTDATE +"=?",
+                new String[] { Integer.toString(lid), date }, null, null, null, null);
+        if (cursor.getCount() > 0)
+        {
+            cursor.moveToFirst();
+	          
+	        Receipt receipt = new Receipt(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Integer.parseInt(cursor.getString(2)),cursor.getString(3),Integer.parseInt(cursor.getString(4)),cursor.getString(5));
+	        // return receipt
+	        cursor.close();
+	        
+	        return receipt;
+	    }
+	    else
+	    {
+	        cursor.close();
+	        
+	    	throw new java.lang.Exception("Cannot find receipt matching location id="+lid+" and date="+date);
 	    }
         
     }
@@ -480,8 +511,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 receipt.setLocationID(Integer.parseInt(cursor.getString(2)));
                 receipt.setDate(cursor.getString(3));
                 receipt.setAmount(Integer.parseInt(cursor.getString(4)));
-                receipt.setMileage(Integer.parseInt(cursor.getString(5)));
-                receipt.setNotes(cursor.getString(6));
+                receipt.setNotes(cursor.getString(5));
                 // Adding receipt to list
                 receiptList.add(receipt);
             } while (cursor.moveToNext());
@@ -513,9 +543,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 receipt.setLocationID(Integer.parseInt(cursor.getString(2)));
                 
                 receipt.setDate(cursor.getString(3));
-                receipt.setMileage(Integer.parseInt(cursor.getString(4)));
-                receipt.setAmount(Integer.parseInt(cursor.getString(5)));
-                receipt.setNotes(cursor.getString(6));
+                receipt.setAmount(Integer.parseInt(cursor.getString(4)));
+                receipt.setNotes(cursor.getString(5));
                 // Adding receipt to list
                 receiptList.add(receipt);
             } while (cursor.moveToNext());
@@ -526,6 +555,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         
         return receiptList;
     }
+    
+
  
     // Updating single receipt
     public int updateReceipt(Receipt receipt) {
@@ -537,7 +568,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(Receipt.KEY_LOCATION_IDLOCATION,receipt.getLocationID());
         values.put(Receipt.KEY_RECEIPTDATE,receipt.getDate());
         values.put(Receipt.KEY_RECEIPTAMOUNT,receipt.getAmount());
-        values.put(Receipt.KEY_RECEIPTMILEAGE,receipt.getMileage());
         values.put(Receipt.KEY_RECEIPTNOTES,receipt.getNotes());
  
         // updating row
@@ -550,6 +580,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Deleting single receipt
     public void deleteReceipt(Receipt receipt) {
         SQLiteDatabase db = this.getWritableDatabase();
+        
+        deleteReceiptImage(receipt.getFile());
+        
         db.delete(Receipt.TABLE_NAME, Receipt.KEY_ID + " = ?",
                 new String[] { String.valueOf(receipt.getID()) });
         
@@ -708,6 +741,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(Work.KEY_VEHICLE_IDVEHICLE, work.getVehicleID()); // Work description
         values.put(Work.KEY_ITEMS_IDITEMS, work.getItemID()); // Work description
         values.put(Work.KEY_RECIEPT_IDRECEIPT, work.getReceiptID()); // Work description
+        values.put(Work.KEY_WORKMILEAGE, work.getMileage());
         values.put(Work.KEY_WORKNOTES, work.getNotes()); // Work description
         
         // Inserting Row
@@ -726,6 +760,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         					Work.KEY_VEHICLE_IDVEHICLE,
         					Work.KEY_ITEMS_IDITEMS,
         					Work.KEY_RECIEPT_IDRECEIPT,
+        					Work.KEY_WORKMILEAGE,
 							Work.KEY_WORKNOTES  
 							}, Work.KEY_ID + "=?",
                 new String[] { Integer.toString(id) }, null, null, null, null);
@@ -734,7 +769,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         	
             cursor.moveToFirst();
 
-	        Work work = new Work(Integer.parseInt(cursor.getString(0)),Integer.parseInt(cursor.getString(1)),Integer.parseInt(cursor.getString(2)),Integer.parseInt(cursor.getString(3)),cursor.getString(4));
+	        Work work = new Work(Integer.parseInt(cursor.getString(0)),Integer.parseInt(cursor.getString(1)),Integer.parseInt(cursor.getString(2)),Integer.parseInt(cursor.getString(3)),Integer.parseInt(cursor.getString(4)),cursor.getString(5));
 	        cursor.close();
 	        
 	        // return work
@@ -758,6 +793,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         					Work.KEY_VEHICLE_IDVEHICLE,
         					Work.KEY_ITEMS_IDITEMS,
         					Work.KEY_RECIEPT_IDRECEIPT,
+        					Work.KEY_WORKMILEAGE,
 							Work.KEY_WORKNOTES  
 							}, 
 							Work.KEY_VEHICLE_IDVEHICLE + "=? and "+Work.KEY_ITEMS_IDITEMS+"=? and "+Work.KEY_RECIEPT_IDRECEIPT+"=?",
@@ -766,7 +802,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         {
             cursor.moveToFirst();
 	
-	        Work work = new Work(Integer.parseInt(cursor.getString(0)),Integer.parseInt(cursor.getString(1)),Integer.parseInt(cursor.getString(2)),Integer.parseInt(cursor.getString(3)),cursor.getString(4));
+	        Work work = new Work(Integer.parseInt(cursor.getString(0)),Integer.parseInt(cursor.getString(1)),Integer.parseInt(cursor.getString(2)),Integer.parseInt(cursor.getString(3)),Integer.parseInt(cursor.getString(4)),cursor.getString(5));
 	        // return work
 	        cursor.close();
 	        
@@ -799,7 +835,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 work.setVehicleID(Integer.parseInt(cursor.getString(1)));
                 work.setItemID(Integer.parseInt(cursor.getString(2)));
                 work.setReceiptID(Integer.parseInt(cursor.getString(3)));
-                work.setNotes(cursor.getString(4));
+                work.setMileage(Integer.parseInt(cursor.getString(4)));
+                work.setNotes(cursor.getString(5));
                 // Adding work to list
                 workList.add(work);
             } while (cursor.moveToNext());
@@ -829,7 +866,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 work.setVehicleID(Integer.parseInt(cursor.getString(1)));
                 work.setItemID(Integer.parseInt(cursor.getString(2)));
                 work.setReceiptID(Integer.parseInt(cursor.getString(3)));
-                work.setNotes(cursor.getString(4));
+                work.setMileage(Integer.parseInt(cursor.getString(4)));
+                work.setNotes(cursor.getString(5));
                 // Adding work to list
                 workList.add(work);
             } while (cursor.moveToNext());
@@ -850,6 +888,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(Work.KEY_VEHICLE_IDVEHICLE, work.getVehicleID());
         values.put(Work.KEY_ITEMS_IDITEMS, work.getItemID());
         values.put(Work.KEY_RECIEPT_IDRECEIPT,work.getReceiptID());
+        values.put(Work.KEY_WORKMILEAGE,work.getMileage());
         values.put(Work.KEY_WORKNOTES,work.getNotes());
  
         // updating row
@@ -881,6 +920,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
     
     public void deleteAllRecordsFromTable(String table_name) {
+    	
+    	if (table_name.equals(Receipt.TABLE_NAME))
+    	{
+    		deleteAllReceiptImages();
+    	}
+    	
     	try {
 	        SQLiteDatabase db = this.getWritableDatabase();
 	        db.delete(table_name, null, null);
@@ -891,7 +936,30 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	}
     	
     }
- 
     
+    private void deleteAllReceiptImages() 
+    {
+    	List<Receipt> receiptList = getAllReceipts();
+    	for (int index = 0; index < receiptList.size(); index++)
+    	{
+    		deleteReceiptImage(receiptList.get(index).getFile());
+    	}
+    }
+    
+    /// http://www.mkyong.com/java/how-to-delete-file-in-java/
+    private void deleteReceiptImage(String filename)
+    {
+		try 
+		{
+			File file = new File(filename);
+			file.delete();
+		}
+		catch (Exception e)
+		{
+			System.err.println("Could not delete "+filename);
+			System.err.println(e.getMessage());
+		}
+    }
+	
     
 }

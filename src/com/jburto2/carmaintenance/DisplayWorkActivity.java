@@ -6,6 +6,7 @@ import java.util.StringTokenizer;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -191,10 +192,14 @@ AdapterView.OnItemSelectedListener {
         tableRow.addView(textView);
         
         // 7
+        textView = LayoutUtils.createTextView(this, "Mileage", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
+        tableRow.addView(textView);
+        
+        // 8
         textView = LayoutUtils.createTextView(this, "Work Notes", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
         tableRow.addView(textView);
 
-	    // 8
+	    // 9
 	    textView = LayoutUtils.createTextView(this, "Save", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
 	    if (autoSave)
         {
@@ -206,14 +211,14 @@ AdapterView.OnItemSelectedListener {
         }
 	    tableRow.addView(textView);
 	    
-        // 9
+        // 10
         textView = LayoutUtils.createTextView(this, "Detail", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
         tableRow.addView(textView);
-        // 10
+        // 11
         textView = LayoutUtils.createTextView(this, "Delete", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
         tableRow.addView(textView);
         
-        // 11 - Must be last 
+        // 12 - Must be last 
         textView = LayoutUtils.createTextView(this, "New Row", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
         textView.setVisibility(View.GONE);
         tableRow.addView(textView);
@@ -358,7 +363,11 @@ AdapterView.OnItemSelectedListener {
 //            tableRow.addView(imageView);
             
             // 7
-            EditText editText = LayoutUtils.createEditText(this, workitem.getNotes(), 15, LayoutUtils.DARK_GRAY,LayoutUtils.WHITE);
+            EditText editText = LayoutUtils.createEditText(this, Integer.toString(workitem.getMileage()), 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+            tableRow.addView(editText);
+            
+            // 8
+            editText = LayoutUtils.createEditText(this, workitem.getNotes(), 15, LayoutUtils.DARK_GRAY,LayoutUtils.WHITE);
             tableRow.addView(editText);
             
             // Add either the save button or autosave functionality
@@ -539,10 +548,13 @@ AdapterView.OnItemSelectedListener {
         
         tableRow.addView(spinner);
         
-        
-        
         // 7
-        EditText editText = LayoutUtils.createEditText(this, "", 15, LayoutUtils.DARK_GRAY,LayoutUtils.WHITE);
+        EditText editText = LayoutUtils.createEditText(this, "0", 15, LayoutUtils.DARK_GRAY,LayoutUtils.WHITE);
+        tableRow.addView(editText);
+        
+        
+        // 8
+        editText = LayoutUtils.createEditText(this, "", 15, LayoutUtils.DARK_GRAY,LayoutUtils.WHITE);
         tableRow.addView(editText);
 
         //Save button or autosave
@@ -590,45 +602,19 @@ AdapterView.OnItemSelectedListener {
 	
 	private String getVehicleDescription(TableRow tr) throws Exception
 	{
-		String vehicleDescription;
-		try 
-		{
-			vehicleDescription = ((Spinner)tr.getChildAt(4)).getSelectedItem().toString();
-		}
-		catch (java.lang.ClassCastException ce)
-		{
-			vehicleDescription = ((TextView)tr.getChildAt(4)).getText().toString();
-		}
-		
-		return vehicleDescription;
+		return getValueFromSpinner(tr,4);
+
 	}
 		
 	private String getItemDescription(TableRow tr) throws Exception
 	{
-		String itemDescription;
-		try 
-		{
-			itemDescription = ((Spinner)tr.getChildAt(5)).getSelectedItem().toString();
-		}
-		catch (java.lang.ClassCastException ce)
-		{
-			itemDescription = ((TextView)tr.getChildAt(5)).getText().toString();
-		}
-		return itemDescription;
+		return getValueFromSpinner(tr,5);
+
 	}	
 	
 	private String getReceiptField(TableRow tr) throws Exception
 	{
-		String receiptFile;
-		try
-		{
-			receiptFile = ((Spinner)tr.getChildAt(6)).getSelectedItem().toString();
-		}
-		catch (java.lang.ClassCastException ce)
-		{
-			receiptFile = ((TextView)tr.getChildAt(6)).getText().toString();
-		}
-		return receiptFile;
+		return getValueFromSpinner(tr,6);
 	}
 	
 	private String getReceiptFile(TableRow tr) throws Exception
@@ -638,7 +624,7 @@ AdapterView.OnItemSelectedListener {
 
 	private Receipt getReceiptFromTable(TableRow tr) throws Exception
 	{
-		// This is ugly, but it's late and I'm tired.
+		Receipt receipt;
 		
 		String receiptField = getReceiptField(tr);
 		
@@ -650,18 +636,9 @@ AdapterView.OnItemSelectedListener {
 		Location location = db.getLocation(locationDescr);
 		
 		
-		List<Receipt> receiptList = db.getAllReceiptsByLocationId(location.getID());
-		
-	    for (int index = 0; index < receiptList.size(); index++)
-	    {
-	    	Receipt r = receiptList.get(index);
-	    	if (r.getDate().equals(date))
-	    	{
-	    		
-	    		return r;
-	    	}
-	    }
-	    return null;
+		receipt = db.getReceiptByLocationAndDate(location.getID(),date);
+		return receipt;
+	    
 	}
 	
 	private void fillWorkIdFieldsFromSpinners(TableRow tr) throws Exception
@@ -705,10 +682,14 @@ AdapterView.OnItemSelectedListener {
 		// Receipt Id = child 3
 		int receiptid = Integer.parseInt(((TextView)tr.getChildAt(3)).getText().toString());
 		
-		// Notes = child 4
-		String notes = ((TextView)tr.getChildAt(7)).getText().toString();
+		// Mileage = child 5
+		int mileage = Integer.parseInt(((TextView)tr.getChildAt(7)).getText().toString());
+				
 		
-		return new Work(workid,vehicleDescription,itemid,receiptid,notes);
+		// Notes = child 4
+		String notes = ((TextView)tr.getChildAt(8)).getText().toString();
+		
+		return new Work(workid,vehicleDescription,itemid,receiptid,mileage,notes);
 	
 
 	}
@@ -744,11 +725,16 @@ AdapterView.OnItemSelectedListener {
     	
     	/// http://stackoverflow.com/questions/2736389/how-to-pass-object-from-one-activity-to-another-in-android
     	intent.putExtra("WorkClass", work);
+    	
+    			
     	try
     	{
+    	Receipt receipt = db.getReceiptById(work.getReceiptID());
+    	intent.putExtra("ReceiptClass", receipt);
         intent.putExtra("VehicleDescription",getVehicleDescription(tr));
         intent.putExtra("ItemDescription", getItemDescription(tr));
-        intent.putExtra("ReceiptFile",getReceiptFile(tr));
+        
+        
 
     	}
     	catch (Exception e)

@@ -33,7 +33,7 @@
          <activity
             android:name="com.jburto2.carmaintenance.SettingsActivity"
             android:label="@string/work" 
-                        android:parentActivityName="com.jburto2.carmaintenance.MainActivity" >
+            android:parentActivityName="com.jburto2.carmaintenance.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jburto2.carmaintenance.MainActivity" />
@@ -106,6 +106,16 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jburto2.carmaintenance.MainActivity" />
+            
+                </activity>
+              <activity
+            android:name="com.jburto2.carmaintenance.DisplayReceiptDetailActivity"
+            android:label="@string/work" 
+                        android:parentActivityName="com.jburto2.carmaintenance.DisplayReceiptActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jburto2.carmaintenance.DisplayReceiptActivity" />
+            
         </activity>
         <activity
             android:name="com.jburto2.carmaintenance.DisplayLocationActivity"

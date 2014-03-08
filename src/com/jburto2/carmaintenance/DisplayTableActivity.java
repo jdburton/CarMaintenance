@@ -2,10 +2,12 @@ package com.jburto2.carmaintenance;
 
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
@@ -14,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -27,34 +30,47 @@ import android.widget.TextView;
  * @brief This class implements functionality for the main activity in Android Lookup. Start here.
  */
 
-public abstract class DisplayTableActivity extends Activity  {
-	
-	public DatabaseHandler db = new DatabaseHandler(this);
-	protected boolean autoSave = false;
-	protected int colorTheme = LayoutUtils.HIGHLIGHT_COLOR;
+public abstract class DisplayTableActivity extends DisplayActivity  {
 	
 	
 
 	
+	
+
+	
+	@SuppressLint("NewApi")
 	@Override
-
 	/**
 	 * @fn protected void onCreate(Bundle savedInstanceState)
-	 * @brief Method called when activity is created. Sets the content view to activity_main. 
+	 * @brief Method called when activity is created.  
 	 * 
 	 * @param savedInstanceState
 	 */
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-	    /// Preferences from http://developer.android.com/guide/topics/data/data-storage.html#pref
-	    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-	    autoSave = settings.getBoolean(SettingsActivity.KEY_AUTOSAVE, false);
-	    LayoutUtils.setHighlightColor(Integer.parseInt(settings.getString(SettingsActivity.KEY_HIGHLIGHT_COLOR, "2")));
-	    colorTheme = LayoutUtils.HIGHLIGHT_COLOR;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            // Show the Up button in the action bar.
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
 
 	}
+	
+	/**
+	 * @fn private void setupActionBar()
+	 * 
+	 * Set up the {@link android.app.ActionBar}, if the API is available.
+	 * This enables the up/home button to allow users to return to the main screen.
+	 * 
+	 */
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void setupActionBar() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+		}
+	}
+
 	
 	@Override
 	protected void onPause()
@@ -167,32 +183,7 @@ public abstract class DisplayTableActivity extends Activity  {
 	    return true;
 	}
 
-    /**
-     * @fn public void displayToast(String message)
-     * @brief Displays a popup "Toast" message to the user.
-     * Displaying toasts from http://developer.android.com/guide/topics/ui/notifiers/toasts.html
-     * @param message Message to display
-     */
-    public void displayToast(String message)
-    {
-    	Context context = this.getApplicationContext();
-    	LayoutUtils.displayToast(context,message);
-    }
-    
-    /**
-     * @fn public void displayMessageDialog(String message, String title)
-     * @brief Displays a message dialog to the user.
-     * Displaying message dialogs from http://www.mkyong.com/android/android-alert-dialog-example/
-     * @param message Message to display
-     * @param title Title of dialog
-     * 
-     */
-    
-    public void displayMessageDialog(String title, String message )
-    {
-    	
-		LayoutUtils.displayMessageDialog(this,title,message);
-    }
+
     
     protected abstract void updateRow(TableRow tr);
     
@@ -271,9 +262,10 @@ public abstract class DisplayTableActivity extends Activity  {
 				else
 				{
 					updateRow(tr);
+					tr.performClick();
 				}
 
-            	tr.performClick();
+            	
             	
            }
         });
@@ -357,6 +349,21 @@ public abstract class DisplayTableActivity extends Activity  {
 	    tableRow.addView(button);
 
     }
+    
+    protected String getValueFromSpinner(TableRow tr, int index)
+    {
+		String spinnerValue;
+		try 
+		{
+			spinnerValue = ((Spinner)tr.getChildAt(index)).getSelectedItem().toString();
+		}
+		catch (java.lang.ClassCastException ce)
+		{
+			spinnerValue = ((TextView)tr.getChildAt(index)).getText().toString();
+		}
+		
+		return spinnerValue;
+	}
 }
     
 

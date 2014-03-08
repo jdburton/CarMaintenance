@@ -19,10 +19,10 @@ import android.view.View;
  * @brief This class implements functionality for the main activity in CarMaintenance. Start here.
  */
 
-public class MainActivity extends Activity {
+public class MainActivity extends DisplayActivity {
 	
 
-	private  DatabaseHandler db = new DatabaseHandler(this);
+	
 	
 	private void createData()
 	{
@@ -57,18 +57,18 @@ public class MainActivity extends Activity {
 		//this(0,file, location_id, date, amount, mileage,  notes)
 		try
 		{
-			db.addReceipt(new Receipt(0,"none",l.getID(),"02/04/2012",1999,90210,"Replaced blinker fluid. Checked muffler bearings." ));
+			db.addReceipt(new Receipt(0,"/mnt/sdcard/JPEG_20140306_022918_2121550581.jpg",l.getID(),"2/04/2012",1999,"Replaced blinker fluid. Checked muffler bearings." ));
 		}
 		catch (Exception e)
 		{
-		
+			displayMessageDialog("SQLite fail",e.getMessage());
 		}
 		Receipt r = null;
 		Vehicle v = null;
 		Item it = null;
 		Item it2 = null;
 		try {
-			r = db.getReceipt("none");
+			r = db.getReceipt("/mnt/sdcard/JPEG_20140306_022918_2121550581.jpg");
 			v = db.getVehicle("Chevette");
 			it = db.getItem("Blinker Fluid");
 			it2 = db.getItem("Muffler bearings");
@@ -81,11 +81,15 @@ public class MainActivity extends Activity {
 		}
 		try
 		{
-			db.addWork(new Work(0,v.getID(),it.getID(),r.getID(),"50ML Blinker Fluid"));
-			db.addWork(new Work(0,v.getID(),it2.getID(),r.getID(),"Muffler bearings fine"));
+			db.addWork(new Work(0,v.getID(),it.getID(),r.getID(),90210,"50ML Blinker Fluid"));
+			db.addWork(new Work(0,v.getID(),it2.getID(),r.getID(),90210,"Muffler bearings fine"));
 		}
 		catch (Exception e)
-		{}
+		{
+			displayMessageDialog("SQLite fail",e.getMessage());
+			e.printStackTrace();
+		}
+		
 		
 	}
 	
@@ -143,57 +147,6 @@ public class MainActivity extends Activity {
 	}
 	
 
-	/**
-	 * @fn public boolean onOptionsItemSelected(MenuItem item)
-	 * @brief Handles menu item selection. 
-	 * Only menu item here is the "action_about" for the info activity.
-	 * @param item MenuItem that was selected
-	 * @return true  
-	 */
-	public void onAboutButtonClick(View v) {
-	
-
-	    Intent intent = new Intent(this, DisplayInfoActivity.class);
-	    startActivity(intent);
-
-	}
-	public void onVehicleButtonClick(View v) {
-		
-
-	    Intent intent = new Intent(this, DisplayVehicleActivity.class);
-	    startActivity(intent);
-
-	}
-	public void onLocationButtonClick(View v) {
-		
-	    Intent intent = new Intent(this, DisplayLocationActivity.class);
-	    startActivity(intent);
-
-	}
-	public void onWorkButtonClick(View v) {
-		
-
-	    Intent intent = new Intent(this, DisplayWorkActivity.class);
-	    startActivity(intent);
-
-	}
-
-	
-	public void onReceiptButtonClick(View v) {
-		
-
-	    Intent intent = new Intent(this, DisplayReceiptActivity.class);
-	    startActivity(intent);
-
-	}
-	
-	public void onItemButtonClick(View v) {
-		
-
-	    Intent intent = new Intent(this, DisplayItemActivity.class);
-	    startActivity(intent);
-
-	}
 
 
 	@Override
@@ -232,33 +185,6 @@ public class MainActivity extends Activity {
 	}
 
 
-    /**
-     * @fn public void displayToast(String message)
-     * @brief Displays a popup "Toast" message to the user.
-     * Displaying toasts from http://developer.android.com/guide/topics/ui/notifiers/toasts.html
-     * @param message Message to display
-     */
-    public void displayToast(String message)
-    {
-    	Context context = this.getApplicationContext();
-		LayoutUtils.displayToast(context, message);
-    }
-    
-    /**
-     * @fn public void displayMessageDialog(String message, String title)
-     * @brief Displays a message dialog to the user.
-     * Displaying message dialogs from http://www.mkyong.com/android/android-alert-dialog-example/
-     * @param message Message to display
-     * @param title Title of dialog
-     * 
-     */
-    
-    public void displayMessageDialog(String message, String title)
-    {
-    	
-		LayoutUtils.displayMessageDialog(this, message, title);
-    }
-    
     
     
 }

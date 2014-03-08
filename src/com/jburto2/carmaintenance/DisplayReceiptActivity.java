@@ -1,29 +1,18 @@
 package com.jburto2.carmaintenance;
 
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -42,15 +31,7 @@ import android.widget.TextView;
 public class DisplayReceiptActivity extends DisplayTableActivity implements
 AdapterView.OnItemSelectedListener {
 	
-	public static final int IMAGE_REQUEST_CODE = 1;
-	public static final int REQUEST_IMAGE_CAPTURE = 2;
-	
-	private TextView imageTextViewHolder;
-	private Bitmap bitmap;
-	private ImageView imageViewHolder;
-	private Uri photoUri;
 
-	
 	@Override
 
 	/**
@@ -59,6 +40,8 @@ AdapterView.OnItemSelectedListener {
 	 * 
 	 * @param savedInstanceState
 	 */
+	
+	
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -134,6 +117,10 @@ AdapterView.OnItemSelectedListener {
 		
 		super.drawTable();
 
+		// http://stackoverflow.com/questions/5669747/android-how-to-use-dip-density-independent-pixel-in-code
+	    final int sixty_dip = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60, getResources().getDisplayMetrics());
+	    final int eighty_dip = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80, getResources().getDisplayMetrics());
+		
 		
 		// Get the Table Layout 
 	    TableLayout tableLayout = (TableLayout) findViewById(R.id.tlGridTable);
@@ -164,19 +151,19 @@ AdapterView.OnItemSelectedListener {
     	TableRow tableRow = LayoutUtils.createTableRow(this);
     	tableRow.setId(0);
     	
-    	TextView textView = LayoutUtils.createTextView(this, "Receipt ID", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+    	TextView textView = LayoutUtils.createTextView(this, "Receipt ID", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
     	// 1
-    	textView = LayoutUtils.createTextView(this, "Location ID", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+    	textView = LayoutUtils.createTextView(this, "Location ID", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
 
     	// 2
     	
-        textView = LayoutUtils.createTextView(this, "Location Descripton", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Location Descripton", 15, LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
         if (vid < 0)
         {
         	textView.setVisibility(View.VISIBLE);
@@ -188,32 +175,30 @@ AdapterView.OnItemSelectedListener {
         tableRow.addView(textView);
         
         // 3
-        textView = LayoutUtils.createTextView(this, "Receipt Image", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Receipt Image", 15, LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
         tableRow.addView(textView);
 
         // 4
-        textView = LayoutUtils.createTextView(this, "Date", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Date", 15, LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
         tableRow.addView(textView);
         
-        // 5
-        textView = LayoutUtils.createTextView(this, "Mileage", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
-        tableRow.addView(textView);
+
         
         // 6
-        textView = LayoutUtils.createTextView(this, "Amount", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Amount", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
         tableRow.addView(textView);
 
         // 7
-        textView = LayoutUtils.createTextView(this, "Receipt Notes", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Receipt Notes", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
         tableRow.addView(textView);
         
         // 8
-        textView = LayoutUtils.createTextView(this, "Receipt Uri", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Receipt Uri", 15, LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
         textView.setVisibility(View.GONE);
         tableRow.addView(textView);
 
         // 9
-        textView = LayoutUtils.createTextView(this, "Save", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Save", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
         
 	    if (autoSave)
         {
@@ -227,10 +212,10 @@ AdapterView.OnItemSelectedListener {
 
 		
         // 9
-        //textView = LayoutUtils.createTextView(this, "Edit", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
-        //tableRow.addView(textView);
+        textView = LayoutUtils.createTextView(this, "Detail", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
+        tableRow.addView(textView);
         // 10
-        textView = LayoutUtils.createTextView(this, "Delete", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Delete", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
         tableRow.addView(textView);
         
         // New Row Indicator = Must be last 
@@ -299,18 +284,18 @@ AdapterView.OnItemSelectedListener {
         	        	
             // Data
         	// 0
-        	textView = LayoutUtils.createTextView(this, Integer.toString(singlereceipt.getID()), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+        	textView = LayoutUtils.createTextView(this, Integer.toString(singlereceipt.getID()), 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
         	textView.setVisibility(View.GONE);
         	tableRow.addView(textView);
             
         	// 1
-        	textView = LayoutUtils.createTextView(this, Integer.toString(singlereceipt.getLocationID()), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+        	textView = LayoutUtils.createTextView(this, Integer.toString(singlereceipt.getLocationID()), 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
         	textView.setVisibility(View.GONE);
         	tableRow.addView(textView);
      
 
         	// 2
-            textView = LayoutUtils.createTextView(this, location.getLocationDescription(), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+            textView = LayoutUtils.createTextView(this, location.getLocationDescription(), 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
             if (vid < 0)
             {
             	textView.setVisibility(View.VISIBLE);
@@ -324,8 +309,10 @@ AdapterView.OnItemSelectedListener {
             // 3
             ImageButton imageButton = new ImageButton(this);    	
             imageButton.setClickable(true);
-            imageButton.setLayoutParams(new TableRow.LayoutParams(60,80));
-            imageButton.setScaleType(ScaleType.CENTER_CROP);
+            
+
+            imageButton.setLayoutParams(new TableRow.LayoutParams(sixty_dip,eighty_dip));
+            
             imageButton.setOnClickListener(new View.OnClickListener() 
             {
     			
@@ -336,8 +323,8 @@ AdapterView.OnItemSelectedListener {
     	        	//("touched image!");
     				//send click through to parent.
     				TableRow tr = (TableRow)v.getParent();
-    				TextView tv = (TextView)tr.getChildAt(8);
-    				onImageFieldClick((ImageButton)v,tv);
+    				TextView tv = (TextView)tr.getChildAt(7);
+    				dispatchTakePictureIntent((ImageButton)v,tv);
     				
     	        	tr.performClick();
      
@@ -347,34 +334,36 @@ AdapterView.OnItemSelectedListener {
             //LayoutUtils.loadImage(this,singlereceipt.getFile(),imageViewHolder);
             try
             {
-            	imageButton.setImageURI(Uri.parse(singlereceipt.getFile()));
+            	//imageButton.setImageURI(Uri.parse(singlereceipt.getFile()));
+
+            	rotateAndSetImage(imageButton,singlereceipt.getFile());
+            	
             }
             catch (Exception e)
             {
     			imageButton.setImageResource(R.drawable.ic_receipt);
     				
             }
+            imageButton.setScaleType(ScaleType.CENTER_CROP);
             tableRow.addView(imageButton);
             
             // 4
             
-            textView = LayoutUtils.createDateTextView(this, singlereceipt.getDate(), 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+            textView = LayoutUtils.createDateTextView(this, singlereceipt.getDate(), 15, LayoutUtils.DARK_GRAY,LayoutUtils.WHITE);
             tableRow.addView(textView);
             
-            // 5
-            EditText editText = LayoutUtils.createEditText(this, Integer.toString(singlereceipt.getMileage()), 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
-            tableRow.addView(editText);
+
             
             // 6
-            editText = LayoutUtils.createEditText(this, Integer.toString(singlereceipt.getAmount()), 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+            EditText editText = LayoutUtils.createEditText(this, Integer.toString(singlereceipt.getAmount()), 15, LayoutUtils.DARK_GRAY,LayoutUtils.WHITE);
             tableRow.addView(editText);
 
             // 7
-             editText = LayoutUtils.createEditText(this, singlereceipt.getNotes(), 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+             editText = LayoutUtils.createEditText(this, singlereceipt.getNotes(), 15, LayoutUtils.DARK_GRAY,LayoutUtils.WHITE);
             tableRow.addView(editText);
             
             // 8
-            textView = LayoutUtils.createTextView(this, singlereceipt.getFile(), 15, Color.rgb(51, 51, 51),Color.rgb(200, 200, 200));
+            textView = LayoutUtils.createTextView(this, singlereceipt.getFile(), 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
             textView.setVisibility(View.GONE);
             tableRow.addView(textView);
             
@@ -383,28 +372,18 @@ AdapterView.OnItemSelectedListener {
             
 	        ImageButton button; 
 	        
+	        
+	    	button = new ImageButton(this);
+	    	button.setImageResource(android.R.drawable.ic_menu_edit);
+	    	button.setOnClickListener(new View.OnClickListener(){
+		    	public void onClick(View v){
+		    		onEditButtonClick(v);
+		    	}
 
-//	        button = new ImageButton(this);
-//	        button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
-//	        button.setId(i*NUMBER_BUTTONS+1);
-//	        button.setOnClickListener(new View.OnClickListener(){
-//	            public void onClick(View v){
-//	                 // Do some operation for minus after getting v.getId() to get the current row
-//	            	// http://stackoverflow.com/questions/14112044/android-how-to-get-the-id-of-a-parent-view
-//	            	("Button is"+v.getId()+ " on row "+ ((TableRow)v.getParent()).getId());
-//	            	//send click through to parent.
-//	            	/// http://stackoverflow.com/questions/8135032/does-making-parent-clickable-make-all-child-element-clickable-as-well
-//		            ViewParent tr = v.getParent();
-//	            	v.performClick();
-//
-//	            	
-//	            }
-//
-//	        
-//	            
-//	        });
-//	        
-//	        tableRow.addView(button);
+	    	});
+
+	    	tableRow.addView(button);
+
 	        
 	        button = new ImageButton(this);
 	        button.setImageResource(android.R.drawable.ic_menu_delete);
@@ -493,12 +472,12 @@ AdapterView.OnItemSelectedListener {
         
         // Data
     	// 0
-    	TextView textView = LayoutUtils.createTextView(this, "-1", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+    	TextView textView = LayoutUtils.createTextView(this, "-1", 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
     	// 1
-    	textView = LayoutUtils.createTextView(this, Integer.toString(vid), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+    	textView = LayoutUtils.createTextView(this, Integer.toString(vid), 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
@@ -520,7 +499,7 @@ AdapterView.OnItemSelectedListener {
     	{
     		Spinner vSpinner = (Spinner) findViewById(R.id.locationSpinner);
     		
-	        textView = LayoutUtils.createTextView(this, vSpinner.getSelectedItem().toString() , 15, Color.rgb(51, 51, 51),Color.rgb(255,255,255));
+	        textView = LayoutUtils.createTextView(this, vSpinner.getSelectedItem().toString() , 15, LayoutUtils.DARK_GRAY,LayoutUtils.WHITE);
 	    	textView.setVisibility(View.GONE);
 	        tableRow.addView(textView);
 
@@ -542,8 +521,8 @@ AdapterView.OnItemSelectedListener {
 	
 				//send click through to parent.
 				TableRow tr = (TableRow)v.getParent();
-				TextView tv = (TextView)tr.getChildAt(8);
-				onImageFieldClick((ImageButton)v,tv);
+				TextView tv = (TextView)tr.getChildAt(7);
+				dispatchTakePictureIntent((ImageButton)v,tv);
 				
 	        	tr.performClick();
  
@@ -560,52 +539,34 @@ AdapterView.OnItemSelectedListener {
         
         
         // 4
-        textView = LayoutUtils.createDateTextView(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+        textView = LayoutUtils.createDateTextView(this, "", 15, LayoutUtils.DARK_GRAY,LayoutUtils.WHITE);
         //TODO: Override with date picker dialog.
 
         tableRow.addView(textView);
         
         // 5
-        EditText editText = LayoutUtils.createEditText(this, "0", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+        EditText editText = LayoutUtils.createEditText(this, "0", 15, LayoutUtils.DARK_GRAY,LayoutUtils.WHITE);
         tableRow.addView(editText);
         
+        
         // 6
-        editText = LayoutUtils.createEditText(this, "0", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+        editText = LayoutUtils.createEditText(this, "", 15, LayoutUtils.DARK_GRAY,LayoutUtils.WHITE);
         tableRow.addView(editText);
         
         // 7
-        editText = LayoutUtils.createEditText(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
-        tableRow.addView(editText);
-        
-        // 8
-        textView = LayoutUtils.createTextView(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+        textView = LayoutUtils.createTextView(this, "", 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
         textView.setVisibility(View.GONE);
         tableRow.addView(textView);
 
         addSaveFunctionToRow(tableRow);
         ImageButton button;
+        
+    	button = new ImageButton(this);
+    	button.setImageResource(android.R.drawable.ic_menu_edit);
+    	button.setEnabled(false);
 
-//        button = new ImageButton(this);
-//        button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
-//        
-//        button.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//                 // Do some operation for minus after getting v.getId() to get the current row
-//            	// http://stackoverflow.com/questions/14112044/android-how-to-get-the-id-of-a-parent-view
-//            	("Button is"+v.getId()+ " on row "+ ((TableRow)v.getParent()).getId());
-//            	//send click through to parent.
-//            	/// http://stackoverflow.com/questions/8135032/does-making-parent-clickable-make-all-child-element-clickable-as-well
-//	            ViewParent tr = v.getParent();
-//            	v.performClick();
-//
-//            	
-//            }
-//
-//        
-//            
-//        });
-//        
-//        tableRow.addView(button);
+    	tableRow.addView(button);
+
         
         button = new ImageButton(this);
         button.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
@@ -642,20 +603,7 @@ AdapterView.OnItemSelectedListener {
 	
 	private void fillReceiptIdFieldsFromSpinners(TableRow tr) throws Exception
 	{
-		String locationDescription;
-
-		
-		try 
-		{
-			locationDescription = ((Spinner)tr.getChildAt(2)).getSelectedItem().toString();
-		}
-		catch (java.lang.ClassCastException ce)
-		{
-			locationDescription = ((TextView)tr.getChildAt(2)).getText().toString();
-		}
-		
-		
-		
+		String locationDescription = getLocationDescription(tr);
 		
 		Location v = db.getLocation(locationDescription);
 		((TextView)tr.getChildAt(1)).setText(Integer.toString(v.getID()));
@@ -670,22 +618,20 @@ AdapterView.OnItemSelectedListener {
 		
 		// Location ID = child 1
 		int locationid = Integer.parseInt(((TextView)tr.getChildAt(1)).getText().toString());
-		// File = child 8
-		String file = ((TextView)tr.getChildAt(8)).getText().toString();
+		// File = child 7
+		String file = ((TextView)tr.getChildAt(7)).getText().toString();
 		
 		// Date = child 4
 		String date = ((TextView)tr.getChildAt(4)).getText().toString();
 
-		// Amount = child 4
+		// Amount = child 5
 		int amount = Integer.parseInt(((TextView)tr.getChildAt(5)).getText().toString());
 
-		// Mileage = child 5
-		int mileage = Integer.parseInt(((TextView)tr.getChildAt(6)).getText().toString());
 		
 		// Notes = child 6
-		String notes = ((TextView)tr.getChildAt(7)).getText().toString();
+		String notes = ((TextView)tr.getChildAt(6)).getText().toString();
 		
-		return new Receipt(receiptid,file,locationid,date,mileage,amount,notes);
+		return new Receipt(receiptid,file,locationid,date,amount,notes);
 	
 
 	}
@@ -738,9 +684,6 @@ AdapterView.OnItemSelectedListener {
 		
 		String keys = LayoutUtils.getKeysFromTableRow(tr);
 		//(keys);
-		
-		
-		
 	
 		try 
 		{
@@ -754,128 +697,33 @@ AdapterView.OnItemSelectedListener {
 		drawTable();
 	}
 	
-	public void onLocationButtonClick(View v) {
+	private String getLocationDescription(TableRow tr) throws Exception
+	{
 		
-
-	    Intent intent = new Intent(this, DisplayLocationActivity.class);
-	    startActivity(intent);
-
+		return getValueFromSpinner(tr,2);
 	}
-	
-	// Working with an image picker from http://www.vogella.com/tutorials/AndroidCamera/article.html
-	
-	public void onImageFieldClick(ImageButton iv, TextView tv) {
-		// save the view.
-		imageViewHolder = iv;
-		imageTextViewHolder = tv;
-		
-		
-		
-		// create the intent
-//		Intent intent = new Intent();
-//		intent.setType("image/*");
-//		intent.setAction(Intent.ACTION_GET_CONTENT);
-//		intent.addCategory(Intent.CATEGORY_OPENABLE);
-//		startActivityForResult(intent, IMAGE_REQUEST_CODE);
-//		
-		dispatchTakePictureIntent();
-		
-	}
-	    
-	private void dispatchTakePictureIntent() {
-		
-		/// Started with this http://developer.android.com/training/camera/photobasics.html
-		/// But ran into this problem http://stackoverflow.com/questions/13912095/java-lang-nullpointerexception-on-bundle-extras-data-getextras
-		
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) 
-        {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try 
-            {
-                photoFile = createImageFile();
-            } catch (IOException ex) 
-            {
-                // Error occurred while creating the File
-                
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null)
-            {
-            	photoUri = Uri.fromFile(photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,  photoUri                     );
-                //takePictureIntent.putExtra("filename", "file:"+photoFile.getAbsolutePath());
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-            }
-        }
-    }
 
-	
-	private File createImageFile() throws IOException {
-	    // Create an image file name
-	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	    String imageFileName = "JPEG_" + timeStamp + "_";
-	    File storageDir = this.getExternalFilesDir("receipts");
-	    File image = File.createTempFile(
-	        imageFileName,  /* prefix */
-	        ".jpg",         /* suffix */
-	        storageDir      /* directory */
-	    );
-
-	    // Save a file: path for use with ACTION_VIEW intent
-	    return image;
-	}
-	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	public void onEditButtonClick(View v) 
+	{
+		Intent intent = new Intent(this,DisplayReceiptDetailActivity.class);
 		
-		super.onActivityResult(requestCode, resultCode, data);
-
-		
-		if (requestCode == IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK)
-		{
-			imageTextViewHolder.setText(data.getDataString());
-			//LayoutUtils.loadImage(this,data.getData(),imageViewHolder);
-			try
-			{
-				imageViewHolder.setImageURI(data.getData());
-			}
-			catch (Exception e)
-			{
-				imageViewHolder.setImageResource(R.drawable.ic_receipt);
-			}
-			
-			
+    	// Get the table row
+    	TableRow tr = (TableRow)v.getParent();
+    	
+    	Receipt receipt = getReceiptFromTableRow(tr);
+    	intent.putExtra("ReceiptClass", receipt);
+    	try {
+			intent.putExtra("LocationDescription",getLocationDescription(tr));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-	        
-	        try {
-	        	/// Fixed null pointer exceptions from - http://www.androidhive.info/2013/09/android-working-with-camera-api/
-	            // bitmap factory
-	            BitmapFactory.Options options = new BitmapFactory.Options();
-	 
-	            // downsizing image as it throws OutOfMemory Exception for larger
-	            // images
-	            options.inSampleSize = 8;
-	 
-	            final Bitmap bitmap = BitmapFactory.decodeFile(photoUri.getPath(),
-	                    options);
-	 
-	            imageViewHolder.setImageBitmap(bitmap);
-	            imageTextViewHolder.setText(photoUri.toString());
-	        } catch (NullPointerException e) {
-	            e.printStackTrace();
-	        }
-	        
 
-	         
-	        
-	    }
-
-		
+    	
+		startActivity(intent);
 	}
+	
+	
 
 
 }

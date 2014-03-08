@@ -1,15 +1,23 @@
 package com.jburto2.carmaintenance;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.ImageView;
 
 /**
  * 
@@ -20,17 +28,16 @@ import android.webkit.WebView;
  * @brief This class controls activities that displays the information page. 
  */
 
-public abstract class DisplayDetailActivity extends Activity {
+public abstract class DisplayDetailActivity extends DisplayActivity {
+	
+	protected DatabaseHandler db = new DatabaseHandler(this);
 
 	@SuppressLint("NewApi")
 	@Override
 	/**
 	 * @fn protected void onCreate(Bundle savedInstanceState)
 	 * @brief Method called when activity is created. 
-	 * This method sets the content view to activity_display_info, then creates an WebView view on which it displays the help information.
-	 * The help information is stored in an an HTML file in the assets directory. R.string.about_text gives the location of the file.
-	 * 
-	 * More on scrolling from 	http://stackoverflow.com/questions/16623337/how-to-scroll-table-layout-in-horizontal-and-vertical-in-android 
+ore on scrolling from 	http://stackoverflow.com/questions/16623337/how-to-scroll-table-layout-in-horizontal-and-vertical-in-android 
 	 * 
 	 * @param savedInstanceState
 	 */
@@ -89,15 +96,18 @@ public abstract class DisplayDetailActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case android.R.id.home:
-				NavUtils.navigateUpFromSameTask(this);
-				break;
-
+				if (autoSave)
+				{
+					LayoutUtils.displayToast(this, "Saving...");
+					update();
+				}
 			case R.id.action_cancel:
 				
 				super.onBackPressed();
 				break;
 			case R.id.action_save:
 				LayoutUtils.displayToast(this, "Saving...");
+				update();
 				break;
 				
 		    case R.id.action_about:
@@ -113,4 +123,57 @@ public abstract class DisplayDetailActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	
+	// Working with an image picker from http://www.vogella.com/tutorials/AndroidCamera/article.html
+
+	protected void loadImage(String uriString, ImageView imageView) 
+	{
+		try
+		{
+			Uri resource = Uri.parse(uriString);
+			loadImage(resource, imageView);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	protected void loadImage(Uri resource,ImageView imageView) 
+	{
+		InputStream stream  = null;
+		Bitmap bitmap = null;
+		try 
+		{
+
+			stream = getContentResolver().openInputStream(resource);
+			bitmap = BitmapFactory.decodeStream(stream);
+	
+			imageView.setImageBitmap(bitmap);
+			
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		catch (java.lang.OutOfMemoryError e)
+		{
+			e.printStackTrace();
+			System.gc();
+		}
+		finally {
+			
+			if (stream != null)
+				try {
+					stream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		}
+
+	}
+	
+
+	
+	protected abstract void update();
+	
 }

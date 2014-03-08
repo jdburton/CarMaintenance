@@ -17,27 +17,30 @@ public class Work extends DatabaseObject
 	public static final String KEY_VEHICLE_IDVEHICLE = "Vehicle_idVehicle";
 	public static final String KEY_ITEMS_IDITEMS = "Items_idItem";
 	public static final String KEY_RECIEPT_IDRECEIPT = "Receipt_idReceipt";
+	public static final String KEY_WORKMILEAGE = "WorkMileage";
 	public static final String KEY_WORKNOTES = "WorkNotes";
 	
 	private String WorkNotes;
 	private int idVehicle;
 	private int idItem;
 	private int idReceipt;
+	private int workMileage;
 	
 	
 	public Work()
 	{
 	
-		this(0,0,0,0,null);
+		this(0,0,0,0,0,null);
 				
 	}
 	
-	public Work(int id, int vehicle_id, int item_id, int receipt_id, String notes)
+	public Work(int id, int vehicle_id, int item_id, int receipt_id, int mileage, String notes)
 	{
 		this.id = id;
 		this.idVehicle = vehicle_id;
 		this.idItem = item_id;
 		this.idReceipt = receipt_id;
+		this.workMileage = mileage;
 		this.WorkNotes = notes;
 		
 	}
@@ -81,6 +84,16 @@ public class Work extends DatabaseObject
 	public int getReceiptID()
 	{
 		return this.idReceipt;
+	}
+	
+	public void setMileage(int mileage)
+	{
+		this.workMileage = mileage;
+	}
+	
+	public int getMileage()
+	{
+		return this.workMileage;
 	}
 	
     /**

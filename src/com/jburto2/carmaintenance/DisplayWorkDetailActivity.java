@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 /**
@@ -28,13 +29,32 @@ import android.widget.TextView;
  * @brief This class controls activities that displays the information page. 
  */
 
+
+
 public class DisplayWorkDetailActivity extends DisplayDetailActivity {
 	
 	public static final int IMAGE_REQUEST_CODE = 1;
 	private TextView imageTextViewHolder;
 	private Bitmap bitmap;
 	private ImageView imageViewHolder;
+	
+	TextView workId;
+    TextView vehicleId;
+    TextView itemId;
+    TextView receiptId;
 
+    TextView vehicleField;
+    TextView itemField;
+    TextView receiptField;
+    TextView receiptDate;
+
+    ImageView receiptImage;
+    
+    EditText workMileage;
+    EditText workDescription;
+
+    
+    
 	@SuppressLint("NewApi")
 	@Override
 	/**
@@ -50,153 +70,77 @@ public class DisplayWorkDetailActivity extends DisplayDetailActivity {
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_add_work);
+		setContentView(R.layout.activity_detail_work);
 		
         // Get the message from the intent
         Intent intent = getIntent();
         Work work = (Work)intent.getSerializableExtra("WorkClass");
         String vehicleDescription = intent.getStringExtra("VehicleDescription");
-        String receiptLocation = intent.getStringExtra("ReceiptFile");
+        Receipt receipt = (Receipt)intent.getSerializableExtra("ReceiptClass");
+        String receiptFile = receipt.getFile();
         String itemDescription = intent.getStringExtra("ItemDescription");
 
-        TextView vehicleId = (TextView) findViewById(R.id.vehicleIdTextView);
-        TextView itemId = (TextView) findViewById(R.id.itemIdTextView);
-        TextView receiptId = (TextView) findViewById(R.id.receiptIdTextView);
+        workId = (TextView) findViewById(R.id.workIdTextView);
+        vehicleId = (TextView) findViewById(R.id.vehicleIdTextView);
+        itemId = (TextView) findViewById(R.id.itemIdTextView);
+        receiptId = (TextView) findViewById(R.id.receiptIdTextView);
+        receiptDate = (TextView) findViewById(R.id.dateTextView);
 
-        TextView vehicleField = (TextView) findViewById(R.id.vehicleTextView);
-        TextView itemField = (TextView) findViewById(R.id.itemTextView);
-        TextView receiptField = (TextView) findViewById(R.id.receiptTextView);
+        vehicleField = (TextView) findViewById(R.id.vehicleTextView);
+        itemField = (TextView) findViewById(R.id.itemTextView);
+        receiptField = (TextView) findViewById(R.id.receiptTextView);
 
-        ImageView receiptImage = (ImageView) findViewById(R.id.receiptImageView);
+        receiptImage = (ImageView) findViewById(R.id.receiptImageView);
         
-        EditText workDescription = (EditText) findViewById(R.id.noteEditText);
+        workMileage = (EditText) findViewById(R.id.mileageEditText);
+        workDescription = (EditText) findViewById(R.id.noteEditText);
 		
+        workId.setText(Integer.toString(work.getID()));
         vehicleId.setText(Integer.toString(work.getVehicleID()));
         itemId.setText(Integer.toString(work.getItemID()));
         receiptId.setText(Integer.toString(work.getReceiptID()));
-        //loadImage(receiptLocation,)
+        
+        //loadImage(receiptFile,)
         try
         {
-        	receiptImage.setImageURI(Uri.parse(receiptLocation));
+        	
+        	rotateAndSetImage(receiptImage,receipt.getFile());
+
         }
         catch (Exception e)
         {
-        	System.err.println("Could not load image "+receiptLocation);
+        	System.err.println("Could not load image "+receiptFile);
         }
         
         vehicleField.setText(vehicleDescription);
         itemField.setText(itemDescription);
-        receiptField.setText(receiptLocation);
-        
+        receiptField.setText(receiptFile);
+        workMileage.setText(Integer.toString(work.getMileage()));
         workDescription.setText(work.getNotes());
+        receiptDate.setText(receipt.getDate());
 
 	}
 
 
-
-	@Override
-	/**
-	 * @fn onOptionsItemSelected(MenuItem item) 
-	 * This ID represents the Home or Up button. In the case of this
-	 * activity, the Up button is shown. Use NavUtils to allow users
-	 * to navigate up one level in the application structure. For
-	 * more details, see the Navigation pattern on Android Design:
-	 * 
-	 * http://developer.android.com/design/patterns/navigation.html#up-vs-back	
-	 * 
-	 * @param item The MenuItem
-	 * @return If Home or Up, navigate up and return true.
-	 * @return Otherwise, parent class functionality.
-	 */
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-		case R.id.action_cancel:
-
-
-			NavUtils.navigateUpFromSameTask(this);
-			break;
-		case R.id.action_save:
-			LayoutUtils.displayToast(this, "Saving...");
-			break;
-			
-	    case R.id.action_about:
-	    	Intent intent = new Intent(this, DisplayInfoActivity.class);
-	    	startActivity(intent);
-	    	break;
-		}
-		return super.onOptionsItemSelected(item);
-	}
 	
-	public void onVehicleButtonClick(View v) {
-		
 
-	    Intent intent = new Intent(this, DisplayVehicleActivity.class);
-	    startActivity(intent);
-
-	}
-	public void onReceiptButtonClick(View v) {
-		
-
-	    Intent intent = new Intent(this, DisplayReceiptActivity.class);
-	    startActivity(intent);
-
-	}
-	
-	public void onItemButtonClick(View v) {
-		
-
-	    Intent intent = new Intent(this, DisplayItemActivity.class);
-	    startActivity(intent);
-
-	}
-	
-	// Working with an image picker from http://www.vogella.com/tutorials/AndroidCamera/article.html
-
-	protected void loadImage(String uriString, ImageView imageView) 
+	protected void update()
 	{
-		try
+		
+		Work work = new Work(Integer.parseInt(workId.getText().toString()),Integer.parseInt(vehicleId.getText().toString()),Integer.parseInt(itemId.getText().toString()),Integer.parseInt(receiptId.getText().toString()),Integer.parseInt(workMileage.getText().toString()),workDescription.getText().toString());
+
+		try 
 		{
-			Uri resource = Uri.parse(uriString);
-			loadImage(resource, imageView);
+			db.updateWork(work);	
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			LayoutUtils.displayMessageDialog(this,e.getMessage(),e.toString());
 		}
-	}
-	
-	protected void loadImage(Uri resource,ImageView imageView) 
-	{
-		InputStream stream  = null;
-		Bitmap bitmap = null;
-		try 
-		{
-
-			stream = getContentResolver().openInputStream(resource);
-			bitmap = BitmapFactory.decodeStream(stream);
-	
-			imageView.setImageBitmap(bitmap);
-			
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		catch (java.lang.OutOfMemoryError e)
-		{
-			e.printStackTrace();
-			System.gc();
-		}
-		finally {
-			
-			if (stream != null)
-				try {
-					stream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-		}
-
+		
+		//displayToast("Updating...");
+		//send click through to parent.
+		
 	}
 	
 

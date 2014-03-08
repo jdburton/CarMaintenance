@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -92,28 +93,28 @@ public class DisplayItemActivity extends DisplayTableActivity {
     	
         
     	// 1
-    	TextView textView = LayoutUtils.createTextView(this, "Item ID", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+    	TextView textView = LayoutUtils.createTextView(this, "Item ID", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
 
     	// 2
     	
-        textView = LayoutUtils.createTextView(this, "Item Descripton", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Item Descripton", 15, LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
 
         tableRow.addView(textView);
         
         
-        textView = LayoutUtils.createTextView(this, "Mileage Interval", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Mileage Interval", 15, LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
 
         tableRow.addView(textView);
         
-        textView = LayoutUtils.createTextView(this, "Time Interval (Months)", 15, Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Time Interval (Months)", 15, LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
 
         tableRow.addView(textView);
 
         // 3
-        textView = LayoutUtils.createTextView(this, "Save", 15,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Save", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
 	    if (autoSave)
         {
         	textView.setVisibility(View.GONE);
@@ -126,10 +127,10 @@ public class DisplayItemActivity extends DisplayTableActivity {
 
 	
         // 4
-        //textView = LayoutUtils.createTextView(this, "Clear", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        //textView = LayoutUtils.createTextView(this, "Clear", 10,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
         //tableRow.addView(textView);
         // 5
-        textView = LayoutUtils.createTextView(this, "Delete", 10,Color.rgb(200,200,200), Color.rgb(51, 51, 51));
+        textView = LayoutUtils.createTextView(this, "Delete", 15,LayoutUtils.LIGHT_GRAY, LayoutUtils.DARK_GRAY);
         tableRow.addView(textView);
         
         // New Row Indicator = Must be last 
@@ -178,23 +179,25 @@ public class DisplayItemActivity extends DisplayTableActivity {
         	        	
             // Data
         	// 0
-        	textView = LayoutUtils.createTextView(this, Integer.toString(item.getID()), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+        	textView = LayoutUtils.createTextView(this, Integer.toString(item.getID()), 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
         	textView.setVisibility(View.GONE);
         	tableRow.addView(textView);
             
 
         	
         	// 1
-            textView = LayoutUtils.createTextView(this, item.getItemDescription(), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+            textView = LayoutUtils.createTextView(this, item.getItemDescription(), 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
             tableRow.addView(textView);
             
             // 2
-        	textView = LayoutUtils.createTextView(this, Integer.toString(item.getMileageInterval()), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
-        	tableRow.addView(textView);
+        	EditText editText = LayoutUtils.createEditText(this, Integer.toString(item.getMileageInterval()), 15, LayoutUtils.DARK_GRAY,LayoutUtils.WHITE);
+        	editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        	tableRow.addView(editText);
         	
         	// 3
-        	textView = LayoutUtils.createTextView(this, Integer.toString(item.getTimeInterval()), 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
-        	tableRow.addView(textView);
+        	editText = LayoutUtils.createEditText(this, Integer.toString(item.getTimeInterval()), 15, LayoutUtils.DARK_GRAY,LayoutUtils.WHITE);
+        	editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        	tableRow.addView(editText);
             
 
             addSaveFunctionToRow(tableRow);
@@ -299,22 +302,22 @@ public class DisplayItemActivity extends DisplayTableActivity {
         
         // Data
     	// 0
-    	TextView textView = LayoutUtils.createTextView(this, "-1", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+    	TextView textView = LayoutUtils.createTextView(this, "-1", 15, LayoutUtils.DARK_GRAY,LayoutUtils.LIGHT_GRAY);
     	textView.setVisibility(View.GONE);
     	tableRow.addView(textView);
         
     
         
         // 1
-        EditText editText = LayoutUtils.createEditText(this, "", 15, Color.rgb(51, 51, 51),Color.rgb(255, 255, 255));
+        EditText editText = LayoutUtils.createEditText(this, "", 15, LayoutUtils.DARK_GRAY,LayoutUtils.WHITE);
         tableRow.addView(editText);
         
         // 2
-     	editText = LayoutUtils.createEditText(this, "0", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+     	editText = LayoutUtils.createEditText(this, "0", 15, LayoutUtils.DARK_GRAY,LayoutUtils.WHITE);
      	tableRow.addView(editText);
      	
      	// 3
-     	editText = LayoutUtils.createEditText(this, "0", 15, Color.rgb(51, 51, 51),Color.rgb(200,200,200));
+     	editText = LayoutUtils.createEditText(this, "0", 15, LayoutUtils.DARK_GRAY,LayoutUtils.WHITE);
      	tableRow.addView(editText);
          
      	addSaveFunctionToRow(tableRow);

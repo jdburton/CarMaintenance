@@ -14,13 +14,13 @@ public class Receipt extends DatabaseObject
 	public static final String KEY_LOCATION_IDLOCATION = "Location_idLocation";
 	public static final String KEY_RECEIPTDATE = "ReceiptDate";
 	public static final String KEY_RECEIPTAMOUNT = "ReceiptAmount";
-	public static final String KEY_RECEIPTMILEAGE = "ReceiptMileage";
+	
 	public static final String KEY_RECEIPTNOTES = "ReceiptNotes";
 	
 	private String ReceiptFile;
 	private int ReceiptAmount;
 	private String ReceiptDate;
-	private int ReceiptMileage;
+	
 	private int Location_id;
 	private String ReceiptNotes;
 	
@@ -28,19 +28,19 @@ public class Receipt extends DatabaseObject
 	public Receipt()
 	{
 	
-		this(0,null,0,null,0,0,null);
+		this(0,null,0,null,0,null);
 				
 	}
 	
-	public Receipt(String file, int location_id, String date, int amount, int mileage, String notes)
+	public Receipt(String file, int location_id, String date, int amount, String notes)
 	{
-		this(0,file, location_id, date, amount, mileage,  notes);
+		this(0,file, location_id, date, amount,  notes);
 	}
-	public Receipt(int id, String file, int location_id, String date, int amount, int mileage, String notes)
+	public Receipt(int id, String file, int location_id, String date, int amount, String notes)
 	{
 		this.id = id;
 		this.Location_id = location_id;
-		this.ReceiptMileage = mileage;
+		
 		this.ReceiptDate = date;
 		this.ReceiptAmount = amount;
 		this.ReceiptNotes = notes;
@@ -58,15 +58,7 @@ public class Receipt extends DatabaseObject
 	}
 	
 	
-	public void setMileage(int mileage)
-	{
-		this.ReceiptMileage = mileage;
-	}
-	
-	public int getMileage()
-	{
-		return this.ReceiptMileage;
-	}
+
 	public void setDate(String date)
 	{
 		this.ReceiptDate = date;
