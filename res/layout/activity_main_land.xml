@@ -1,0 +1,103 @@
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:columnCount="3"
+    android:rowCount="2"
+    tools:context=".MainActivity" >
+
+    <!--
+         Image button for lookup icon used under Creative Commons license from:  
+     	 http://www.iconarchive.com/show/old-school-icons-by-babasse/recherche-internet-icon.html
+    -->
+    <!--
+         Image button for internet picture used under Creative Commons license from:  
+     	 http://commons.wikimedia.org/wiki/File:Internet1.jpg
+    -->
+
+
+    <!-- http://findicons.com/search/car -->
+
+
+    <!-- http://stackoverflow.com/questions/5128949/resize-Button -->
+    <!-- http://stackoverflow.com/questions/1532876/android-combining-text-image-on-a-button-or-Button -->
+
+    <Button
+        android:id="@+id/Button1"
+        android:layout_width="100dip"
+        android:layout_height="100dip"
+        android:layout_row="0"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_column="0"
+        android:background="@drawable/ic_car"
+        android:gravity="bottom|center"
+        android:onClick="onVehicleButtonClick"
+        android:paddingBottom="4dp"
+        android:text="@string/vehicles" />
+
+    <Button
+        android:id="@+id/Button2"
+        android:layout_width="100dip"
+        android:layout_height="100dip"
+        android:layout_row="1"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_column="0"
+        android:background="@drawable/ic_work"
+        android:gravity="bottom|center"
+        android:onClick="onWorkButtonClick"
+        android:paddingBottom="4dp"
+        android:text="@string/work" />
+
+    <Button
+        android:id="@+id/Button3"
+        android:layout_width="100dip"
+        android:layout_height="100dip"
+        android:layout_row="0"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_column="1"
+        android:background="@drawable/ic_receipt"
+        android:gravity="bottom|center"
+        android:onClick="onReceiptButtonClick"
+        android:paddingBottom="4dp"
+        android:text="@string/receipts" />
+
+    <Button
+        android:id="@+id/Button4"
+        android:layout_width="100dip"
+        android:layout_height="100dip"
+        android:layout_row="1"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_column="1"
+        android:background="@drawable/ic_item"
+        android:gravity="bottom|center"
+        android:onClick="onItemButtonClick"
+        android:paddingBottom="4dp"
+        android:text="@string/items" />
+
+    <Button
+        android:id="@+id/Button5"
+        android:layout_width="100dip"
+        android:layout_height="100dip"
+        android:layout_row="0"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_column="2"
+        android:background="@drawable/ic_location"
+        android:gravity="bottom|center"
+        android:onClick="onLocationButtonClick"
+        android:paddingBottom="4dp"
+        android:text="@string/locations" />
+
+    <Button
+        android:id="@+id/Button6"
+        android:layout_width="100dip"
+        android:layout_height="100dip"
+        android:layout_row="1"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_column="2"
+        android:background="@drawable/ic_about"
+        android:gravity="bottom|center"
+        android:onClick="onAboutButtonClick"
+        android:paddingBottom="4dp"
+        android:text="@string/action_about" />
+
+</GridLayout>

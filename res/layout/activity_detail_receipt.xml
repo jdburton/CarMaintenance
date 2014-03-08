@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".DisplayReceiptDetailActivity" >
+	<ScrollView 
+	    android:id="@+id/layout" 
+	    android:layout_height="match_parent"         
+	    android:scrollbars="horizontal|vertical" 
+	    android:layout_width="match_parent"     
+	    android:layout_marginTop="5dip" 
+	    android:layout_marginLeft="5dip"     
+	    android:scrollbarStyle="outsideInset"
+	    android:fillViewport="true"> 
+	
+	    <HorizontalScrollView 
+	        android:id="@+id/horizontalView" 
+	        android:layout_height="wrap_content"     
+	        android:scrollbars="horizontal|vertical" 
+	        android:layout_width="wrap_content"     
+	        android:layout_marginTop="5dip">
+	
+	        <RelativeLayout
+	            android:id="@+id/receiptlayout"
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent"
+	            android:layout_margin="5dip" >
+
+
+	            <TextView
+	                android:id="@+id/locationTextView"
+	                android:layout_width="200dip"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentLeft="true"
+	                android:layout_marginTop="5dip"
+	                android:textSize="20sp"
+	                android:background="#c8c8c8"
+	                
+	                
+	                
+	                 />
+	            
+	           <Button
+			         android:id="@+id/locationGoButton"
+			         android:layout_width="50dip"
+			         android:layout_height="50dip"
+			         android:layout_alignTop="@+id/locationTextView"
+			         android:layout_toRightOf="@+id/locationTextView"
+			         android:onClick="onLocationButtonClick"
+			         android:layout_alignParentRight="true"
+			         
+			         android:background="@drawable/ic_table_go" />
+	            
+	            
+	            <TextView
+	                android:id="@+id/locationLabelTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_below="@+id/locationTextView"
+	                android:layout_alignParentLeft="true"
+	                android:text="Location"
+	                 />
+	            
+	            <TextView
+	                android:id="@+id/locationIdTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_toRightOf="@+id/locationTextView"
+	                android:text="LocationID"
+	                android:visibility="gone"
+	                 />
+	            <TextView
+	                android:id="@+id/receiptIdTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_above="@+id/locationTextView"
+	                android:text="receiptID"
+	                android:visibility="gone"
+	                 />
+
+	            <!-- 
+	            
+	            	Start with database keys. TextView, label, textview.
+	            
+	             -->
+	             	            <!--  
+	            	Date field
+	            -->
+	            
+	            <EditText
+				    android:id="@+id/dateEditText"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_alignParentLeft="true"
+				    android:layout_below="@+id/locationGoButton"
+				    android:ems="10"
+				    android:clickable="true"
+				    android:editable="false"
+				    android:inputType="date"
+				    android:onClick="onDateFieldClick" />
+
+	            
+	            
+	            <TextView
+	                android:id="@+id/dateLabelTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignLeft="@+id/dateEditText"
+	                android:layout_below="@+id/dateEditText"
+	                android:text="Date" />
+
+
+
+	             <!-- receipt  -->
+	             <TextView
+	                android:id="@+id/receiptTextView"
+	                android:layout_width="200dip"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentLeft="true"
+	                android:layout_below="@+id/dateLabelTextView"
+	                
+	                android:textSize="20sp"
+	                android:background="#c8c8c8"
+	                android:visibility="gone"
+	                 />
+				<ImageView
+	                android:id="@+id/receiptImageView"
+	                android:layout_width="200dip"
+	                android:layout_height="300dip"
+	                android:layout_alignParentLeft="true"
+	                
+	                android:layout_below="@+id/dateLabelTextView"
+	                android:textSize="20sp"
+	                android:background="#c8c8c8"
+	                 />
+
+	            <TextView
+	                android:id="@+id/receiptLabelTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentLeft="true"
+	                android:layout_below="@+id/receiptImageView"
+	                android:text="Receipt" />
+	            
+
+	            
+	            <Button
+         			android:id="@+id/receiptGoButton"
+         			android:layout_width="50dip"
+         			android:layout_height="50dip"
+	                android:layout_toRightOf="@+id/receiptImageView"
+	                android:layout_alignTop="@+id/receiptImageView"
+         			android:onClick="onReceiptButtonClick"
+         			android:layout_alignParentRight="true"
+         
+         			android:background="@drawable/ic_table_go" 
+         			/>
+				<!--  
+	            <ImageButton
+	                android:id="@+id/imageButton2"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentRight="true"
+	                android:layout_centerVertical="true"
+	                android:src="@android:drawable/ic_menu_gallery" />
+	            -->
+	            
+	           <TextView
+	                android:id="@+id/receiptIdTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_toRightOf="@+id/receiptTextView"
+	                android:text="ReceiptID"
+	                android:visibility="gone"
+	                 />
+	             
+
+	            
+	           <EditText
+	               android:id="@+id/amountEditText"
+	               android:layout_width="wrap_content"
+	               android:layout_height="wrap_content"
+	               android:layout_alignParentLeft="true"
+	               android:layout_below="@+id/receiptLabelTextView"
+	               android:ems="10"
+	               android:inputType="number" />
+	            
+	            <TextView
+	                android:id="@+id/amountLabelTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignLeft="@+id/amountEditText"
+	                android:layout_below="@+id/amountEditText"
+	                android:text="Amount" />
+	            
+				
+
+
+	            <EditText
+	                android:id="@+id/noteEditText"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignLeft="@+id/amountLabelTextView"
+	                android:layout_below="@+id/amountLabelTextView"
+	                android:layout_marginTop="10dip"
+	                android:ems="10"
+	                android:inputType="textMultiLine" >
+
+	                
+	            </EditText>
+
+	            <TextView
+	                android:id="@+id/noteLabelTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignLeft="@+id/noteEditText"
+	                android:layout_below="@+id/noteEditText"
+	                android:text="Notes" />
+
+	            <ImageButton
+	                android:id="@+id/receiptCameraButton"
+	                android:layout_width="50dp"
+	                android:layout_height="50dp"
+	                android:layout_alignParentRight="true"
+	                android:layout_below="@+id/receiptGoButton"
+	                android:layout_marginTop="25dp"
+	                android:layout_toRightOf="@+id/receiptImageView"
+	                android:onClick="onCameraButtonClick"
+	                android:src="@android:drawable/ic_menu_camera" />
+
+	        </RelativeLayout>
+	            
+
+	    </HorizontalScrollView>
+	</ScrollView>
+</LinearLayout>
+
