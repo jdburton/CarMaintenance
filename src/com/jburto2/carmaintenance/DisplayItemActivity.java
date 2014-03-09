@@ -37,6 +37,8 @@ import android.widget.TextView;
 
 public class DisplayItemActivity extends DisplayTableActivity {
 	
+	
+	DatabaseObject myDatabaseObject = new Item();
 
 	
 	@Override
@@ -156,11 +158,11 @@ public class DisplayItemActivity extends DisplayTableActivity {
         //LinkedList<TableRow> rowList = new LinkedList<TableRow>();
         //rowList.add(tableRow);
 
-        List<Item> itemlist = null;
+        List<DatabaseObject> itemlist = null;
         
 
 
-        itemlist = db.getAllItems();
+        itemlist = dbSQLite.getAllItems();
    
         int NUMBER_BUTTONS=2;
         for (int i = 0; i < itemlist.size(); i++){
@@ -172,7 +174,7 @@ public class DisplayItemActivity extends DisplayTableActivity {
         	
 
         	
-        	Item item = itemlist.get(i);
+        	Item item = (Item) itemlist.get(i);
         	
 
         	
@@ -244,7 +246,7 @@ public class DisplayItemActivity extends DisplayTableActivity {
 
 	            	try 
 	            	{
-	            		db.deleteItem(item);	
+	            		deleteFromDatabase(item);	
 	            	}
 	            	catch (Exception e)
 	            	{
@@ -398,16 +400,6 @@ public class DisplayItemActivity extends DisplayTableActivity {
 	}
 	
 
-	protected void deleteAllRows()
-	{
-		LayoutUtils.displayYesNoDialog(this, "Delete All", "Delete All Rows in Item Table?");
-		if(LayoutUtils.getDialogResult())
-		{
-			displayToast("Deleted all rows!");
-			db.deleteAllRecordsFromTable(Item.TABLE_NAME);
-			drawTable();
-		}
-	}
 	
 	protected void updateRow(TableRow tr)
 	{
@@ -420,7 +412,7 @@ public class DisplayItemActivity extends DisplayTableActivity {
 
     	try 
     	{
-    		db.updateItem(item);	
+    		updateInDatabase(item);	
     	}
     	catch (Exception e)
     	{
@@ -441,7 +433,7 @@ public class DisplayItemActivity extends DisplayTableActivity {
 
     	try 
     	{
-    		db.addItem(item);	
+    		addToDatabase(item);	
     	}
     	catch (Exception e)
     	{
@@ -450,6 +442,15 @@ public class DisplayItemActivity extends DisplayTableActivity {
     	
     	drawTable();
 		
+	}
+
+
+
+
+	@Override
+	protected String getTableName() {
+		// TODO Auto-generated method stub
+		return Item.TABLE_NAME;
 	}
 
 

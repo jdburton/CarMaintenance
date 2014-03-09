@@ -42,7 +42,7 @@ import android.widget.TextView;
 public class DisplayVehicleActivity extends DisplayTableActivity  {
 	
 	
-
+	DatabaseObject myDatabaseObject = new Vehicle();
 	
 	@Override
 
@@ -147,14 +147,13 @@ public class DisplayVehicleActivity extends DisplayTableActivity  {
 
 
         
-        //LinkedList<TableRow> rowList = new LinkedList<TableRow>();
+        //LinkedList<DatabaseObject>();
         //rowList.add(tableRow);
-
-        List<Vehicle> vehiclelist = null;
+        List<DatabaseObject> vehiclelist = null;
         
 
 
-        vehiclelist = db.getAllVehicles();
+        vehiclelist = dbSQLite.getAllVehicles();
    
         int NUMBER_BUTTONS=2;
         for (int i = 0; i < vehiclelist.size(); i++){
@@ -166,7 +165,7 @@ public class DisplayVehicleActivity extends DisplayTableActivity  {
         	
 
         	
-        	Vehicle vehicle = vehiclelist.get(i);
+        	Vehicle vehicle = (Vehicle) vehiclelist.get(i);
         	
 
         	
@@ -229,7 +228,7 @@ public class DisplayVehicleActivity extends DisplayTableActivity  {
 
 	            	try 
 	            	{
-	            		db.deleteVehicle(vehicle);	
+	            		deleteFromDatabase(vehicle);	
 	            	}
 	            	catch (Exception e)
 	            	{
@@ -376,17 +375,7 @@ public class DisplayVehicleActivity extends DisplayTableActivity  {
 	}
 	
 
-	protected void deleteAllRows()
-	{
-		LayoutUtils.displayYesNoDialog(this, "Delete All", "Delete All Rows in Vehicle Table?");
-		if(LayoutUtils.getDialogResult())
-		{
-			displayToast("Deleted all rows!");
-			db.deleteAllRecordsFromTable(Vehicle.TABLE_NAME);
-			drawTable();
-		}
-	}
-	
+
 	protected void saveNewRow(TableRow tr)
       {
         	// Get the table row
@@ -398,7 +387,7 @@ public class DisplayVehicleActivity extends DisplayTableActivity  {
         	//displayToast(keys);
         	try 
         	{
-        		db.addVehicle(vehicle);	
+        		addToDatabase(vehicle);	
         	}
         	catch (android.database.sqlite.SQLiteConstraintException e)
         	{
@@ -424,7 +413,7 @@ public class DisplayVehicleActivity extends DisplayTableActivity  {
 
     	try 
     	{
-    		db.updateVehicle(vehicle);	
+    		updateInDatabase(vehicle);	
     	}
     	catch (Exception e)
     	{
@@ -437,6 +426,17 @@ public class DisplayVehicleActivity extends DisplayTableActivity  {
     	
     	
     }
+
+
+
+
+
+
+	@Override
+	protected String getTableName() {
+		// TODO Auto-generated method stub
+		return Vehicle.TABLE_NAME;
+	}
 
 
 

@@ -60,12 +60,14 @@ public class LayoutUtils
 	
 	public static int HIGHLIGHT_COLOR = BLUE;
 	public static int SPINNER_COLOR = LIGHT_BLUE;
-	public static final int OPTION_RED = 0;
+	public static final int OPTION_BLUE = 0;
+	public static final int OPTION_RED = 2;
 	public static final int OPTION_GREEN = 1;
-	public static final int OPTION_BLUE = 2;
+	
 	public static final int OPTION_MAGENTA = 3;
 	public static final int OPTION_YELLOW = 4;
 	public static final int OPTION_CYAN = 5;
+	
 	
 	
 	/**
@@ -510,7 +512,7 @@ public class LayoutUtils
 	                      			// Set the Selected Date in Select date Button
 	                      			  if (LayoutUtils.getDialogResult())
 	                      			  {
-	                                      LayoutUtils.setDate(Integer.toString(monthOfYear+1)+"/"+dayOfMonth+"/"+yearSelected);
+	                                      LayoutUtils.setDate(yearSelected+"-"+Integer.toString(monthOfYear+1)+"-"+dayOfMonth);
 		                      			  TextView tv = (TextView)v;
 		                      			  tv.setText(LayoutUtils.getDate());
 	                      			  }
@@ -554,6 +556,8 @@ public class LayoutUtils
     {
     	return dateString;
     }
+    
+
     
     public static void setHighlightColor(int colorPreference)
     {

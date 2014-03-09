@@ -26,7 +26,7 @@ if (isset($_POST['idReceipt']) && isset($_POST['ReceiptFile']) && isset($_POST['
     $db = new DB_CONNECT();
  
     // mysql update row with matched pid
-    $result = mysql_query("update Receipt set ReceiptFile=$ReceiptFile, Location_idLocation=$Location_idLocation, ReceiptDate=$ReceiptDate, ReceiptAmount=$ReceiptLocation, ReceiptNotes=$ReceiptNotes  where idReceipt=$idReceipt");
+    $result = mysql_query("update Receipt set ReceiptFile='$ReceiptFile', Location_idLocation=$Location_idLocation, ReceiptDate='$ReceiptDate', ReceiptAmount='$ReceiptAmount', ReceiptNotes='$ReceiptNotes'  where idReceipt=$idReceipt");
  
     // check if row inserted or not
     if ($result) {

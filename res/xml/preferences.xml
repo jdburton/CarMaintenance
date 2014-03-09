@@ -15,4 +15,10 @@
         android:entries="@array/highlightColorEntries"
         android:entryValues="@array/highlightColorValues"
         android:defaultValue="@string/highlightColorDefault" />
+        <EditTextPreference
+        
+        android:key="baseURL"
+        
+        android:title="@string/baseURLTitle"
+        android:defaultValue="@string/baseURLDefault" />
 </PreferenceScreen>

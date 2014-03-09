@@ -31,7 +31,7 @@ if (mysql_num_rows($result) > 0) {
         $location["update_time"] = $row["update_time"];
  
         // push single location into final response array
-        array_push($response["locations"], $location);
+        array_push($response['Location'],$location);
     }
     // success
     $response["success"] = 1;
@@ -41,6 +41,7 @@ if (mysql_num_rows($result) > 0) {
 } else {
     // no locations found
     $response["success"] = 0;
+    $response["message"] = "No vehicles found";
  
     // echo no users JSON
     echo json_encode($response);

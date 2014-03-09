@@ -3,6 +3,7 @@ package com.jburto2.carmaintenance;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -24,16 +25,19 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	
 	public static final String KEY_AUTOSAVE = "autoSave";
 	public static final String KEY_HIGHLIGHT_COLOR = "highlightColor";
+	public static final String KEY_BASEURL = "baseURL";
 	
     @SuppressWarnings("deprecation")
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        //SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
     	ListPreference highlightPreference = (ListPreference) findPreference(KEY_HIGHLIGHT_COLOR);
     	highlightPreference.setSummary(highlightPreference.getEntry());
     	LayoutUtils.setHighlightColor(Integer.parseInt(highlightPreference.getValue()));
+    	EditTextPreference urlBase = (EditTextPreference) findPreference(KEY_BASEURL);
+    	urlBase.setSummary(urlBase.getText());
 
 
         
@@ -46,13 +50,20 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
         	
 
         }
-        if (key.equals(SettingsActivity.KEY_HIGHLIGHT_COLOR))
+        else if (key.equals(SettingsActivity.KEY_HIGHLIGHT_COLOR))
         {
         	ListPreference highlightPreference = (ListPreference) findPreference(key);
         	highlightPreference.setSummary(highlightPreference.getEntry());
         	LayoutUtils.setHighlightColor(Integer.parseInt(highlightPreference.getValue()));
         	
         }
+        else if (key.equals(SettingsActivity.KEY_BASEURL)) {
+        	EditTextPreference urlBase = (EditTextPreference) findPreference(KEY_BASEURL);
+        	urlBase.setSummary(urlBase.getText());
+        	DatabaseObject.setBaseUrl(urlBase.getText());
+
+        }
+       
     }
     
     @SuppressWarnings("deprecation")

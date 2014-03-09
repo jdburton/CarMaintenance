@@ -31,7 +31,8 @@ if (mysql_num_rows($result) > 0) {
         $vehicle["update_time"] = $row["update_time"];
  
         // push single vehicle into final response array
-        array_push($response["vehicles"], $vehicle);
+        
+        array_push($response['Vehicle'],$vehicle);
     }
     // success
     $response["success"] = 1;

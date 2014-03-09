@@ -21,7 +21,12 @@
         android:orderInCategory="103"
         android:showAsAction="never"
         android:title="Create Data"/>
-    
+    <item
+        android:id="@+id/resync_from_remote"
+        android:orderInCategory="104"
+        android:showAsAction="never"
+        android:title="Sync with remote DB"/>
+        
 
 
 </menu>

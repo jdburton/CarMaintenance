@@ -31,6 +31,8 @@ import android.widget.TextView;
 public class DisplayReceiptActivity extends DisplayTableActivity implements
 AdapterView.OnItemSelectedListener {
 	
+	
+	DatabaseObject myDatabaseObject = new Receipt();
 
 	@Override
 
@@ -55,14 +57,14 @@ AdapterView.OnItemSelectedListener {
 		Spinner spinner = (Spinner) findViewById(R.id.locationSpinner);
 		// Create an ArrayAdapter using the string array and a default spinner layout
 		
-        List<Location> locationList = db.getAllLocations();
+        List<DatabaseObject> locationList = dbSQLite.getAllLocations();
         
         String [] spinnerList = new String[locationList.size()+1];
         spinnerList[0] = "";
         
         for (int i = 0; i < locationList.size(); i++)
         {
-        	spinnerList[i+1] = (locationList.get(i).getLocationDescription());
+        	spinnerList[i+1] = (((Location)locationList.get(i)).getLocationDescription());
         }
         
         // Create spinner from array http://stackoverflow.com/questions/2784081/android-create-spinner-programmatically-from-array
@@ -90,7 +92,7 @@ AdapterView.OnItemSelectedListener {
 		Location location = null;
 		try 
 		{
-			location = db.getLocation(((TextView)v).getText().toString());
+			location = dbSQLite.getLocation(((TextView)v).getText().toString());
 			htv.setText(Integer.toString(location.getID()));
 		}
 		catch (Exception e)
@@ -238,18 +240,18 @@ AdapterView.OnItemSelectedListener {
 
 
         
-        //LinkedList<TableRow> rowList = new LinkedList<TableRow>();
+        //LinkedList<DatabaseObject>();
         //rowList.add(tableRow);
 
-        List<Receipt> receiptlist = null;
+        List<DatabaseObject> receiptlist = null;
         
         if (vid < 0)
         {
-        	receiptlist = db.getAllReceipts();
+        	receiptlist = dbSQLite.getAllReceipts();
         }
         else
         {
-        	receiptlist = db.getAllReceiptsByLocationId(vid);
+        	receiptlist = dbSQLite.getAllReceiptsByLocationId(vid);
         }
         
         
@@ -264,7 +266,7 @@ AdapterView.OnItemSelectedListener {
         	
 
         	
-        	Receipt singlereceipt = receiptlist.get(i);
+        	Receipt singlereceipt = (Receipt) receiptlist.get(i);
         	
         	Location location = null;
 
@@ -272,7 +274,7 @@ AdapterView.OnItemSelectedListener {
         	try 
         	{
 
-	        	location = db.getLocationById(singlereceipt.getLocationID());
+	        	location = dbSQLite.getLocationById(singlereceipt.getLocationID());
 
         	}
         	catch (Exception e)
@@ -402,7 +404,7 @@ AdapterView.OnItemSelectedListener {
 
 	            	try 
 	            	{
-	            		db.deleteReceipt(receipt);	
+	            		deleteFromDatabase(receipt);	
 	            	}
 	            	catch (Exception e)
 	            	{
@@ -486,11 +488,11 @@ AdapterView.OnItemSelectedListener {
     	Spinner spinner = null;
     	if (vid < 0)
     	{
-            List<Location> locationList = db.getAllLocations();
+            List<DatabaseObject> locationList = dbSQLite.getAllLocations();
             String [] locationArray = new String [locationList.size()];
             for (int i = 0; i < locationList.size(); i++)
             {
-            	locationArray[i] = locationList.get(i).getLocationDescription();
+            	locationArray[i] = ((Location)locationList.get(i)).getLocationDescription();
             }
             spinner = LayoutUtils.createSpinner(this, locationArray);
             tableRow.addView(spinner);
@@ -605,7 +607,7 @@ AdapterView.OnItemSelectedListener {
 	{
 		String locationDescription = getLocationDescription(tr);
 		
-		Location v = db.getLocation(locationDescription);
+		Location v = dbSQLite.getLocation(locationDescription);
 		((TextView)tr.getChildAt(1)).setText(Integer.toString(v.getID()));
 		
 
@@ -636,17 +638,7 @@ AdapterView.OnItemSelectedListener {
 
 	}
 	
-	protected void deleteAllRows()
-	{
-		LayoutUtils.displayYesNoDialog(this, "Delete All", "Delete All Rows in Receipt Table?");
-		if(LayoutUtils.getDialogResult())
-		{
-			displayToast("Deleted all rows!");
-			db.deleteAllRecordsFromTable(Receipt.TABLE_NAME);
-			drawTable();
-		}
-	}
-	
+
 	protected void updateRow(TableRow tr)
 	{
     	Receipt receipt = getReceiptFromTableRow(tr);
@@ -656,7 +648,7 @@ AdapterView.OnItemSelectedListener {
 
     	try 
     	{
-    		db.updateReceipt(receipt);	
+    		updateInDatabase(receipt);	
     	}
     	catch (Exception e)
     	{
@@ -687,7 +679,7 @@ AdapterView.OnItemSelectedListener {
 	
 		try 
 		{
-			db.addReceipt(receipt);	
+			addToDatabase(receipt);	
 		}
 		catch (Exception e)
 		{
@@ -721,6 +713,14 @@ AdapterView.OnItemSelectedListener {
 
     	
 		startActivity(intent);
+	}
+
+
+
+	@Override
+	protected String getTableName() {
+		// TODO Auto-generated method stub
+		return Receipt.TABLE_NAME;
 	}
 	
 	

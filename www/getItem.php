@@ -19,7 +19,7 @@ if (isset($_GET["ItemDescription"])) {
 	$ItemDescription = $_GET['ItemDescription'];
 
 	// get a item from items table
-	$result = mysql_query("select idItem, ItemDescription, ItemMileageInterval, ItemTimeInterval, create_time, update_time from Item where ItemDescription=$ItemDescription");
+	$result = mysql_query("select idItem, ItemDescription, ItemMileageInterval, ItemTimeInterval, create_time, update_time from Item where ItemDescription='$ItemDescription'");
 
 	if (!empty($result)) {
 		// check for empty result
@@ -38,9 +38,9 @@ if (isset($_GET["ItemDescription"])) {
 			$response["success"] = 1;
 
 			// user node
-			$response["item"] = array();
+			$response["Item"] = array();
 
-			array_push($response["item"], $item);
+			array_push($response["Item"], $item);
 
 			// echoing JSON response
 			echo json_encode($response);

@@ -42,9 +42,9 @@ public final class R {
         public static final int Button5=0x7f0a0040;
         public static final int Button6=0x7f0a0041;
         public static final int action_about=0x7f0a0044;
-        public static final int action_add=0x7f0a0047;
+        public static final int action_add=0x7f0a0048;
         public static final int action_cancel=0x7f0a0043;
-        public static final int action_delete=0x7f0a0048;
+        public static final int action_delete=0x7f0a0049;
         public static final int action_save=0x7f0a0042;
         public static final int action_settings=0x7f0a0045;
         public static final int addressEditText=0x7f0a000f;
@@ -95,6 +95,7 @@ public final class R {
         public static final int receiptlayout=0x7f0a0023;
         public static final int recieptImageView=0x7f0a0015;
         public static final int result=0x7f0a003b;
+        public static final int resync_from_remote=0x7f0a0047;
         public static final int textView1=0x7f0a0032;
         public static final int tlGridTable=0x7f0a0033;
         public static final int vehicleAddButton=0x7f0a001a;
@@ -139,6 +140,8 @@ public final class R {
         public static final int app_name=0x7f060000;
         public static final int autosave=0x7f06001c;
         public static final int autosaveDescription=0x7f06001d;
+        public static final int baseURLDefault=0x7f060020;
+        public static final int baseURLTitle=0x7f06001f;
         public static final int blue=0x7f060018;
         public static final int create_data=0x7f060015;
         public static final int green=0x7f060017;

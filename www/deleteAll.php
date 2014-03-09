@@ -1,16 +1,17 @@
 <?php
 
 /*
- * Following code will delete a product from table
-* A product is identified by product id (pid)
+ * Following code will delete a item from table
+* A item is identified by item id (pid)
 */
 
 // array for JSON response
 $response = array();
 
 // check for required fields
-if (isset($_POST['idLocation'])) {
-	$idLocation = $_POST['idLocation'];
+if (isset($_POST['table_name'])) {
+	$table_name = $_POST['table_name'];
+
 
 	// include db connect class
 	require_once __DIR__ . '/db_connect.php';
@@ -18,25 +19,30 @@ if (isset($_POST['idLocation'])) {
 	// connecting to db
 	$db = new DB_CONNECT();
 
-	// mysql update row with matched pid
-	$result = mysql_query("delete from Location where idLocation=$idLocation");
-
+	// truncate the table
+	// foreign key workaround http://stackoverflow.com/questions/5452760/truncate-foreign-key-constrained-table
+	mysql_query("SET FOREIGN_KEY_CHECKS=0");
+	$result = mysql_query("truncate table $table_name");
+	mysql_query("SET FOREIGN_KEY_CHECKS=1");
+	
 	// check if row deleted or not
-	if (mysql_affected_rows() > 0) {
+	if ($result) {
 		// successfully updated
 		$response["success"] = 1;
-		$response["message"] = "Location successfully deleted";
+		$response["message"] = "Table $table_name successfully deleted";
 
 		// echoing JSON response
 		echo json_encode($response);
 	} else {
-		// no product found
+		// no item found
 		$response["success"] = 0;
-		$response["message"] = "No Location found";
+		$response["message"] = "Table $table_name not deleted";
 
 		// echo no users JSON
 		echo json_encode($response);
 	}
+	
+
 } else {
 	// required field is missing
 	$response["success"] = 0;

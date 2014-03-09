@@ -35,7 +35,7 @@ import android.widget.TextView;
 
 public class DisplayLocationActivity extends DisplayTableActivity  {
 	
-
+	DatabaseObject myDatabaseObject = new Location();
 	
 	@Override
 
@@ -142,14 +142,14 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
 
 
         
-        //LinkedList<TableRow> rowList = new LinkedList<TableRow>();
+        //LinkedList<DatabaseObject>();
         //rowList.add(tableRow);
 
-        List<Location> locationlist = null;
+        List<DatabaseObject> locationlist = null;
         
 
 
-        locationlist = db.getAllLocations();
+        locationlist = dbSQLite.getAllLocations();
    
         int NUMBER_BUTTONS=2;
         for (int i = 0; i < locationlist.size(); i++){
@@ -161,7 +161,7 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
         	
 
         	
-        	Location location = locationlist.get(i);
+        	Location location = (Location) locationlist.get(i);
         	
 
         	
@@ -221,7 +221,7 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
 
 	            	try 
 	            	{
-	            		db.deleteLocation(location);	
+	            		deleteFromDatabase(location);	
 	            	}
 	            	catch (Exception e)
 	            	{
@@ -363,16 +363,6 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
 	}
 	
 
-	protected void deleteAllRows()
-	{
-		LayoutUtils.displayYesNoDialog(this, "Delete All", "Delete All Rows in Location Table?");
-		if(LayoutUtils.getDialogResult())
-		{
-			displayToast("Deleted all rows!");
-			db.deleteAllRecordsFromTable(Location.TABLE_NAME);
-			drawTable();
-		}
-	}
 	
 	
 	protected void updateRow(TableRow tr)
@@ -384,7 +374,7 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
 
     	try 
     	{
-    		db.updateLocation(location);	
+    		updateInDatabase(location);	
     	}
     	catch (Exception e)
     	{
@@ -403,7 +393,7 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
     	//displayToast(keys);
     	try 
     	{
-    		db.addLocation(location);	
+    		addToDatabase(location);	
     	}
     	catch (Exception e)
     	{
@@ -415,6 +405,15 @@ public class DisplayLocationActivity extends DisplayTableActivity  {
     	drawTable();
 
 		
+	}
+
+
+
+
+	@Override
+	protected String getTableName() {
+		// TODO Auto-generated method stub
+		return Location.TABLE_NAME;
 	}
 	
 	

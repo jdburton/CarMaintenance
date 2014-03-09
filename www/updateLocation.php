@@ -1,18 +1,18 @@
 <?php
  
 /*
- * Following code will update a vehicle information
- * A vehicle is identified by vehicle id (pid)
+ * Following code will update a location information
+ * A location is identified by location id (pid)
  */
  
 // array for JSON response
 $response = array();
  
 // check for required fields
-if (isset($_POST['idVehicle']) && isset($_POST['VehicleDescription'])) {
+if (isset($_POST['idLocation']) && isset($_POST['LocationDescription'])) {
  
-    $idVehicle = $_POST['idVehicle'];
-    $VehicleDescription = $_POST['VehicleDescription'];
+    $idLocation = $_POST['idLocation'];
+    $LocationDescription = $_POST['LocationDescription'];
  
     // include db connect class
     require_once __DIR__ . '/db_connect.php';
@@ -21,7 +21,7 @@ if (isset($_POST['idVehicle']) && isset($_POST['VehicleDescription'])) {
     $db = new DB_CONNECT();
  
     // mysql update row with matched pid
-    $result = mysql_query("update Vehicle set VehicleDescription=$VehicleDescription where idVehicle=$idVehicle");
+    $result = mysql_query("update Location set LocationDescription='$LocationDescription' where idLocation=$idLocation");
  
     // check if row inserted or not
     if ($result) {

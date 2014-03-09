@@ -21,7 +21,7 @@ if (isset($_POST['idVehicle']) && isset($_POST['VehicleDescription'])) {
     $db = new DB_CONNECT();
  
     // mysql update row with matched pid
-    $result = mysql_query("update Vehicle set VehicleDescription=$VehicleDescription where idVehicle=$idVehicle");
+    $result = mysql_query("update Vehicle set VehicleDescription='$VehicleDescription' where idVehicle=$idVehicle");
  
     // check if row inserted or not
     if ($result) {

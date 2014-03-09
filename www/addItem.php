@@ -25,17 +25,59 @@ if (isset($_POST['ItemDescription']) && isset($_POST['ItemMileageInterval']) && 
 	$db = new DB_CONNECT();
 
 	// mysql inserting a new row
-	$result = mysql_query("INSERT INTO Item (ItemDescription, ItemMileageInterval, ItemTimeInterval) VALUES('$ItemDescription', '$ItemMileageInterval', '$ItemTimeInterval')");
+	$insert_result = mysql_query("INSERT INTO Item (ItemDescription, ItemMileageInterval, ItemTimeInterval) VALUES('$ItemDescription', '$ItemMileageInterval', '$ItemTimeInterval')");
 
 	// check if row inserted or not
-	if ($result) {
-		// successfully inserted into database
-		$response["success"] = 1;
-		$response["message"] = "Item successfully created.";
-
-		// echoing JSON response
-		echo json_encode($response);
-	} else {
+	if ($insert_result) {
+		
+		// get a item from items table
+		$result = mysql_query("select idItem, ItemDescription, ItemMileageInterval, ItemTimeInterval, create_time, update_time from Item where ItemDescription='$ItemDescription'");
+		
+		if (!empty($result)) {
+			// check for empty result
+			if (mysql_num_rows($result) > 0) {
+		
+				$result = mysql_fetch_array($result);
+		
+				$item = array();
+				$item["idItem"] = $result["idItem"];
+				$item["ItemDescription"] = $result["ItemDescription"];
+				$item["ItemMileageInterval"] = $result["ItemMileageInterval"];
+				$item["ItemTimeInterval"] = $result["ItemTimeInterval"];
+				$item["create_time"] = $result["create_time"];
+				$item["update_time"] = $result["update_time"];
+				
+				// user node
+				$response["Item"] = array();
+		
+				array_push($response["Item"], $item);
+		
+				// successfully inserted into database
+				$response["success"] = 1;
+				$response["message"] = "Item successfully created.";
+				
+				
+				// echoing JSON response
+				echo json_encode($response);
+			} else {
+				// no item found
+				$response["success"] = 0;
+				$response["message"] = "Item created, but not found";
+		
+				// echo no users JSON
+				echo json_encode($response);
+			}
+		} else {
+			// no item found
+			$response["success"] = 0;
+			$response["message"] = "Oops! An error occurred.";
+		
+			// echo no users JSON
+			echo json_encode($response);
+		}
+		
+		
+		} else {
 		// failed to insert row
 		$response["success"] = 0;
 		$response["message"] = "Oops! An error occurred.";

@@ -32,15 +32,15 @@ if (isset($_GET["Location_idLocation"])) {
 	        $receipt = array();
 			$receipt["idReceipt"] = $row["idReceipt"];
 			$receipt["ReceiptFile"] = $row["ReceiptFile"];
-			$receipt["Location_idLocation"] = $result["Location_idLocation"];
-			$receipt["ReceiptDate"] = $result["ReceiptDate"];
-			$receipt["ReceiptAmount"] = $result["ReceiptAmount"];
-			$receipt["ReceiptNotes"] = $result["ReceiptNotes"];
+			$receipt["Location_idLocation"] = $row["Location_idLocation"];
+			$receipt["ReceiptDate"] = $row["ReceiptDate"];
+			$receipt["ReceiptAmount"] = $row["ReceiptAmount"];
+			$receipt["ReceiptNotes"] = $row["ReceiptNotes"];
 	        $receipt["create_time"] = $row["create_time"];
 	        $receipt["update_time"] = $row["update_time"];
 	 
 	        // push single receipt into final response array
-	        array_push($response["receipts"], $receipt);
+	        array_push($response['Receipt'],$receipt);
 	    }
 	    // success
 	    $response["success"] = 1;

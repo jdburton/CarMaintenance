@@ -19,7 +19,7 @@ if (isset($_GET["VehicleDescription"])) {
 	$VehicleDescription = $_GET['VehicleDescription'];
 
 	// get a vehicle from vehicles table
-	$result = mysql_query("select idVehicle, VehicleDescription, create_time, update_time from Vehicle where VehicleDescription=$VehicleDescription");
+	$result = mysql_query("select idVehicle, VehicleDescription, create_time, update_time from Vehicle where VehicleDescription='$VehicleDescription'");
 
 	if (!empty($result)) {
 		// check for empty result
@@ -45,7 +45,7 @@ if (isset($_GET["VehicleDescription"])) {
 		} else {
 			// no vehicle found
 			$response["success"] = 0;
-			$response["message"] = "No vehicle found";
+			$response["message"] = "No vehicle found for $VehicleDescription";
 
 			// echo no users JSON
 			echo json_encode($response);
@@ -53,7 +53,7 @@ if (isset($_GET["VehicleDescription"])) {
 	} else {
 		// no vehicle found
 		$response["success"] = 0;
-		$response["message"] = "No vehicle found";
+		$response["message"] = "No vehicle found for $VehicleDescription";
 
 		// echo no users JSON
 		echo json_encode($response);

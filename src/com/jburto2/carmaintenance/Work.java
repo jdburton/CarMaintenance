@@ -3,6 +3,11 @@ package com.jburto2.carmaintenance;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,15 +21,19 @@ public class Work extends DatabaseObject
 	public static final String KEY_ID = "idWork";
 	public static final String KEY_VEHICLE_IDVEHICLE = "Vehicle_idVehicle";
 	public static final String KEY_ITEMS_IDITEMS = "Items_idItem";
-	public static final String KEY_RECIEPT_IDRECEIPT = "Receipt_idReceipt";
+	public static final String KEY_RECEIPT_IDRECEIPT = "Receipt_idReceipt";
 	public static final String KEY_WORKMILEAGE = "WorkMileage";
 	public static final String KEY_WORKNOTES = "WorkNotes";
+	
+
+
+	
 	
 	private String WorkNotes;
 	private int idVehicle;
 	private int idItem;
 	private int idReceipt;
-	private int workMileage;
+	private int WorkMileage;
 	
 	
 	public Work()
@@ -40,7 +49,7 @@ public class Work extends DatabaseObject
 		this.idVehicle = vehicle_id;
 		this.idItem = item_id;
 		this.idReceipt = receipt_id;
-		this.workMileage = mileage;
+		this.WorkMileage = mileage;
 		this.WorkNotes = notes;
 		
 	}
@@ -88,140 +97,79 @@ public class Work extends DatabaseObject
 	
 	public void setMileage(int mileage)
 	{
-		this.workMileage = mileage;
+		this.WorkMileage = mileage;
 	}
 	
 	public int getMileage()
 	{
-		return this.workMileage;
+		return this.WorkMileage;
 	}
 	
-    /**
-     * All CRUD(Create, Read, Update, Delete) Operations
-     *
- 
-    // Adding new work
-    void addWork(Work work) {
-        SQLiteDatabase db = this.getWritableDatabase();
- 
-        ContentValues values = new ContentValues();
-       
-        values.put(Work.KEY_VEHICLE_IDVEHICLE, work.getVehicleID()); // Work description
-        values.put(Work.KEY_ITEMS_IDITEMS, work.getItemID()); // Work description
-        values.put(Work.KEY_RECIEPT_IDRECEIPT, work.getReceiptID()); // Work description
-        values.put(Work.KEY_WORKNOTES, work.getNotes()); // Work description
-        
-        // Inserting Row
-        db.insert(Work.TABLE_NAME, null, values);
-        db.close(); // Closing database connection
-    }
- 
- 
-    // Getting single work
-    Work getWorkById(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        
- 
-        Cursor cursor = db.query(Work.TABLE_NAME, new String[] { 
-        					Work.KEY_ID, 
-        					Work.KEY_VEHICLE_IDVEHICLE,
-        					Work.KEY_ITEMS_IDITEMS,
-        					Work.KEY_RECIEPT_IDRECEIPT,
-							Work.KEY_WORKNOTES  
-							}, Work.KEY_ID + "=?",
-                new String[] { Integer.toString(id) }, null, null, null, null);
-        if (cursor != null )
-        	
-            cursor.moveToFirst();
+	@Override
+	public List<NameValuePair> getParams() {
+		// TODO Auto-generated method stub
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair(KEY_ID, Integer.toString(id)));
+        params.add(new BasicNameValuePair(KEY_VEHICLE_IDVEHICLE, Integer.toString(idVehicle)));
+        params.add(new BasicNameValuePair(KEY_ITEMS_IDITEMS, Integer.toString(idItem)));
+        params.add(new BasicNameValuePair(KEY_RECEIPT_IDRECEIPT, Integer.toString(idReceipt)));
+        params.add(new BasicNameValuePair(KEY_WORKMILEAGE, Integer.toString(WorkMileage)));
+        params.add(new BasicNameValuePair(KEY_WORKNOTES, WorkNotes));
+		
+		return params;
+	}
 
-        Work work = new Work(Integer.parseInt(cursor.getString(0)),Integer.parseInt(cursor.getString(1)),Integer.parseInt(cursor.getString(2)),Integer.parseInt(cursor.getString(3)),cursor.getString(4));
-        // return work
-        return work;
-    }
-    
-    Work getWorkByVehicleItemReceipt(int vid,int iid, int rid) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        
- 
-        Cursor cursor = db.query(Work.TABLE_NAME, new String[] { 
-        					Work.KEY_ID, 
-        					Work.KEY_VEHICLE_IDVEHICLE,
-        					Work.KEY_ITEMS_IDITEMS,
-        					Work.KEY_RECIEPT_IDRECEIPT,
-							Work.KEY_WORKNOTES  
-							}, 
-							Work.KEY_VEHICLE_IDVEHICLE + "=? and "+Work.KEY_ITEMS_IDITEMS+"=? and "+Work.KEY_RECIEPT_IDRECEIPT+"=?",
-                new String[] { Integer.toString(vid), Integer.toString(iid), Integer.toString(rid) }, null, null, null, null);
-        if (cursor != null)
-            cursor.moveToFirst();
+	@Override
+	public void setObjectFromJSON(JSONObject j) throws JSONException{
+		// TODO Auto-generated method stub
+		setID(Integer.parseInt(j.getString(KEY_ID)));
+		setVehicleID(Integer.parseInt(j.getString(KEY_VEHICLE_IDVEHICLE)));
+		setItemID(Integer.parseInt(j.getString(KEY_ITEMS_IDITEMS)));
+		setReceiptID(Integer.parseInt(j.getString(KEY_RECEIPT_IDRECEIPT)));
+		setMileage(Integer.parseInt(j.getString(KEY_WORKMILEAGE)));
+		setNotes(j.getString(KEY_WORKNOTES));
+		
+	}
 
-        Work work = new Work(Integer.parseInt(cursor.getString(0)),Integer.parseInt(cursor.getString(1)),Integer.parseInt(cursor.getString(2)),Integer.parseInt(cursor.getString(3)),cursor.getString(4));
-        // return work
-        return work;
-    }
-     
-    // Getting All Works
-    public static List<DatabaseObject> getAll(DatabaseHandler dbh) {
-        List<DatabaseObject> workList = new ArrayList<DatabaseObject>();
-        // Select All Query
-        String selectQuery = "SELECT  * FROM " + Work.TABLE_NAME;
- 
-        SQLiteDatabase db = dbh.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
- 
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                Work work = new Work();
-                
-                work.setID(Integer.parseInt(cursor.getString(0)));
-                work.setVehicleID(Integer.parseInt(cursor.getString(1)));
-                work.setItemID(Integer.parseInt(cursor.getString(2)));
-                work.setReceiptID(Integer.parseInt(cursor.getString(3)));
-                work.setNotes(cursor.getString(4));
-                // Adding work to list
-                workList.add(work);
-            } while (cursor.moveToNext());
-        }
- 
-        // return work list
-        return workList;
-    }
- 
-    // Updating single work
-    public int update(DatabaseHandler dbh) {
-        SQLiteDatabase db = dbh.getWritableDatabase();
- 
-        ContentValues values = new ContentValues();
-        values.put(Work.KEY_ID, work.getID());
-        values.put(Work.KEY_VEHICLE_IDVEHICLE, work.getVehicleID());
-        values.put(Work.KEY_ITEMS_IDITEMS, work.getItemID());
-        values.put(Work.KEY_RECIEPT_IDRECEIPT,work.getReceiptID());
-        values.put(Work.KEY_WORKNOTES,work.getNotes());
- 
-        // updating row
-        return db.update(Work.TABLE_NAME, values, Work.KEY_ID + " = ?",
-                new String[] { String.valueOf(work.getID()) });
-    }
- 
-    // Deleting single work
-    public void delete(DatabaseHandler dbh) {
-        SQLiteDatabase db = dbh.getWritableDatabase();
-        db.delete(Work.TABLE_NAME, Work.KEY_ID + " = ?",
-                new String[] { String.valueOf(work.getID()) });
-        db.close();
-    }
- 
- 
-    // Getting works Count
-    public int getCount(DatabaseHandler dbh) {
-        String countQuery = "SELECT  * FROM " + Work.TABLE_NAME;
-        SQLiteDatabase db = dbh.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
-        cursor.close();
- 
-        // return count
-        return cursor.getCount();
-    }
- */
+	@Override
+	public void update(DatabaseHandler db) {
+		// TODO Auto-generated method stub
+		db.updateWork(this);
+	}
+
+	@Override
+	public void add(DatabaseHandler db) throws Exception {
+		// TODO Auto-generated method stub
+		db.addWork(this);
+		
+	}
+
+	@Override
+	public void delete(DatabaseHandler db) {
+		// TODO Auto-generated method stub
+		db.deleteWork(this);
+		
+	}
+
+	@Override
+	public DatabaseObject selectByID(DatabaseHandler db) throws Exception {
+		// TODO Auto-generated method stub
+		return db.getWorkById(id);
+		
+	}
+
+	@Override
+	public List<DatabaseObject> selectAll(DatabaseHandler db) {
+		// TODO Auto-generated method stub
+		return db.getAllWorks();
+	}
+
+	
+	@Override
+	public String getTableName()
+	{
+		return TABLE_NAME;
+	}
+	
+
 }

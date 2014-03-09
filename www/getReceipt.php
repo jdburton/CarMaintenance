@@ -19,7 +19,7 @@ if (isset($_GET["ReceiptFile"])) {
 	$ReceiptFile = $_GET['ReceiptFile'];
 
 	// get a receipt from receipts table
-	$result = mysql_query("select idReceipt, ReceiptFile, Location_idLocation, ReceiptDate, ReceiptAmount, ReceiptNotes, create_time, update_time from Receipt where ReceiptFile=$ReceiptFile");
+	$result = mysql_query("select idReceipt, ReceiptFile, Location_idLocation, ReceiptDate, ReceiptAmount, ReceiptNotes, create_time, update_time from Receipt where ReceiptFile='$ReceiptFile'");
 
 	if (!empty($result)) {
 		// check for empty result

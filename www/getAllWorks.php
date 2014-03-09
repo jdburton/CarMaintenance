@@ -27,15 +27,15 @@ if (mysql_num_rows($result) > 0) {
         $work = array();
 		$work["idWork"] = $row["idWork"];
 		$work["Vehicle_idVehicle"] = $row["Vehicle_idVehicle"];
-		$work["Items_idItem"] = $result["Items_idItem"];
-		$work["Receipt_idReceipt"] = $result["Receipt_idReceipt"];
-		$work["WorkMileage"] = $result["WorkMileage"];
-		$work["WorkNotes"] = $result["WorkNotes"];
+		$work["Items_idItem"] = $row["Items_idItem"];
+		$work["Receipt_idReceipt"] = $row["Receipt_idReceipt"];
+		$work["WorkMileage"] = $row["WorkMileage"];
+		$work["WorkNotes"] = $row["WorkNotes"];
         $work["create_time"] = $row["create_time"];
         $work["update_time"] = $row["update_time"];
  
         // push single work into final response array
-        array_push($response["works"], $work);
+        array_push($response['Work'],$work);
     }
     // success
     $response["success"] = 1;

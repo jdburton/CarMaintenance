@@ -35,7 +35,7 @@ public abstract class DisplayTableActivity extends DisplayActivity  {
 	
 
 	
-	
+	protected abstract String getTableName(); 
 
 	
 	@SuppressLint("NewApi")
@@ -189,7 +189,17 @@ public abstract class DisplayTableActivity extends DisplayActivity  {
     
     protected abstract void saveNewRow(TableRow tr);
 
-    protected abstract void deleteAllRows();
+	protected void deleteAllRows()
+	{
+		LayoutUtils.displayYesNoDialog(this, "Delete All", "Delete All Rows in "+getTableName()+" Table?");
+		if(LayoutUtils.getDialogResult())
+		{
+			displayToast("Deleted all rows!");
+			dbSQLite.deleteAllRecordsFromTable(getTableName());
+			drawTable();
+		}
+	}
+	
     
     protected void saveAllRows()
     {

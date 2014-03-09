@@ -33,9 +33,10 @@
      <string name="autosaveDescription">Automatically Save Changes?</string>
      
      <string-array name="highlightColorEntries">
-        <item>Red</item>
-        <item>Green</item>
+        
         <item>Blue</item>
+        <item>Green</item>
+        <item>Red</item>
         <item>Magenta</item>
         <item>Yellow</item>
         <item>Cyan</item>
@@ -52,6 +53,8 @@
     </string-array>
     
     <string name="highlightColorDefault">0</string>
+    <string name="baseURLTitle">Url for remote database access.</string>
+    <string name="baseURLDefault">http://people.cs.clemson.edu/~jburto2/CarMaintenance/</string>
     
 </resources>
     

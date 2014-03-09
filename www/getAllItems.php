@@ -27,13 +27,13 @@ if (mysql_num_rows($result) > 0) {
         $item = array();
 		$item["idItem"] = $row["idItem"];
 		$item["ItemDescription"] = $row["ItemDescription"];
-		$item["ItemMileageInterval"] = $result["ItemMileageInterval"];
-		$item["ItemTimeInterval"] = $result["ItemTimeInterval"];
+		$item["ItemMileageInterval"] = $row["ItemMileageInterval"];
+		$item["ItemTimeInterval"] = $row["ItemTimeInterval"];
         $item["create_time"] = $row["create_time"];
         $item["update_time"] = $row["update_time"];
  
         // push single item into final response array
-        array_push($response["items"], $item);
+        array_push($response['Item'],$item);
     }
     // success
     $response["success"] = 1;

@@ -19,7 +19,7 @@ if (isset($_GET["Vehicle_idVehicle"])) {
 	$Vehicle_idVehicle = $_GET['Vehicle_idVehicle'];
 
 	// get a work from works table
-	$result = mysql_query("select idWork, Vehicle_idVehicle, Items_idItem, Receipt_idReceipt, WorkMileage, WorkNotes, create_time, update_time from Work where Vehicle_idVehicle=$Vehicle_idVehicle");
+	$result = mysql_query("select idWork, Vehicle_idVehicle, Items_idItem, Receipt_idReceipt, WorkMileage, WorkNotes, create_time, update_time from Work where Vehicle_idVehicle='$Vehicle_idVehicle'");
 
 	if (!empty($result)) {
 		// check for empty result

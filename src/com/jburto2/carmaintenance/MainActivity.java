@@ -26,19 +26,22 @@ public class MainActivity extends DisplayActivity {
 	
 	private void createData()
 	{
-	    db.deleteAllRecordsFromTable(Location.TABLE_NAME);
-	    db.deleteAllRecordsFromTable(Item.TABLE_NAME);
-	    db.deleteAllRecordsFromTable(Vehicle.TABLE_NAME);
-	    db.deleteAllRecordsFromTable(Receipt.TABLE_NAME);
-	    db.deleteAllRecordsFromTable(Work.TABLE_NAME);
+		deleteAllRecordsFromTable(Work.TABLE_NAME);
+		deleteAllRecordsFromTable(Receipt.TABLE_NAME);
+		deleteAllRecordsFromTable(Location.TABLE_NAME);
+	    deleteAllRecordsFromTable(Item.TABLE_NAME);
+	    deleteAllRecordsFromTable(Vehicle.TABLE_NAME);
+	    
+	    
+	    
 	    try
 	    {
-			db.addVehicle(new Vehicle(0,"Chevette"));
-			db.addVehicle(new Vehicle(0,"DeLorian"));
-			db.addItem(new Item(0,"Blinker Fluid",10000,12));
-			db.addItem(new Item(0,"Muffler bearings",20000,24));
-			db.addItem(new Item(0,"Flux Capacitor",75000,60));
-			db.addLocation(new Location(0,"Jiffy Lube"));
+			addToDatabase(new Vehicle(0,"Chevette"));
+			addToDatabase(new Vehicle(0,"DeLorian"));
+			addToDatabase(new Item(0,"Blinker Fluid",10000,12));
+			addToDatabase(new Item(0,"Muffler bearings",20000,24));
+			addToDatabase(new Item(0,"Flux Capacitor",75000,60));
+			addToDatabase(new Location(0,"Jiffy Lube"));
 	    }
 	    catch (Exception e)
 	    {
@@ -46,7 +49,7 @@ public class MainActivity extends DisplayActivity {
 	    }
 		Location l = null;
 		try {
-		l = db.getLocation("Jiffy Lube");
+		l = dbSQLite.getLocation("Jiffy Lube");
 		}
 		catch (Exception e)
 		{
@@ -57,7 +60,8 @@ public class MainActivity extends DisplayActivity {
 		//this(0,file, location_id, date, amount, mileage,  notes)
 		try
 		{
-			db.addReceipt(new Receipt(0,"/mnt/sdcard/JPEG_20140306_022918_2121550581.jpg",l.getID(),"2/04/2012",1999,"Replaced blinker fluid. Checked muffler bearings." ));
+			System.err.println(0+","+"/mnt/sdcard/JPEG_20140306_022918_2121550581.jpg"+","+l.getID()+","+"2012-04-2"+","+1999+","+"Replaced blinker fluid. Checked muffler bearings.");
+			addToDatabase(new Receipt(0,"/mnt/sdcard/JPEG_20140306_022918_2121550581.jpg",l.getID(),"2012-04-2",1999,"Replaced blinker fluid. Checked muffler bearings." ));
 		}
 		catch (Exception e)
 		{
@@ -68,10 +72,10 @@ public class MainActivity extends DisplayActivity {
 		Item it = null;
 		Item it2 = null;
 		try {
-			r = db.getReceipt("/mnt/sdcard/JPEG_20140306_022918_2121550581.jpg");
-			v = db.getVehicle("Chevette");
-			it = db.getItem("Blinker Fluid");
-			it2 = db.getItem("Muffler bearings");
+			r = dbSQLite.getReceipt("/mnt/sdcard/JPEG_20140306_022918_2121550581.jpg");
+			v = dbSQLite.getVehicle("Chevette");
+			it = dbSQLite.getItem("Blinker Fluid");
+			it2 = dbSQLite.getItem("Muffler bearings");
 		}
 		catch (Exception e)
 		{
@@ -81,8 +85,8 @@ public class MainActivity extends DisplayActivity {
 		}
 		try
 		{
-			db.addWork(new Work(0,v.getID(),it.getID(),r.getID(),90210,"50ML Blinker Fluid"));
-			db.addWork(new Work(0,v.getID(),it2.getID(),r.getID(),90210,"Muffler bearings fine"));
+			addToDatabase(new Work(0,v.getID(),it.getID(),r.getID(),90210,"50ML Blinker Fluid"));
+			addToDatabase(new Work(0,v.getID(),it2.getID(),r.getID(),90210,"Muffler bearings fine"));
 		}
 		catch (Exception e)
 		{
@@ -105,7 +109,9 @@ public class MainActivity extends DisplayActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+		//deleteAndRebuildAllFromRemote();
+
+
 		
 	}
 	
@@ -178,6 +184,14 @@ public class MainActivity extends DisplayActivity {
 	    case R.id.create_data:
 	    	createData();
 	    	break;
+	    
+	    case R.id.resync_from_remote:
+	    	//LayoutUtils.displayYesNoDialog(this, "Do you want to download data from remote servers? This will overwrite all your local data?", "Re-sync");
+	    	//if (LayoutUtils.getDialogResult())
+	    	//{
+	    		deleteAndRebuildAllFromRemote();
+	    		
+	    	//}
 	
 	    	
 	    }

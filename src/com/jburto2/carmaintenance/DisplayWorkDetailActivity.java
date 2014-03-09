@@ -52,6 +52,8 @@ public class DisplayWorkDetailActivity extends DisplayDetailActivity {
     
     EditText workMileage;
     EditText workDescription;
+    
+    DatabaseObject myDatabaseObject = new Work();
 
     
     
@@ -131,7 +133,9 @@ public class DisplayWorkDetailActivity extends DisplayDetailActivity {
 
 		try 
 		{
-			db.updateWork(work);	
+			
+			updateInDatabase(work);
+
 		}
 		catch (Exception e)
 		{

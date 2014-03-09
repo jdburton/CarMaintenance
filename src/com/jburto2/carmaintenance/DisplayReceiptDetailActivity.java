@@ -50,6 +50,8 @@ public class DisplayReceiptDetailActivity extends DisplayDetailActivity {
     private EditText receiptDate;
     private EditText receiptAmount;
     private EditText receiptNotes;
+    
+    DatabaseObject myDatabaseObject = new Receipt();
 
     
     

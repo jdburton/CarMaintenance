@@ -85,10 +85,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) 
     {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_WORKS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECEIPTS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOCATIONS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEMS);
+        db.execSQL("DROP TABLE IF EXISTS " + Work.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + Receipt.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + Location.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + Item.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + Vehicle.TABLE_NAME);
         
         // Create tables again
@@ -100,12 +100,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * All CRUD(Create, Read, Update, Delete) Operations
      */
  
+    public void deleteAndRebuild()
+    {
+    	SQLiteDatabase db = this.getWritableDatabase();
+    	onUpgrade(db,0,0);
+    }
+    
     // Adding new vehicle
     public void addVehicle(Vehicle vehicle) throws Exception {
         SQLiteDatabase db = this.getWritableDatabase();
  
         ContentValues values = new ContentValues();
        
+        values.put(Vehicle.KEY_ID,vehicle.getID());
         values.put(Vehicle.KEY_VEHICLEDESCRIPTION, vehicle.getVehicleDescription()); // Vehicle description
  
         // Inserting Row
@@ -159,8 +166,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
      
     // Getting All Vehicles
-    public List<Vehicle> getAllVehicles() {
-        List<Vehicle> vehicleList = new ArrayList<Vehicle>();
+    public List<DatabaseObject> getAllVehicles() {
+        List<DatabaseObject> vehicleList = new ArrayList<DatabaseObject>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + Vehicle.TABLE_NAME;
  
@@ -235,7 +242,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         ContentValues values = new ContentValues();
        
-        
+        values.put(Item.KEY_ID,item.getID());
         values.put(Item.KEY_ITEMDESCRIPTION, item.getItemDescription());
         values.put(Item.KEY_ITEMMILEAGEINTERVAL, item.getMileageInterval());
         values.put(Item.KEY_ITEMTIMEINTERVAL, item.getTimeInterval());
@@ -300,8 +307,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
      
     // Getting All Items
-    public List<Item> getAllItems() {
-        List<Item> itemList = new ArrayList<Item>();
+    public List<DatabaseObject> getAllItems() {
+        List<DatabaseObject> itemList = new ArrayList<DatabaseObject>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + Item.TABLE_NAME;
  
@@ -378,6 +385,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         ContentValues values = new ContentValues();
        
+        values.put(Receipt.KEY_ID,receipt.getID());
         values.put(Receipt.KEY_RECEIPTFILE, receipt.getFile()); // Receipt description
         values.put(Receipt.KEY_LOCATION_IDLOCATION, receipt.getLocationID());
         values.put(Receipt.KEY_RECEIPTDATE, receipt.getDate());
@@ -493,8 +501,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
      
     // Getting All Receipts
-    public List<Receipt> getAllReceipts() {
-        List<Receipt> receiptList = new ArrayList<Receipt>();
+    public List<DatabaseObject> getAllReceipts() {
+        List<DatabaseObject> receiptList = new ArrayList<DatabaseObject>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + Receipt.TABLE_NAME;
  
@@ -525,8 +533,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
     
     // Getting All Receipts
-    public List<Receipt> getAllReceiptsByLocationId(int vid) {
-        List<Receipt> receiptList = new ArrayList<Receipt>();
+    public List<DatabaseObject> getAllReceiptsByLocationId(int vid) {
+        List<DatabaseObject> receiptList = new ArrayList<DatabaseObject>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + Receipt.TABLE_NAME + " where "+Receipt.KEY_LOCATION_IDLOCATION+"="+Integer.toString(vid);
  
@@ -608,7 +616,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
  
         ContentValues values = new ContentValues();
-       
+        
+        values.put(Location.KEY_ID,location.getID());
         values.put(Location.KEY_LOCATIONDESCRIPTION, location.getLocationDescription()); // Location description
  
         // Inserting Row
@@ -665,8 +674,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
      
     // Getting All Locations
-    public List<Location> getAllLocations() {
-        List<Location> locationList = new ArrayList<Location>();
+    public List<DatabaseObject> getAllLocations() {
+        List<DatabaseObject> locationList = new ArrayList<DatabaseObject>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + Location.TABLE_NAME;
  
@@ -738,9 +747,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         ContentValues values = new ContentValues();
        
+        values.put(Work.KEY_ID,work.getID());
         values.put(Work.KEY_VEHICLE_IDVEHICLE, work.getVehicleID()); // Work description
         values.put(Work.KEY_ITEMS_IDITEMS, work.getItemID()); // Work description
-        values.put(Work.KEY_RECIEPT_IDRECEIPT, work.getReceiptID()); // Work description
+        values.put(Work.KEY_RECEIPT_IDRECEIPT, work.getReceiptID()); // Work description
         values.put(Work.KEY_WORKMILEAGE, work.getMileage());
         values.put(Work.KEY_WORKNOTES, work.getNotes()); // Work description
         
@@ -759,7 +769,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         					Work.KEY_ID, 
         					Work.KEY_VEHICLE_IDVEHICLE,
         					Work.KEY_ITEMS_IDITEMS,
-        					Work.KEY_RECIEPT_IDRECEIPT,
+        					Work.KEY_RECEIPT_IDRECEIPT,
         					Work.KEY_WORKMILEAGE,
 							Work.KEY_WORKNOTES  
 							}, Work.KEY_ID + "=?",
@@ -792,11 +802,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         					Work.KEY_ID, 
         					Work.KEY_VEHICLE_IDVEHICLE,
         					Work.KEY_ITEMS_IDITEMS,
-        					Work.KEY_RECIEPT_IDRECEIPT,
+        					Work.KEY_RECEIPT_IDRECEIPT,
         					Work.KEY_WORKMILEAGE,
 							Work.KEY_WORKNOTES  
 							}, 
-							Work.KEY_VEHICLE_IDVEHICLE + "=? and "+Work.KEY_ITEMS_IDITEMS+"=? and "+Work.KEY_RECIEPT_IDRECEIPT+"=?",
+							Work.KEY_VEHICLE_IDVEHICLE + "=? and "+Work.KEY_ITEMS_IDITEMS+"=? and "+Work.KEY_RECEIPT_IDRECEIPT+"=?",
                 new String[] { Integer.toString(vid), Integer.toString(iid), Integer.toString(rid) }, null, null, null, null);
         if (cursor.getCount() > 0)
         {
@@ -818,8 +828,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
      
     // Getting All Works
-    public List<Work> getAllWorks() {
-        List<Work> workList = new ArrayList<Work>();
+    public List<DatabaseObject> getAllWorks() {
+        List<DatabaseObject> workList = new ArrayList<DatabaseObject>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + Work.TABLE_NAME;
  
@@ -849,8 +859,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
  
     // Getting All Works
-    public List<Work> getAllWorksByVehicleId(int vid) {
-        List<Work> workList = new ArrayList<Work>();
+    public List<DatabaseObject> getAllWorksByVehicleId(int vid) {
+        List<DatabaseObject> workList = new ArrayList<DatabaseObject>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + Work.TABLE_NAME + " where "+Work.KEY_VEHICLE_IDVEHICLE+"="+Integer.toString(vid);
  
@@ -887,7 +897,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(Work.KEY_ID, work.getID());
         values.put(Work.KEY_VEHICLE_IDVEHICLE, work.getVehicleID());
         values.put(Work.KEY_ITEMS_IDITEMS, work.getItemID());
-        values.put(Work.KEY_RECIEPT_IDRECEIPT,work.getReceiptID());
+        values.put(Work.KEY_RECEIPT_IDRECEIPT,work.getReceiptID());
         values.put(Work.KEY_WORKMILEAGE,work.getMileage());
         values.put(Work.KEY_WORKNOTES,work.getNotes());
  
@@ -939,10 +949,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     
     private void deleteAllReceiptImages() 
     {
-    	List<Receipt> receiptList = getAllReceipts();
+    	List<DatabaseObject> receiptList = getAllReceipts();
     	for (int index = 0; index < receiptList.size(); index++)
     	{
-    		deleteReceiptImage(receiptList.get(index).getFile());
+    		deleteReceiptImage(((Receipt)receiptList.get(index)).getFile());
     	}
     }
     

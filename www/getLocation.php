@@ -19,7 +19,7 @@ if (isset($_GET["LocationDescription"])) {
 	$LocationDescription = $_GET['LocationDescription'];
 
 	// get a location from locations table
-	$result = mysql_query("select idLocation, LocationDescription, create_time, update_time from Location where LocationDescription=$LocationDescription");
+	$result = mysql_query("select idLocation, LocationDescription, create_time, update_time from Location where LocationDescription='$LocationDescription'");
 
 	if (!empty($result)) {
 		// check for empty result
@@ -36,9 +36,9 @@ if (isset($_GET["LocationDescription"])) {
 			$response["success"] = 1;
 
 			// user node
-			$response["location"] = array();
+			$response["Location"] = array();
 
-			array_push($response["location"], $location);
+			array_push($response["Location"], $location);
 
 			// echoing JSON response
 			echo json_encode($response);

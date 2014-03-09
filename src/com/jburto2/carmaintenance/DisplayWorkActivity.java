@@ -34,7 +34,7 @@ import android.widget.TextView;
 public class DisplayWorkActivity extends DisplayTableActivity implements
 AdapterView.OnItemSelectedListener {
 	
-
+	DatabaseObject myDatabaseObject = new Work();
 	
 	@Override
 
@@ -57,14 +57,14 @@ AdapterView.OnItemSelectedListener {
 		Spinner spinner = (Spinner) findViewById(R.id.vehicleSpinner);
 		// Create an ArrayAdapter using the string array and a default spinner layout
 		
-        List<Vehicle> vehicleList = db.getAllVehicles();
+        List<DatabaseObject> vehicleList = dbSQLite.getAllVehicles();
         
         String [] spinnerList = new String[vehicleList.size()+1];
         spinnerList[0] = "";
         
         for (int i = 0; i < vehicleList.size(); i++)
         {
-        	spinnerList[i+1] = (vehicleList.get(i).getVehicleDescription());
+        	spinnerList[i+1] = ((Vehicle)vehicleList.get(i)).getVehicleDescription();
         }
         
         // Create spinner from array http://stackoverflow.com/questions/2784081/android-create-spinner-programmatically-from-array
@@ -93,7 +93,7 @@ AdapterView.OnItemSelectedListener {
 		Vehicle vehicle = null;
 		try 
 		{
-			vehicle = db.getVehicle(((TextView)v).getText().toString());
+			vehicle = dbSQLite.getVehicle(((TextView)v).getText().toString());
 			htv.setText(Integer.toString(vehicle.getID()));
 		}
 		catch (Exception e)
@@ -243,15 +243,15 @@ AdapterView.OnItemSelectedListener {
         //LinkedList<TableRow> rowList = new LinkedList<TableRow>();
         //rowList.add(tableRow);
 
-        List<Work> worklist = null;
+        List<DatabaseObject> worklist = null;
         
         if (vid < 0)
         {
-        	worklist = db.getAllWorks();
+        	worklist = dbSQLite.getAllWorks();
         }
         else
         {
-        	worklist = db.getAllWorksByVehicleId(vid);
+        	worklist = dbSQLite.getAllWorksByVehicleId(vid);
         }
         
         
@@ -266,7 +266,7 @@ AdapterView.OnItemSelectedListener {
         	
 
         	
-        	Work workitem = worklist.get(i);
+        	Work workitem = (Work) worklist.get(i);
         	
         	Vehicle vehicle = null;
         	Item item = null;
@@ -275,13 +275,14 @@ AdapterView.OnItemSelectedListener {
         	try 
         	{
 
-	        	vehicle = db.getVehicleById(workitem.getVehicleID());
-	        	item = db.getItemById(workitem.getItemID());
-	        	receipt = db.getReceiptById(workitem.getReceiptID());
+	        	vehicle = dbSQLite.getVehicleById(workitem.getVehicleID());
+	        	item = dbSQLite.getItemById(workitem.getItemID());
+	        	receipt = dbSQLite.getReceiptById(workitem.getReceiptID());
         	}
         	catch (Exception e)
         	{
         		displayMessageDialog("SQL fail",e.getMessage());
+        		System.err.println("work: Workid="+workitem.getID()+" VehicleID="+workitem.getVehicleID()+" ItemID="+workitem.getItemID()+" ReceiptID="+workitem.getReceiptID());
         		return;
         	}
         	
@@ -328,7 +329,7 @@ AdapterView.OnItemSelectedListener {
         	Location location;
         	String locationDescr;
 			try {
-				location = db.getLocationById(locationID);
+				location = dbSQLite.getLocationById(locationID);
 				locationDescr = location.getLocationDescription();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -404,7 +405,7 @@ AdapterView.OnItemSelectedListener {
 
 	            	try 
 	            	{
-	            		db.deleteWork(work);	
+	            		deleteFromDatabase(work);	
 	            	}
 	            	catch (Exception e)
 	            	{
@@ -493,11 +494,11 @@ AdapterView.OnItemSelectedListener {
     	Spinner spinner = null;
     	if (vid < 0)
     	{
-            List<Vehicle> vehicleList = db.getAllVehicles();
+            List<DatabaseObject> vehicleList = dbSQLite.getAllVehicles();
             String [] vehicleArray = new String [vehicleList.size()];
             for (int i = 0; i < vehicleList.size(); i++)
             {
-            	vehicleArray[i] = vehicleList.get(i).getVehicleDescription();
+            	vehicleArray[i] = ((Vehicle)vehicleList.get(i)).getVehicleDescription();
             }
             spinner = LayoutUtils.createSpinner(this, vehicleArray);
             tableRow.addView(spinner);
@@ -514,27 +515,27 @@ AdapterView.OnItemSelectedListener {
     	}
     		
         // 5
-        List<Item> itemList = db.getAllItems();
+        List<DatabaseObject> itemList = dbSQLite.getAllItems();
         String [] itemArray = new String [itemList.size()];
         for (int i = 0; i < itemList.size(); i++)
         {
-        	itemArray[i] = itemList.get(i).getItemDescription();
+        	itemArray[i] = ((Item)itemList.get(i)).getItemDescription();
         }
         spinner = LayoutUtils.createSpinner(this, itemArray);
         tableRow.addView(spinner);
         
 
         // 6
-        List<Receipt> receiptList = db.getAllReceipts();
+        List<DatabaseObject> receiptList = dbSQLite.getAllReceipts();
         String [] receiptArray = new String [receiptList.size()];
         for (int i = 0; i < receiptList.size(); i++)
         {
         	
-        	int locationID =  receiptList.get(i).getLocationID();
+        	int locationID =  ((Receipt)receiptList.get(i)).getLocationID();
         	Location location;
         	String locationDescr;
 			try {
-				location = db.getLocationById(locationID);
+				location = dbSQLite.getLocationById(locationID);
 				locationDescr = location.getLocationDescription();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -542,7 +543,7 @@ AdapterView.OnItemSelectedListener {
 				locationDescr = "Not Found";
 			}
         	
-        	receiptArray[i] = locationDescr + " | "+receiptList.get(i).getDate(); 
+        	receiptArray[i] = locationDescr + " | "+((Receipt)receiptList.get(i)).getDate(); 
         }
         spinner = LayoutUtils.createSpinner(this, receiptArray);
         
@@ -633,10 +634,10 @@ AdapterView.OnItemSelectedListener {
 		String locationDescr = result[0];
 		String date = result[1];
 		
-		Location location = db.getLocation(locationDescr);
+		Location location = dbSQLite.getLocation(locationDescr);
 		
 		
-		receipt = db.getReceiptByLocationAndDate(location.getID(),date);
+		receipt = dbSQLite.getReceiptByLocationAndDate(location.getID(),date);
 		return receipt;
 	    
 	}
@@ -649,13 +650,13 @@ AdapterView.OnItemSelectedListener {
 			
 		vehicleDescription = getVehicleDescription(tr);
 		
-		Vehicle v = db.getVehicle(vehicleDescription);
+		Vehicle v = dbSQLite.getVehicle(vehicleDescription);
 		
 		((TextView)tr.getChildAt(1)).setText(Integer.toString(v.getID()));
 		
 		
 		itemDescription = getItemDescription(tr);
-		Item i = db.getItem(itemDescription);
+		Item i = dbSQLite.getItem(itemDescription);
 		((TextView)tr.getChildAt(2)).setText(Integer.toString(i.getID()));
 		
 		Receipt r = getReceiptFromTable(tr); 
@@ -694,17 +695,7 @@ AdapterView.OnItemSelectedListener {
 
 	}
 	
-	protected void deleteAllRows()
-	{
-		LayoutUtils.displayYesNoDialog(this, "Delete All", "Delete All Rows in Work Table?");
-		if(LayoutUtils.getDialogResult())
-		{
-			displayToast("Deleted all rows!");
-			db.deleteAllRecordsFromTable(Work.TABLE_NAME);
-			drawTable();
-		}
-	}
-	
+
 	public void onVehicleButtonClick(View v) {
 		
 
@@ -729,7 +720,7 @@ AdapterView.OnItemSelectedListener {
     			
     	try
     	{
-    	Receipt receipt = db.getReceiptById(work.getReceiptID());
+    	Receipt receipt = dbSQLite.getReceiptById(work.getReceiptID());
     	intent.putExtra("ReceiptClass", receipt);
         intent.putExtra("VehicleDescription",getVehicleDescription(tr));
         intent.putExtra("ItemDescription", getItemDescription(tr));
@@ -758,7 +749,7 @@ AdapterView.OnItemSelectedListener {
 	
 		try 
 		{
-			db.updateWork(work);	
+			updateInDatabase(work);	
 		}
 		catch (Exception e)
 		{
@@ -793,7 +784,7 @@ AdapterView.OnItemSelectedListener {
     	//displayToast(keys);
     	try 
     	{
-    		db.addWork(work);	
+    		addToDatabase(work);	
     	}
     	catch (android.database.sqlite.SQLiteConstraintException e)
     	{
@@ -812,6 +803,14 @@ AdapterView.OnItemSelectedListener {
     	drawTable();
     	
 
+	}
+
+
+
+	@Override
+	protected String getTableName() {
+		// TODO Auto-generated method stub
+		return Work.TABLE_NAME;
 	}
 	
 

@@ -25,7 +25,7 @@ if (isset($_POST['idItem']) && isset($_POST['ItemDescription']) && isset($_POST[
     $db = new DB_CONNECT();
  
     // mysql update row with matched pid
-    $result = mysql_query("update Item set ItemDescription=$ItemDescription, ItemMileageInterval=$ItemMileageInterval, ItemTimeInterval=$ItemTimeInterval  where idItem=$idItem");
+    $result = mysql_query("update Item set ItemDescription='$ItemDescription', ItemMileageInterval=$ItemMileageInterval, ItemTimeInterval=$ItemTimeInterval  where idItem=$idItem");
  
     // check if row inserted or not
     if ($result) {

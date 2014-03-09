@@ -11,35 +11,43 @@ public class DatabaseSQL {
 
 
 	public static final String CREATE_VEHICLE = "CREATE TABLE \"Vehicle\"( \n" +
-	"  \"idVehicle\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
+	"  \"idVehicle\" INTEGER PRIMARY KEY NOT NULL,\n" +
 	"  \"VehicleDescription\" VARCHAR(255) NOT NULL,\n" +
+	"  \"create_time\" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"+
+	"  \"update_time\" TIMESTAMP,\n"+
 	"  CONSTRAINT \"VehicleDescription_UNIQUE\"\n" +
 	"    UNIQUE(\"VehicleDescription\")\n" +
 	");\n";
 	
 	public static final String CREATE_LOCATION = "CREATE TABLE \"Location\"(\n" +
-	"  \"idLocation\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
+	"  \"idLocation\" INTEGER PRIMARY KEY NOT NULL,\n" +
 	"  \"LocationDescription\" VARCHAR(255) NOT NULL,\n" +
+	"  \"create_time\" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"+
+	"  \"update_time\" TIMESTAMP,\n"+
 	"  CONSTRAINT \"LocationDescription_UNIQUE\"\n" +
 	"    UNIQUE(\"LocationDescription\")\n" +
 	");\n";
 	
 	public static final String CREATE_ITEM = 	"CREATE TABLE \"Item\"(\n" +
-	"  \"idItem\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
+	"  \"idItem\" INTEGER PRIMARY KEY NOT NULL,\n" +
 	"  \"ItemDescription\" VARCHAR(255) NOT NULL,\n" +
 	"  \"ItemMileageInterval\" INTEGER NOT NULL,\n" +
 	"  \"ItemTimeInterval\" INTEGER NOT NULL,\n" +
+	"  \"create_time\" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"+
+	"  \"update_time\" TIMESTAMP,\n"+
 	"  CONSTRAINT \"ItemDescription_UNIQUE\"\n" +
 	"    UNIQUE(\"ItemDescription\")\n" +
 	");\n";
 	
 	public static final String CREATE_RECEIPT = "CREATE TABLE \"Receipt\"(\n" +
-	"  \"idReceipt\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
+	"  \"idReceipt\" INTEGER PRIMARY KEY NOT NULL,\n" +
 	"  \"ReceiptFile\" VARCHAR(255) NOT NULL,\n" +
 	"  \"Location_idLocation\" INTEGER NOT NULL,\n" +
-	"  \"ReceiptDate\" DATETIME,\n" +
+	"  \"ReceiptDate\" DATE,\n" +
 	"  \"ReceiptAmount\" INTEGER,\n" +
 	"  \"ReceiptNotes\" VARCHAR(255),\n" +
+	"  \"create_time\" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"+
+	"  \"update_time\" TIMESTAMP,\n"+
 	"  CONSTRAINT \"Secondary\"\n" +
 	"    UNIQUE(\"Location_idLocation\",\"ReceiptDate\"),\n"+
 	"  CONSTRAINT \"ReceiptFile_UNIQUE\"\n" +
@@ -53,12 +61,14 @@ public class DatabaseSQL {
 	
 	
 	public static final String CREATE_WORK = "CREATE TABLE \"Work\"(\n" +
-	"  \"idWork\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
+	"  \"idWork\" INTEGER PRIMARY KEY NOT NULL,\n" +
 	"  \"Vehicle_idVehicle\" INTEGER NOT NULL,\n" +
 	"  \"Items_idItem\" INTEGER NOT NULL,\n" +
 	"  \"Receipt_idReceipt\" INTEGER NOT NULL,\n" +
 	"  \"WorkMileage\" INTEGER NOT NULL,\n" +
 	"  \"WorkNotes\" VARCHAR(255),\n" +
+	"  \"create_time\" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"+
+	"  \"update_time\" TIMESTAMP,\n"+
 	"  CONSTRAINT \"Secondary\"\n" +
 	"    UNIQUE(\"Vehicle_idVehicle\",\"Items_idItem\",\"Receipt_idReceipt\"),\n"+
 	"  CONSTRAINT \"fk_Work_Vehicle1\"\n" +
