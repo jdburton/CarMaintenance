@@ -2,12 +2,10 @@ package com.jburto2.carmaintenance;
 
 
 import java.util.List;
-import java.util.StringTokenizer;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -15,8 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
